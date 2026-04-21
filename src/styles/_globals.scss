@@ -1,0 +1,24 @@
+@use "@/styles/variables" as vars;
+@use "@/styles/components/navbar";
+@use "@/styles/components/category-menu";
+@use "@/styles/components/paginate";
+
+.form-container {
+  margin-top: vars.$form-container-margin-top;
+  margin-left: vars.$form-container-margin-left;
+  margin-right: vars.$form-container-margin-right;
+  width: 100%;
+}
+
+.form-sm-container {
+  margin-top: vars.$form-container-margin-top;
+  margin-left: vars.$form-container-margin-left;
+  margin-right: vars.$form-container-margin-right;
+  width: 100%;
+}
+
+.menu-container {
+  width: 100%;
+  margin-right: 2rem;
+  margin-bottom: 2rem;
+}

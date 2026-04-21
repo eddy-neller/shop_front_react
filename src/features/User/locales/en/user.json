@@ -1,0 +1,132 @@
+{
+  "helmet": {
+    "home": {
+      "title": "E.N Shop - User Dashboard",
+      "description": "User Dashboard"
+    },
+    "profile": {
+      "title": "E.N Shop - User Profile",
+      "description": "My Profile"
+    },
+    "editPassword": {
+      "title": "E.N Shop - User Edit Password",
+      "description": "Edit Password"
+    },
+    "avatar": { "title": "E.N Shop - User Avatar", "description": "Avatar" }
+  },
+  "breadcrumb": {
+    "dashboard": "Dashboard",
+    "profile": "My Profile",
+    "editPassword": "Edit Password",
+    "avatar": "Avatar"
+  },
+  "errorCard": {
+    "title": "Error",
+    "description": "Unable to load your profile information. Please try again later.",
+    "retry": "Try again"
+  },
+  "dashboard": {
+    "welcome": "Welcome, {{username}}!",
+    "welcomeBack": "Good to see you again",
+    "fallbackUsername": "User",
+    "showProfile": "View profile",
+    "admin": {
+      "title": "Administrator",
+      "text": "You have access to all administrative features on the site."
+    },
+    "moderator": {
+      "title": "Moderator",
+      "intro": "As a moderator, you can manage the site's content.",
+      "features": {
+        "delete": "Remove content",
+        "rules": "Moderate rules",
+        "resolve": "Resolve conflicts"
+      }
+    },
+    "member": {
+      "title": "Member",
+      "intro": "Welcome to your member area. Enjoy all available features.",
+      "features": {
+        "private": "Access private content",
+        "profile": "Manage your profile"
+      }
+    }
+  },
+  "profileCard": {
+    "email": "Email:",
+    "registered": "Registered on:",
+    "lastVisit": "Last Visit:",
+    "logins": "Sign-ins:"
+  },
+  "avatar": {
+    "alt": "{{username}}'s avatar"
+  },
+  "roles": {
+    "admin": "Admin",
+    "moderator": "Moderator",
+    "member": "Member",
+    "unknown": "Unknown"
+  },
+  "avatarPage": {
+    "p1": "An avatar is a small image used to help visitors recognize you easily. It must be square, with a standard size of 96x96 pixels and a maximum file size of 200 KB.",
+    "p2": "Last point, if the image contains content that may be deemed offensive or inappropriate for visitors, the administrator reserves the right to remove the avatar."
+  },
+  "forms": {
+    "editPassword": {
+      "intro": "To update your password, fill out the fields below. Make sure to use a strong new password.",
+      "current": {
+        "label": "Current password",
+        "placeholder": "Current password",
+        "required": "Current password is required",
+        "show": "Show current password",
+        "hide": "Hide current password"
+      },
+      "new": {
+        "label": "New password",
+        "placeholder": "Choose a new password",
+        "required": "New password is required",
+        "policy": "8–30 chars, with 1 uppercase, 1 number, and 1 special: ()!@#$%^&*_-",
+        "hint": "Use a strong password: 8–30 chars, uppercase, number, special.",
+        "different": "New password must be different from current password",
+        "show": "Show new password",
+        "hide": "Hide new password"
+      },
+      "confirm": {
+        "label": "Confirm new password",
+        "placeholder": "Confirm your new password",
+        "required": "Please confirm your new password",
+        "mismatch": "Passwords do not match",
+        "show": "Show confirm new password",
+        "hide": "Hide confirm new password"
+      },
+      "submit": { "label": "Change password", "busy": "Changing…" },
+      "toast": {
+        "success": "Password updated successfully!",
+        "error": "An error occurred while updating your password."
+      }
+    },
+    "avatar": {
+      "label": "Image file",
+      "required": "Please select an image file",
+      "size": "File size must be less than 200KB",
+      "type": "Only jpg and png files are allowed",
+      "hint": "(jpg/png, 96x96px max, 200KB max)",
+      "submit": {
+        "label": "Update avatar",
+        "busy": "Uploading..."
+      },
+      "toast": {
+        "success": "Avatar updated successfully!",
+        "error": "An error occurred while uploading your avatar."
+      }
+    }
+  },
+  "userNav": {
+    "menuAria": "User menu",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "avatar": "Avatar",
+    "password": "Password",
+    "logout": "Logout"
+  }
+}

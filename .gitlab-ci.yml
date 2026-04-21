@@ -1,0 +1,56 @@
+image: node:20
+
+variables:
+  NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/.npm"
+  CI: "true"
+  HUSKY: "0"
+
+cache:
+  key:
+    files:
+      - package-lock.json
+  paths:
+    - .npm/
+
+stages:
+  - install
+  - lint
+  - test
+
+install:
+  stage: install
+  script:
+    - if [ -f package-lock.json ]; then npm ci; else npm install; fi
+  cache:
+    policy: pull-push
+  artifacts:
+    name: "deps-$CI_COMMIT_SHA"
+    paths:
+      - node_modules/
+    expire_in: 1h
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH
+
+lint:
+  stage: lint
+  needs: [install]
+  script:
+    - npm run lint
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH
+
+test:
+  stage: test
+  needs: [install]
+  script:
+    - npm run test:cov
+  artifacts:
+    when: always
+    paths:
+      - coverage/
+    expire_in: 7 days
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH

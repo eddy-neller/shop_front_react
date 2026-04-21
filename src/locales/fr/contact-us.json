@@ -1,0 +1,48 @@
+{
+  "title": "Contact",
+  "helmet": {
+    "title": "E.N Shop - Contact",
+    "description": "Contactez-moi"
+  },
+  "hero": {
+    "title": "Contactez-nous",
+    "description": "Une question ? Une demande ? N'hésitez pas à nous écrire, nous vous répondrons dans les plus brefs délais."
+  },
+  "toast": {
+    "success": "Message envoyé avec succès !",
+    "description": "Nous vous répondrons dans les plus brefs délais."
+  },
+  "error": {
+    "generic": "Une erreur est survenue lors de l'envoi de l'email."
+  },
+  "form": {
+    "name": {
+      "label": "Nom complet",
+      "placeholder": "Votre nom",
+      "min": "Le nom doit contenir au moins 2 caractères",
+      "max": "Le nom ne peut pas dépasser 50 caractères"
+    },
+    "email": {
+      "label": "Email",
+      "placeholder": "votre.email@exemple.com",
+      "pattern": "Format d'email invalide",
+      "max": "L'email ne peut pas dépasser 100 caractères"
+    },
+    "subject": {
+      "label": "Sujet",
+      "placeholder": "Sujet de votre message",
+      "min": "Le sujet doit contenir au moins 5 caractères",
+      "max": "Le sujet ne peut pas dépasser 100 caractères"
+    },
+    "message": {
+      "label": "Message",
+      "placeholder": "Votre message...",
+      "min": "Le message doit contenir au moins 10 caractères",
+      "max": "Le message ne peut pas dépasser 1000 caractères"
+    },
+    "submit": {
+      "label": "Envoyer le message",
+      "busy": "Envoi en cours…"
+    }
+  }
+}

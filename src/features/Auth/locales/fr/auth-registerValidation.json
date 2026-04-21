@@ -1,0 +1,93 @@
+{
+  "breadcrumb": {
+    "register": "Inscription",
+    "success": "Activation réussie"
+  },
+  "activationSuccess": {
+    "helmet": {
+      "title": "E.N Shop - Activation réussie",
+      "description": "Votre compte a été activé"
+    },
+    "hero": {
+      "title": "Compte activé avec succès !",
+      "subtitle": "Votre compte a été activé. Vous pouvez maintenant vous connecter.",
+      "cta": "Se connecter"
+    },
+    "next": {
+      "title": "Prochaines étapes",
+      "items": {
+        "dashboard": {
+          "title": "Explorer le tableau de bord",
+          "text": "Découvrez toutes les fonctionnalités disponibles.",
+          "badge": "Recommandé",
+          "cta": "Continuer"
+        },
+        "profile": {
+          "title": "Compléter votre profil",
+          "text": "Ajoutez vos informations personnelles.",
+          "badge": "Optionnel",
+          "cta": "Commencer"
+        },
+        "security": {
+          "title": "Sécuriser votre compte",
+          "text": "Configurez l'authentification à deux facteurs.",
+          "badge": "Sécurité",
+          "cta": "En savoir plus"
+        }
+      }
+    },
+    "trust": {
+      "text": "Votre compte est maintenant actif et sécurisé.",
+      "badge": "99.9%",
+      "caption": "Disponibilité garantie"
+    }
+  },
+  "validation": {
+    "breadcrumb": "Valider le compte",
+    "helmet": {
+      "verify": {
+        "title": "E.N Shop - Validez votre compte",
+        "description": "Validez votre compte E.N Shop"
+      },
+      "invalid": {
+        "title": "E.N Shop - Échec de l'activation",
+        "description": "Lien d'activation invalide pour le compte E.N Shop"
+      }
+    },
+    "pending": "Vérification de votre compte en cours...",
+    "invalid": {
+      "title": "Lien d'activation invalide",
+      "text": "Ce lien d'activation n'est plus valide ou a expiré."
+    },
+    "resend": {
+      "title": "Renvoyer l'email d'activation"
+    },
+    "contact": {
+      "title": "Besoin d'aide ?",
+      "text": "Si vous rencontrez des difficultés, n'hésitez pas à nous contacter.",
+      "cta": "Nous contacter"
+    },
+    "forms": {
+      "resendActivation": {
+        "email": {
+          "label": "Votre email",
+          "placeholder": "vous@exemple.com",
+          "required": "L'email est requis",
+          "max": "Maximum 100 caractères",
+          "invalid": "Format d'email invalide"
+        },
+        "submit": {
+          "label": "M'envoyer un nouveau lien",
+          "busy": "Envoi…"
+        },
+        "toast": {
+          "success": "Un nouveau lien d'activation a été envoyé.",
+          "error": "Une erreur s'est produite lors de la réexpédition de l'email d'activation."
+        },
+        "success": {
+          "message": "Un nouveau lien d'activation a été envoyé à <strong>{{email}}</strong>. Veuillez vérifier votre boîte de réception."
+        }
+      }
+    }
+  }
+}

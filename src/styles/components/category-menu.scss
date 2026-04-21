@@ -1,0 +1,14 @@
+.tree-list,
+.tree-list ul,
+.tree-list li {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.tree-list .custom-hover:hover,
+.tree-list .active {
+  background-color: #0d6efd;
+  border-radius: 5px;
+  color: white;
+}

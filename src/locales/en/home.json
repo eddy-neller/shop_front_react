@@ -1,0 +1,47 @@
+{
+  "hero": {
+    "title": "Welcome to E.N Shop",
+    "description": "Discover our selection of quality products, carefully chosen to offer you the best online shopping experience.",
+    "cta": "Contact us"
+  },
+  "featured": {
+    "title": "Featured products",
+    "description": "Discover our selection of most popular products, chosen for their quality and exceptional value.",
+    "imagePlaceholder": "Product image",
+    "cta": "View more",
+    "products": [
+      {
+        "name": "Premium Product",
+        "description": "A top-quality product designed to meet all your needs.",
+        "category": "Premium"
+      },
+      {
+        "name": "Standard Product",
+        "description": "A reliable and affordable solution for everyday life.",
+        "category": "Standard"
+      },
+      {
+        "name": "Essential Product",
+        "description": "The essentials within reach, guaranteed quality.",
+        "category": "Essential"
+      }
+    ]
+  },
+  "benefits": {
+    "title": "Why choose us?",
+    "items": {
+      "fastDelivery": {
+        "title": "Fast delivery",
+        "description": "Receive your orders quickly and securely."
+      },
+      "quality": {
+        "title": "Guaranteed quality",
+        "description": "All our products are selected for their exceptional quality."
+      },
+      "support": {
+        "title": "Customer support",
+        "description": "Our team is here to help you at any time."
+      }
+    }
+  }
+}

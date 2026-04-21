@@ -1,0 +1,127 @@
+{
+  "breadcrumb": {
+    "register": "Register",
+    "success": "Success"
+  },
+  "hero": {
+    "title": "Create account",
+    "description": {
+      "prefix": "Join",
+      "brand": "E.N Shop",
+      "suffix": "today."
+    }
+  },
+  "sso": {
+    "google": "Continue with Google",
+    "facebook": "Continue with Facebook",
+    "apple": "Continue with Apple"
+  },
+  "separator": "or",
+  "links": {
+    "alreadyHaveAccount": "Already have an account?",
+    "signIn": "Sign in"
+  },
+  "trust": {
+    "secure": "Secure",
+    "nospam": "No spam"
+  },
+  "whyJoin": {
+    "title": "Why join?",
+    "items": {
+      "onboarding": {
+        "title": "Fast onboarding",
+        "text": "Get started in minutes with our streamlined onboarding process."
+      },
+      "practices": {
+        "title": "Best practices",
+        "text": "Benefit from years of experience and proven best practices."
+      },
+      "security": {
+        "title": "Security",
+        "text": "Your data is protected with the latest security technologies."
+      }
+    }
+  },
+  "stats": {
+    "uptime": "Availability",
+    "percentage": "99.9%",
+    "caption": "Uptime guarantee"
+  },
+  "forms": {
+    "register": {
+      "helmet": {
+        "title": "E.N Shop - Register",
+        "description": "Create an account"
+      },
+      "email": {
+        "label": "Email address",
+        "placeholder": "name@example.com",
+        "required": "Email is required",
+        "min": "Minimum 4 characters",
+        "max": "Maximum 100 characters",
+        "invalid": "Invalid email format"
+      },
+      "username": {
+        "label": "Username",
+        "placeholder": "Choose a username",
+        "required": "Username is required",
+        "min": "Minimum 2 characters",
+        "max": "Maximum 20 characters"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Choose a password",
+        "required": "Password is required",
+        "pattern": "8–30 chars, with 1 uppercase, 1 number, and 1 special: ()!@#$%^&*_-",
+        "show": "Show password",
+        "hide": "Hide password"
+      },
+      "confirmPassword": {
+        "label": "Confirm password",
+        "placeholder": "Confirm your password",
+        "required": "Please confirm your password",
+        "match": "Passwords do not match",
+        "show": "Show confirm password",
+        "hide": "Hide confirm password"
+      },
+      "submit": {
+        "label": "Create account",
+        "busy": "Creating…"
+      },
+      "hint": {
+        "text": "Use a strong password: 8–30 chars, uppercase, number, special."
+      },
+      "toast": {
+        "success": "Account created successfully.",
+        "error": "An error occurred while creating your account."
+      }
+    }
+  },
+  "registerSuccess": {
+    "helmet": {
+      "title": "E.N Shop - Registration successful",
+      "description": "Your activation link has been sent"
+    },
+    "subtitle": "We've sent you an activation link.",
+    "hero": {
+      "title": "Registration successful!",
+      "subtitlePrefix": "A confirmation email has been sent to"
+    },
+    "steps": {
+      "mail": {
+        "title": "Open your inbox",
+        "text": "and click the confirmation link to activate your account."
+      },
+      "expiry": {
+        "prefix": "The confirmation link is valid for",
+        "highlight": "24 hours",
+        "suffix": ". After that, you will need to request a new link."
+      }
+    },
+    "alert": {
+      "title": "Important:",
+      "message": "You must activate your account before you can sign in."
+    },
+    "cta": "Go to the sign-in page"
+  }
+}

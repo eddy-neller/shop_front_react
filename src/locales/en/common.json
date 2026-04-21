@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "brand": "E.N Shop"
+  },
+  "buttons": {
+    "seeAll": "See all",
+    "goBack": "Go Back »",
+    "seeForum": "See the forum »"
+  },
+  "sections": {
+    "news": "News",
+    "forum": "Forum"
+  },
+  "spinner": {
+    "loading": "Loading..."
+  },
+  "categoryMenu": {
+    "title": "Categories",
+    "treeAria": "Tree Category Menu",
+    "expandAria": "Expand category {{id}}",
+    "selectAria": "Select category {{id}}"
+  },
+  "footer": {
+    "brand": "E.N Shop",
+    "description": "Your destination for the best products online.",
+    "navigation": {
+      "title": "Navigation",
+      "home": "Home",
+      "contact": "Contact"
+    },
+    "contact": {
+      "title": "Contact",
+      "emailLabel": "Email",
+      "email": "contact@en-develop.fr"
+    },
+    "copyrightBrand": "E.N Shop.",
+    "rights": "All rights reserved."
+  },
+  "moderation": {
+    "regionAria": "Moderation",
+    "selectAll": "Select all",
+    "unselectAll": "Unselect all",
+    "invert": "Invert",
+    "actions": "Actions"
+  }
+}

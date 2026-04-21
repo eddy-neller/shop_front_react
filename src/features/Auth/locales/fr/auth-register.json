@@ -1,0 +1,127 @@
+{
+  "breadcrumb": {
+    "register": "Inscription",
+    "success": "Succès"
+  },
+  "hero": {
+    "title": "Créer un compte",
+    "description": {
+      "prefix": "Rejoignez",
+      "brand": "E.N Shop",
+      "suffix": "dès maintenant."
+    }
+  },
+  "sso": {
+    "google": "Continuer avec Google",
+    "facebook": "Continuer avec Facebook",
+    "apple": "Continuer avec Apple"
+  },
+  "separator": "ou",
+  "links": {
+    "alreadyHaveAccount": "Vous avez déjà un compte ?",
+    "signIn": "Se connecter"
+  },
+  "trust": {
+    "secure": "Sécurisé",
+    "nospam": "Pas de spam"
+  },
+  "whyJoin": {
+    "title": "Pourquoi nous rejoindre ?",
+    "items": {
+      "onboarding": {
+        "title": "Onboarding rapide",
+        "text": "Mettez-vous en route en quelques minutes avec notre processus d'intégration simplifié."
+      },
+      "practices": {
+        "title": "Meilleures pratiques",
+        "text": "Bénéficiez de nos années d'expérience et de nos meilleures pratiques éprouvées."
+      },
+      "security": {
+        "title": "Sécurité",
+        "text": "Vos données sont protégées avec les dernières technologies de sécurité."
+      }
+    }
+  },
+  "stats": {
+    "uptime": "Disponibilité",
+    "percentage": "99.9%",
+    "caption": "Garantie de disponibilité"
+  },
+  "forms": {
+    "register": {
+      "helmet": {
+        "title": "E.N Shop - Inscription",
+        "description": "Créer un compte"
+      },
+      "email": {
+        "label": "Adresse email",
+        "placeholder": "nom@exemple.com",
+        "required": "L'email est requis",
+        "min": "Au moins 4 caractères",
+        "max": "Maximum 100 caractères",
+        "invalid": "Format d'email invalide"
+      },
+      "username": {
+        "label": "Nom d'utilisateur",
+        "placeholder": "Choisissez un nom d'utilisateur",
+        "required": "Le nom d'utilisateur est requis",
+        "min": "Au moins 2 caractères",
+        "max": "Maximum 20 caractères"
+      },
+      "password": {
+        "label": "Mot de passe",
+        "placeholder": "Choisissez un mot de passe",
+        "required": "Le mot de passe est requis",
+        "pattern": "8–30 caractères, avec 1 majuscule, 1 chiffre et 1 spécial : ()!@#$%^&*_-",
+        "show": "Afficher le mot de passe",
+        "hide": "Masquer le mot de passe"
+      },
+      "confirmPassword": {
+        "label": "Confirmer le mot de passe",
+        "placeholder": "Confirmez votre mot de passe",
+        "required": "Veuillez confirmer votre mot de passe",
+        "match": "Les mots de passe ne correspondent pas",
+        "show": "Afficher la confirmation",
+        "hide": "Masquer la confirmation"
+      },
+      "submit": {
+        "label": "Créer le compte",
+        "busy": "Création…"
+      },
+      "hint": {
+        "text": "Utilisez un mot de passe fort : 8–30 caractères, majuscule, chiffre, spécial."
+      },
+      "toast": {
+        "success": "Compte créé avec succès.",
+        "error": "Une erreur s'est produite lors de la création de votre compte."
+      }
+    }
+  },
+  "registerSuccess": {
+    "helmet": {
+      "title": "E.N Shop - Inscription réussie",
+      "description": "Votre lien d'activation a été envoyé"
+    },
+    "subtitle": "Nous vous avons envoyé un lien d'activation.",
+    "hero": {
+      "title": "Inscription réussie !",
+      "subtitlePrefix": "Un email de confirmation a été envoyé à"
+    },
+    "steps": {
+      "mail": {
+        "title": "Ouvrez votre boîte mail",
+        "text": "et cliquez sur le lien de confirmation pour activer votre compte."
+      },
+      "expiry": {
+        "prefix": "Le lien de confirmation est valide pendant",
+        "highlight": "24 heures",
+        "suffix": ". Après ce délai, vous devrez demander un nouveau lien."
+      }
+    },
+    "alert": {
+      "title": "Important :",
+      "message": "Vous devez activer votre compte avant de pouvoir vous connecter."
+    },
+    "cta": "Aller à la page de connexion"
+  }
+}

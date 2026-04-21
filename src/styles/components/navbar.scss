@@ -1,0 +1,231 @@
+/* ===========================
+   Variables
+   =========================== */
+$nav-hover-bg: rgba(255, 255, 255, 0.16);
+$nav-active-bg: rgba(255, 255, 255, 0.22);
+$nav-item-height: 46px; // hauteur unifiée : top-level & dropdown
+$nav-item-radius: 12px;
+
+/* ===========================
+   Navbar (modern / extra dark)
+   =========================== */
+.app-navbar {
+  /* 🔁 Variable d’espacement centralisée pour toute la navbar */
+  --nav-gap: 0.2rem;
+
+  z-index: 1030;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 9, 11, 0.98) 0%,
+    rgba(8, 9, 11, 0.94) 100%
+  ) !important;
+  backdrop-filter: saturate(140%) blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+  .brand {
+    img {
+      height: 42px;
+      margin-right: 12px;
+    }
+  }
+
+  .toggler {
+    border: none;
+    box-shadow: none !important;
+
+    svg {
+      font-size: 1.1rem;
+    }
+  }
+
+  /* ===========================
+     Groupes de liens (gauche & droite)
+     — espacement unifié et fallback générique
+     =========================== */
+  .navbar-nav {
+    display: flex;
+    align-items: center;
+
+    /* ✅ même espacement partout (gauche/droite) */
+    gap: var(--nav-gap);
+
+    /* ✅ Fallback si gap non supporté : s’applique à tout enfant direct
+          (NavDropdown .nav-item, .locale-flags, etc.) */
+    > * + * {
+      margin-left: var(--nav-gap);
+    }
+
+    /* Liens top-level (About, Modules, Contact, Login) */
+    .nav-link,
+    .dropdown-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+
+      height: $nav-item-height; /* hauteur unifiée */
+      padding: 0 0.9rem; /* padding horizontal uniquement */
+      line-height: 1;
+      border-radius: $nav-item-radius;
+
+      color: #eceff4 !important;
+      font-size: 0.95rem;
+      font-weight: 500;
+      white-space: nowrap;
+      transition:
+        color 0.2s ease,
+        background-color 0.2s ease;
+
+      svg {
+        position: relative;
+        top: -1px;
+      }
+
+      &:hover {
+        color: #fff !important;
+        background-color: $nav-hover-bg;
+      }
+
+      &:focus-visible {
+        outline: 2px solid #0d6efd;
+        outline-offset: 2px;
+        box-shadow: none;
+      }
+    }
+
+    .nav-link {
+      &.active {
+        color: #fff !important;
+        background-color: $nav-active-bg;
+      }
+    }
+
+    .dropdown-toggle {
+      &::after {
+        margin-left: 0.35rem;
+        vertical-align: middle;
+      }
+    }
+
+    /* Surbrillance du bouton "Modules" si une page enfant est active */
+    .nav-item {
+      &.active > .dropdown-toggle,
+      &.active-parent > .dropdown-toggle {
+        color: #fff !important;
+        background-color: $nav-active-bg !important;
+      }
+    }
+  }
+
+  /* Menu dropdown (Modules) — thème sombre */
+  .dropdown-menu {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(26, 28, 32, 0.98);
+    color: #e8eaf0;
+    border-radius: 16px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+    padding: 0.5rem;
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+
+      min-height: $nav-item-height; /* hauteur unifiée */
+      padding: 0 0.9rem; /* même padding horizontal */
+      line-height: 1;
+      border-radius: $nav-item-radius;
+
+      color: #e7eaf0;
+      transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+
+      &:hover,
+      &:focus {
+        background-color: $nav-hover-bg; /* même couleur que About/Contact */
+        color: #fff;
+      }
+
+      &.active,
+      &.active:hover,
+      &:active {
+        background-color: $nav-active-bg !important;
+        color: #fff !important;
+      }
+    }
+  }
+
+  /* Drapeaux (zone droite) */
+  .locale-flags {
+    display: inline-flex;
+    /* ⚠️ pas de margin manuel : l’espacement horizontal vient de `.navbar-nav` */
+    gap: 0; /* pas nécessaire, mais explicite */
+
+    .locale-flag {
+      width: 26px;
+      height: 18px;
+      object-fit: cover;
+      border-radius: 3px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+}
+/* ===========================
+   Auth Nav.Link + panel
+   =========================== */
+
+.auth-link-wrapper {
+  position: relative;
+
+  /* Applique le “contour gris” tant que la souris est
+     sur le bouton OU sur le panel */
+  &:hover .auth-trigger.nav-link {
+    color: #fff !important;
+    background-color: $nav-hover-bg !important;
+  }
+}
+
+.auth-trigger.nav-link {
+  color: #eceff4 !important;
+  background: transparent !important;
+  border-radius: 12px;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+
+  /* Actif en permanence sur /login|/register|/forgot-password */
+  &.active {
+    color: #fff !important;
+    background-color: $nav-active-bg !important;
+  }
+
+  /* Optionnel: garder l’accessibilité sans coller un fond */
+  &:focus-visible {
+    outline: 2px solid #0d6efd;
+    outline-offset: 2px;
+    box-shadow: none;
+  }
+}
+
+.auth-panel-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  transform: translateY(8px);
+  z-index: 1050;
+  min-width: 340px;
+  padding: 0.75rem 0;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  background: #fff;
+  color: #1f2937;
+}

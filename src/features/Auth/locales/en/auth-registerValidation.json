@@ -1,0 +1,93 @@
+{
+  "breadcrumb": {
+    "register": "Register",
+    "success": "Activation success"
+  },
+  "activationSuccess": {
+    "helmet": {
+      "title": "E.N Shop - Activation success",
+      "description": "Your account has been activated"
+    },
+    "hero": {
+      "title": "Account activated successfully!",
+      "subtitle": "Your account has been activated. You can now sign in.",
+      "cta": "Sign in"
+    },
+    "next": {
+      "title": "Next steps",
+      "items": {
+        "dashboard": {
+          "title": "Explore dashboard",
+          "text": "Discover all the features available to you.",
+          "badge": "Recommended",
+          "cta": "Continue"
+        },
+        "profile": {
+          "title": "Complete your profile",
+          "text": "Add your personal information.",
+          "badge": "Optional",
+          "cta": "Start"
+        },
+        "security": {
+          "title": "Secure your account",
+          "text": "Set up two-factor authentication.",
+          "badge": "Security",
+          "cta": "Learn more"
+        }
+      }
+    },
+    "trust": {
+      "text": "Your account is now active and secure.",
+      "badge": "99.9%",
+      "caption": "Availability guaranteed"
+    }
+  },
+  "validation": {
+    "breadcrumb": "Validate account",
+    "helmet": {
+      "verify": {
+        "title": "E.N Shop - Validate your account",
+        "description": "Validate your E.N Shop account"
+      },
+      "invalid": {
+        "title": "E.N Shop - Activation failed",
+        "description": "Invalid activation link for E.N Shop account"
+      }
+    },
+    "pending": "Checking your account...",
+    "invalid": {
+      "title": "Invalid activation link",
+      "text": "This activation link is no longer valid or has expired."
+    },
+    "resend": {
+      "title": "Resend activation email"
+    },
+    "contact": {
+      "title": "Need help?",
+      "text": "If you run into any issues, feel free to contact us.",
+      "cta": "Contact us"
+    },
+    "forms": {
+      "resendActivation": {
+        "email": {
+          "label": "Your email",
+          "placeholder": "you@example.com",
+          "required": "Email is required",
+          "max": "Maximum 100 characters",
+          "invalid": "Invalid email format"
+        },
+        "submit": {
+          "label": "Send me a new link",
+          "busy": "Sending…"
+        },
+        "toast": {
+          "success": "A new activation link has been sent.",
+          "error": "An error occurred while resending the activation email."
+        },
+        "success": {
+          "message": "A new activation link has been sent to <strong>{{email}}</strong>. Please check your inbox."
+        }
+      }
+    }
+  }
+}

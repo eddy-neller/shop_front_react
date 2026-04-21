@@ -1,0 +1,132 @@
+{
+  "helmet": {
+    "home": {
+      "title": "E.N Shop - Tableau de bord",
+      "description": "Tableau de bord utilisateur"
+    },
+    "profile": { "title": "E.N Shop - Profil", "description": "Mon profil" },
+    "editPassword": {
+      "title": "E.N Shop - Modifier le mot de passe",
+      "description": "Modifier le mot de passe"
+    },
+    "avatar": { "title": "E.N Shop - Avatar", "description": "Avatar" }
+  },
+  "breadcrumb": {
+    "dashboard": "Tableau de bord",
+    "profile": "Mon profil",
+    "editPassword": "Modifier le mot de passe",
+    "avatar": "Avatar"
+  },
+  "errorCard": {
+    "title": "Erreur",
+    "description": "Impossible de charger les informations de votre profil. Veuillez réessayer plus tard.",
+    "retry": "Réessayer"
+  },
+  "dashboard": {
+    "welcome": "Bienvenue, {{username}} !",
+    "welcomeBack": "Content de vous revoir",
+    "fallbackUsername": "Utilisateur",
+    "showProfile": "Voir le profil",
+    "admin": {
+      "title": "Administrateur",
+      "text": "Vous avez accès à toutes les fonctionnalités administratives du site."
+    },
+    "moderator": {
+      "title": "Modérateur",
+      "intro": "En tant que modérateur, vous pouvez gérer le contenu du site.",
+      "features": {
+        "delete": "Supprimer du contenu",
+        "rules": "Modérer les règles",
+        "resolve": "Résoudre les conflits"
+      }
+    },
+    "member": {
+      "title": "Membre",
+      "intro": "Bienvenue dans votre espace membre. Profitez de toutes les fonctionnalités disponibles.",
+      "features": {
+        "private": "Accéder aux contenus privés",
+        "profile": "Gérer votre profil"
+      }
+    }
+  },
+  "profileCard": {
+    "email": "Email :",
+    "registered": "Inscrit le :",
+    "lastVisit": "Dernière visite :",
+    "logins": "Connexions :"
+  },
+  "avatar": {
+    "alt": "Avatar de {{username}}"
+  },
+  "roles": {
+    "admin": "Admin",
+    "moderator": "Modérateur",
+    "member": "Membre",
+    "unknown": "Inconnu"
+  },
+  "avatarPage": {
+    "p1": "Un avatar est une petite image qui aide les visiteurs à vous reconnaître facilement. Il doit être carré, d'une taille standard de 96x96 pixels et d'un poids maximum de 200 KB.",
+    "p2": "Dernier point, si l'image contient un contenu pouvant être jugé offensant ou inapproprié pour les visiteurs, l'administrateur se réserve le droit de supprimer l'avatar."
+  },
+  "forms": {
+    "editPassword": {
+      "intro": "Pour mettre à jour votre mot de passe, remplissez les champs ci-dessous. Utilisez un nouveau mot de passe fort.",
+      "current": {
+        "label": "Mot de passe actuel",
+        "placeholder": "Mot de passe actuel",
+        "required": "Le mot de passe actuel est obligatoire",
+        "show": "Afficher le mot de passe actuel",
+        "hide": "Masquer le mot de passe actuel"
+      },
+      "new": {
+        "label": "Nouveau mot de passe",
+        "placeholder": "Choisissez un nouveau mot de passe",
+        "required": "Le nouveau mot de passe est obligatoire",
+        "policy": "8–30 car., avec 1 majuscule, 1 chiffre et 1 spécial : ()!@#$%^&*_-",
+        "hint": "Utilisez un mot de passe fort : 8–30 car., majuscule, chiffre, spécial.",
+        "different": "Le nouveau mot de passe doit être différent de l'actuel",
+        "show": "Afficher le nouveau mot de passe",
+        "hide": "Masquer le nouveau mot de passe"
+      },
+      "confirm": {
+        "label": "Confirmer le nouveau mot de passe",
+        "placeholder": "Confirmez votre nouveau mot de passe",
+        "required": "Veuillez confirmer votre nouveau mot de passe",
+        "mismatch": "Les mots de passe ne correspondent pas",
+        "show": "Afficher la confirmation du nouveau mot de passe",
+        "hide": "Masquer la confirmation du nouveau mot de passe"
+      },
+      "submit": {
+        "label": "Modifier le mot de passe",
+        "busy": "Modification…"
+      },
+      "toast": {
+        "success": "Mot de passe modifié avec succès !",
+        "error": "Une erreur est survenue lors de la mise à jour de votre mot de passe."
+      }
+    },
+    "avatar": {
+      "label": "Fichier image",
+      "required": "Veuillez sélectionner un fichier image",
+      "size": "La taille du fichier doit être inférieure à 200KB",
+      "type": "Seuls les fichiers jpg et png sont autorisés",
+      "hint": "(jpg/png, 96x96px max, 200KB max)",
+      "submit": {
+        "label": "Mettre à jour l'avatar",
+        "busy": "Upload en cours..."
+      },
+      "toast": {
+        "success": "Avatar modifié avec succès !",
+        "error": "Une erreur est survenue lors du téléversement de votre avatar."
+      }
+    }
+  },
+  "userNav": {
+    "menuAria": "Menu utilisateur",
+    "dashboard": "Tableau de bord",
+    "profile": "Profil",
+    "avatar": "Avatar",
+    "password": "Mot de passe",
+    "logout": "Déconnexion"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "title": "À propos",
+  "helmet": {
+    "title": "E.N Shop - À propos",
+    "description": "Découvrez l'histoire de notre boutique en ligne et notre engagement envers la qualité."
+  },
+  "hero": {
+    "title": "À propos",
+    "description": "Découvrez l'histoire de notre boutique en ligne et notre engagement envers la qualité."
+  },
+  "content": {
+    "description": "Nous sommes une boutique en ligne passionnée par la qualité et la satisfaction de nos clients."
+  }
+}
