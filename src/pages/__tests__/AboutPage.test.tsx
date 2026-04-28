@@ -1,13 +1,22 @@
 import { screen } from "@testing-library/react";
-import { renderPage } from "@/utils/tests/renderPage";
+import { renderPage } from "@/lib/utils/tests/renderPage";
 
 describe("AboutPage", () => {
-  it("renders the shop story", () => {
+  it("renders the shop story", async () => {
     renderPage("/about");
 
-    expect(screen.getByRole("heading", { name: /à propos/i })).toBeInTheDocument();
     expect(
-      screen.getByText(/histoire de notre boutique en ligne/i)
+      await screen.findByRole("heading", { level: 1, name: /about/i })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /discover the story of our online store and our commitment to quality/i
+      )
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /we are an online store passionate about quality and customer satisfaction/i
+      )
     ).toBeInTheDocument();
   });
 });

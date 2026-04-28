@@ -22,10 +22,7 @@ export default function UserAvatar({ avatarUrl, username }: UserAvatarProps) {
   return (
     <Avatar className="w-24 h-24 mb-4">
       {fullAvatarUrl ? (
-        <AvatarImage
-          src={fullAvatarUrl}
-          alt={t("avatar.alt", { username })}
-        />
+        <AvatarImage src={fullAvatarUrl} alt={t("avatar.alt", { username })} />
       ) : null}
       <AvatarFallback>
         {initials || <User className="h-8 w-8" />}

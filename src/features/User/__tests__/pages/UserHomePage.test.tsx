@@ -1,31 +1,87 @@
-import { screen, render } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MemoryRouter } from "react-router-dom";
-import UserHomePage from "@/features/User/pages/UserHomePage";
+import { screen, waitFor, within } from "@testing-library/react";
+import { renderPage } from "@/lib/utils/tests/renderPage";
+import rawUser from "@/features/User/__tests__/fixtures/user-admin.json";
+import { User } from "@/features/User/types/user";
+import { useMe } from "@/features/User/hooks/useUser";
+import { expectSpinnerWhileLoading } from "@/lib/utils/tests/base-tests";
+import { Mock } from "vitest";
 
-vi.mock("react-auth-kit/hooks/useAuthUser", () => ({
-  default: () => ({
-    id: "1",
-    username: "venom",
-    email: "venom@example.com",
-    roles: ["ROLE_USER"],
-  }),
+vi.mock("@/features/User/hooks/useUser", () => ({
+  useMe: vi.fn(),
 }));
 
+const mockUseMe = useMe as Mock;
+
 describe("UserHomePage", () => {
-  it("renders the user dashboard", () => {
-    const queryClient = new QueryClient({
-      defaultOptions: { queries: { retry: false }, mutations: { retry: false } },
+  const user: User = rawUser;
+
+  beforeEach(() => {
+    mockUseMe.mockReturnValue({
+      data: user,
+      isPending: false,
+      isError: false,
+    });
+  });
+
+  const setup = () => {
+    renderPage("/user");
+  };
+
+  it("should render the page title in the Helmet", async () => {
+    setup();
+
+    await waitFor(() => {
+      expect(document.title).toBe("E.N Shop - User Dashboard");
+    });
+  });
+
+  it("should set the breadcrumb correctly", async () => {
+    setup();
+
+    const breadcrumbNav = screen.getByRole("navigation", {
+      name: /breadcrumb/i,
+    });
+    expect(breadcrumbNav).toBeInTheDocument();
+
+    const breadcrumbList = within(breadcrumbNav).getByRole("list");
+    expect(breadcrumbList).toBeInTheDocument();
+
+    expect(within(breadcrumbList).getAllByRole("listitem")).toHaveLength(2);
+
+    const activeItem = await within(breadcrumbList).findByRole("link", {
+      name: "Dashboard",
+    });
+    expect(activeItem).toBeInTheDocument();
+    expect(activeItem).toHaveAttribute("aria-current", "page");
+  });
+
+  it("should render the loading spinner while user is loading", async () => {
+    mockUseMe.mockReturnValue({
+      data: null,
+      isPending: true,
+      isError: false,
     });
 
-    render(
-      <MemoryRouter>
-        <QueryClientProvider client={queryClient}>
-          <UserHomePage />
-        </QueryClientProvider>
-      </MemoryRouter>
-    );
+    setup();
 
-    expect(screen.getByText(/venom/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expectSpinnerWhileLoading();
+    });
+  });
+
+  it("displays an error message if data fetching fails", async () => {
+    mockUseMe.mockReturnValue({
+      data: null,
+      isPending: false,
+      isError: true,
+    });
+
+    setup();
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(/unable to load your profile information/i)
+      ).toBeInTheDocument();
+    });
   });
 });

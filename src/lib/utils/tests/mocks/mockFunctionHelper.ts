@@ -3,7 +3,7 @@ import { parseISO, formatDistanceToNow } from "date-fns";
 import { enUS, fr } from "date-fns/locale";
 import { filesize } from "filesize";
 
-vi.mock("@/utils/helper.ts", () => ({
+vi.mock("@/lib/utils/helper.ts", () => ({
   coupeMot: vi.fn((str: string, length: number = 20) => {
     const regex = new RegExp(`([^ ]{${length}})`, "g");
     return str.replace(regex, "$1 ");

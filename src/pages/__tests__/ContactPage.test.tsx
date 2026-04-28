@@ -1,16 +1,25 @@
 import { screen } from "@testing-library/react";
-import { renderPage } from "@/utils/tests/renderPage";
+import { renderPage } from "@/lib/utils/tests/renderPage";
 
 describe("ContactPage", () => {
-  it("renders the contact page and form", () => {
+  it("renders the contact page and form", async () => {
     renderPage("/contact");
 
     expect(
-      screen.getByRole("heading", { name: /contactez-nous/i })
+      await screen.findByRole("heading", { level: 1, name: /contact us/i })
     ).toBeInTheDocument();
-    expect(screen.getByLabelText(/^email$/i)).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /envoyer le message/i })
+      screen.getByText(/feel free to write to us/i)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /contact us/i })
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText(/full name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/^email$/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/subject/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/^message$/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /send message/i })
     ).toBeInTheDocument();
   });
 });

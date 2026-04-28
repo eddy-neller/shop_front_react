@@ -61,6 +61,8 @@ const Spinner: React.FC<SpinnerProps> = ({
         )}
       >
         <ShadcnSpinner
+          role="presentation"
+          aria-hidden="true"
           className="animate-spin"
           style={{
             width: size,

@@ -1,43 +1,93 @@
-import { screen } from "@testing-library/react";
-import { renderPage } from "@/utils/tests/renderPage";
+import { screen, waitFor, within } from "@testing-library/react";
+import { renderPage } from "@/lib/utils/tests/renderPage";
+import rawUser from "@/features/User/__tests__/fixtures/user-admin.json";
+import { User } from "@/features/User/types/user";
+import { useMe } from "@/features/User/hooks/useUser";
+import { expectSpinnerWhileLoading } from "@/lib/utils/tests/base-tests";
+import { Mock } from "vitest";
 
 vi.mock("@/features/User/hooks/useUser", () => ({
-  useMe: () => ({
-    data: {
-      id: "1",
-      firstname: "John",
-      lastname: "Doe",
-      username: "venom",
-      email: "venom@example.com",
-      roles: ["ROLE_USER"],
-      status: 1,
-      dateNaissance: "1990-01-01",
-      ville: "Paris",
-      passion: "Code",
-      travail: "Dev",
-      citation: "Hello",
-      signature: "JD",
-      siteweb: "",
-      avatarUrl: "/uploads/avatar.png",
-      userbarUrl: "",
-      lastVisit: "2026-04-18T12:00:00+00:00",
-      nbLogin: 7,
-      nbForumMessage: 0,
-      nbMessageSent: 0,
-      nbMessageReceived: 0,
-      createdAt: "2026-04-01T12:00:00+00:00",
-      updatedAt: "2026-04-18T12:00:00+00:00",
-    },
-    isPending: false,
-    isError: false,
-  }),
+  useMe: vi.fn(),
 }));
 
-describe("UserAvatarPage", () => {
-  it("renders the avatar instructions and form", () => {
-    renderPage("/user/avatar");
+const mockUseMe = useMe as Mock;
 
-    expect(screen.getByText(/un avatar est une petite image/i)).toBeInTheDocument();
-    expect(screen.getByText(/modifier l'avatar/i)).toBeInTheDocument();
+describe("UserAvatarPage", () => {
+  const user: User = rawUser;
+
+  beforeEach(() => {
+    mockUseMe.mockReturnValue({
+      data: user,
+      isLoading: false,
+      isError: false,
+    });
+  });
+
+  const setup = () => {
+    renderPage("/user/avatar");
+  };
+
+  it("should render the page title in the Helmet", async () => {
+    setup();
+
+    await waitFor(() => {
+      expect(document.title).toBe("E.N Shop - User Avatar");
+    });
+  });
+
+  it("should set the breadcrumb correctly", async () => {
+    setup();
+
+    const breadcrumbNav = screen.getByRole("navigation", {
+      name: /breadcrumb/i,
+    });
+    expect(breadcrumbNav).toBeInTheDocument();
+
+    const breadcrumbList = within(breadcrumbNav).getByRole("list");
+    expect(breadcrumbList).toBeInTheDocument();
+
+    expect(within(breadcrumbList).getAllByRole("listitem")).toHaveLength(3);
+
+    const activeItem = await within(breadcrumbList).findByRole("link", {
+      name: "Avatar",
+    });
+    expect(activeItem).toBeInTheDocument();
+    expect(activeItem).toHaveAttribute("aria-current", "page");
+  });
+
+  it("should render the loading spinner while user is loading", async () => {
+    mockUseMe.mockReturnValue({
+      data: null,
+      isPending: true,
+      isError: false,
+    });
+
+    setup();
+
+    await waitFor(() => {
+      expectSpinnerWhileLoading();
+    });
+  });
+
+  it("displays an error message if data fetching fails", async () => {
+    mockUseMe.mockReturnValue({
+      data: null,
+      isPending: false,
+      isError: true,
+    });
+
+    setup();
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(/unable to load your profile information/i)
+      ).toBeInTheDocument();
+    });
+  });
+
+  it("renders the avatar instructions", () => {
+    setup();
+
+    expect(screen.getByText(/an avatar is a small image/i)).toBeInTheDocument();
   });
 });

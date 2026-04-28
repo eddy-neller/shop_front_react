@@ -61,6 +61,7 @@ export default function RegisterPage() {
                     {/* Boutons SSO */}
                     <div className="grid gap-2 mb-4">
                       <Button
+                        type="button"
                         variant="outline"
                         className="w-full font-semibold flex items-center justify-center"
                       >
@@ -77,6 +78,7 @@ export default function RegisterPage() {
                         {t("sso.google")}
                       </Button>
                       <Button
+                        type="button"
                         variant="outline"
                         className="w-full font-semibold flex items-center justify-center"
                       >
@@ -90,6 +92,7 @@ export default function RegisterPage() {
                         {t("sso.facebook")}
                       </Button>
                       <Button
+                        type="button"
                         variant="outline"
                         className="w-full font-semibold flex items-center justify-center"
                       >

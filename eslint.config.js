@@ -3,13 +3,16 @@ import js from "@eslint/js";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 import pluginReact from "eslint-plugin-react";
+import pluginReactHooks from "eslint-plugin-react-hooks";
 
 export default defineConfig([
   {
     ignores: [
       "coverage",
+      "dist",
       "node_modules",
       "build",
+      "tailwind.config.ts",
       "vite.config.ts",
       "vitest.config.ts",
     ],
@@ -18,7 +21,7 @@ export default defineConfig([
   tseslint.configs.recommended,
   {
     files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
-    plugins: { js, react: pluginReact },
+    plugins: { js, react: pluginReact, "react-hooks": pluginReactHooks },
     languageOptions: {
       globals: globals.browser,
       parserOptions: {

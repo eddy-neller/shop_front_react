@@ -1,5 +1,5 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import ScrollToTop from "@/components/layout/ScrollToTop";
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/layout/Header";
@@ -57,9 +57,9 @@ function MainLayout() {
                 </BreadcrumbLink>
               </BreadcrumbItem>
               {breadcrumbItems.map((item) => (
-                <>
-                  <BreadcrumbSeparator key={`sep-${item.key}`} />
-                  <BreadcrumbItem key={item.key}>
+                <Fragment key={item.key}>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
                     {item.active ? (
                       <BreadcrumbPage>{item.title}</BreadcrumbPage>
                     ) : (
@@ -73,7 +73,7 @@ function MainLayout() {
                       </BreadcrumbLink>
                     )}
                   </BreadcrumbItem>
-                </>
+                </Fragment>
               ))}
             </BreadcrumbList>
           </Breadcrumb>

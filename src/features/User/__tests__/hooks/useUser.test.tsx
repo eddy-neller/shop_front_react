@@ -15,9 +15,13 @@ const mockGetUser = getUser as Mock;
 describe("useUser", () => {
   const user: User = rawUser;
 
-  const setup = (id: string) => {
+  const setup = (id?: string) => {
     return renderHookTest({ hook: () => useUser(id) });
   };
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
 
   it("should return data successfully", async () => {
     mockGetUser.mockResolvedValueOnce(user);
@@ -42,5 +46,16 @@ describe("useUser", () => {
     expect(result.current.error).toEqual(apiError);
 
     expect(getUser).toHaveBeenCalledWith(user.id);
+  });
+
+  it("should return an error when refetching without id", async () => {
+    const { result } = setup();
+
+    result.current.refetch();
+
+    await waitFor(() => expect(result.current.isError).toBe(true));
+
+    expect(result.current.error).toEqual(new Error("ID not found."));
+    expect(getUser).not.toHaveBeenCalled();
   });
 });

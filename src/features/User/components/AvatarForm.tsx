@@ -38,9 +38,6 @@ export default function AvatarForm() {
   const mutation = useMutation({
     mutationFn: async (data: AvatarFormData) => {
       const avatarFile = data.avatarFile[0];
-      if (!avatarFile) {
-        throw new Error(t("forms.avatar.required"));
-      }
       return updateAvatar(avatarFile);
     },
     onSuccess: () => {

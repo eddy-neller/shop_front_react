@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   CheckCircle,
   Mail,
@@ -20,31 +20,15 @@ export default function ForgotPasswordSuccessPage() {
   const { setBreadcrumbItems } = useBreadcrumb();
   const { t } = useTranslation("auth-forgotPassword");
   const navigate = useNavigate();
-  const [email, setEmail] = useState<string | null>(null);
-  const hasChecked = useRef(false);
+  const location = useLocation();
+
+  const email = (location.state as { email?: string } | null)?.email ?? null;
 
   useEffect(() => {
-    if (hasChecked.current) return;
-    hasChecked.current = true;
-
-    // Récupérer l'email depuis sessionStorage
-    const checkValidation = () => {
-      if (typeof window !== "undefined") {
-        const storedEmail = sessionStorage.getItem("forgotPasswordEmail");
-        if (storedEmail) {
-          setEmail(storedEmail);
-          sessionStorage.removeItem("forgotPasswordEmail");
-        } else {
-          navigate("/forgot-password", { replace: true });
-        }
-      }
-    };
-
-    // Utiliser requestAnimationFrame pour s'assurer que le DOM est prêt
-    requestAnimationFrame(() => {
-      requestAnimationFrame(checkValidation);
-    });
-  }, [navigate]);
+    if (!email) {
+      navigate("/forgot-password", { replace: true });
+    }
+  }, [navigate, email]);
 
   useEffect(() => {
     setBreadcrumbItems([
@@ -74,6 +58,7 @@ export default function ForgotPasswordSuccessPage() {
           content={t("forgot.success.helmet.description")}
         />
       </Helmet>
+
       <div className="bg-gray-50 min-h-screen">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">

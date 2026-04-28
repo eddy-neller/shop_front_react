@@ -54,18 +54,18 @@
         "description": "Invalid activation link for E.N Shop account"
       }
     },
-    "pending": "Checking your account...",
+    "pending": "Validating your activation link…",
     "invalid": {
-      "title": "Invalid activation link",
-      "text": "This activation link is no longer valid or has expired."
+      "title": "Activation failed",
+      "text": "This activation link is invalid or has expired."
     },
     "resend": {
-      "title": "Resend activation email"
+      "title": "Resend activation link"
     },
     "contact": {
-      "title": "Need help?",
-      "text": "If you run into any issues, feel free to contact us.",
-      "cta": "Contact us"
+      "title": "Contact us",
+      "text": "Stuck? Our team can manually activate your account or help troubleshoot.",
+      "cta": "Email support"
     },
     "forms": {
       "resendActivation": {

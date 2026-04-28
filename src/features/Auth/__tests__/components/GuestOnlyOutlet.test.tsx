@@ -1,6 +1,6 @@
-import "@/utils/tests/mocks/mockAuthHelper";
+import "@/lib/utils/tests/mocks/mockAuthHelper";
 import { screen } from "@testing-library/react";
-import { renderComponentQuery } from "@/utils/tests/renderComponent";
+import { renderComponentQuery } from "@/lib/utils/tests/renderComponent";
 import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
 import GuestOnlyOutlet from "@/features/Auth/components/GuestOnlyOutlet";
 import { Mock, vi } from "vitest";

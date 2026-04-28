@@ -49,7 +49,6 @@ export default function ResetPasswordPage() {
     } else {
       setIsTokenValid(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [noToken, token]);
 
   // Afficher la vérification
@@ -77,6 +76,7 @@ export default function ResetPasswordPage() {
                 <CardContent className="p-8">
                   {mutation.isPending && (
                     <div
+                      role="status"
                       className="text-center"
                       aria-live="polite"
                       aria-busy="true"
@@ -262,8 +262,13 @@ export default function ResetPasswordPage() {
                       <div className="text-sm text-muted-foreground">
                         <strong>
                           {t("resetPassword.requirements.tip.title")}
-                        </strong>{" "}
-                        {t("resetPassword.requirements.tip.message")}
+                        </strong>
+                        <p className="mt-1">
+                          {t("resetPassword.requirements.tip.message1")}
+                        </p>
+                        <p className="mt-1">
+                          {t("resetPassword.requirements.tip.message2")}
+                        </p>
                       </div>
                     </div>
                   </CardContent>

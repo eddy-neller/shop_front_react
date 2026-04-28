@@ -1,33 +1,65 @@
+import "@/lib/utils/tests/mocks/mockRouterHelper";
 import { screen } from "@testing-library/react";
-import { render } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MemoryRouter } from "react-router-dom";
 import UserDashboard from "@/features/User/components/UserDashboard";
-
-vi.mock("react-auth-kit/hooks/useAuthUser", () => ({
-  default: () => ({
-    id: "1",
-    username: "venom",
-    email: "venom@example.com",
-    roles: ["ROLE_ADMIN"],
-  }),
-}));
+import { renderComponentAbility } from "@/lib/utils/tests/renderComponent";
+import { UserType } from "@/lib/utils/tests/userTypes";
+import rawUser from "@/features/User/__tests__/fixtures/user-admin.json";
+import { User } from "@/features/User/types/user";
 
 describe("UserDashboard", () => {
-  it("renders the dashboard for an authenticated user", () => {
-    const queryClient = new QueryClient({
-      defaultOptions: { queries: { retry: false }, mutations: { retry: false } },
-    });
+  const user: User = rawUser;
 
-    render(
-      <MemoryRouter>
-        <QueryClientProvider client={queryClient}>
-          <UserDashboard />
-        </QueryClientProvider>
-      </MemoryRouter>
-    );
+  const setup = (typeUser?: UserType) => {
+    renderComponentAbility(<UserDashboard user={user} />, typeUser);
+  };
 
-    expect(screen.getByText(/administrateur/i)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /voir le profil/i })).toHaveAttribute("href", "/user/profile");
+  it("renders admin content for admin", () => {
+    setup("UserAdmin");
+
+    expect(screen.getByText(/Administrator/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Moderator/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Member/i)).not.toBeInTheDocument();
+  });
+
+  it("renders moderator content for moderators", () => {
+    setup("UserModer");
+
+    expect(
+      screen.getByRole("heading", { name: /Moderator/i })
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("heading", { name: /Administrator/i })
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("heading", { name: /Member/i })
+    ).not.toBeInTheDocument();
+  });
+
+  it("renders member content for members", () => {
+    setup("UserMember");
+
+    expect(
+      screen.getByRole("heading", { name: /Member/i })
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("heading", { name: /Administrator/i })
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("heading", { name: /Moderator/i })
+    ).not.toBeInTheDocument();
+  });
+
+  it("renders nothing for users without any permissions", () => {
+    setup(undefined);
+
+    expect(
+      screen.queryByRole("heading", { name: /Administrator/i })
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("heading", { name: /Moderator/i })
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("heading", { name: /Member/i })
+    ).not.toBeInTheDocument();
   });
 });

@@ -9,13 +9,9 @@ import { useTranslation } from "react-i18next";
 
 interface UserProfileCardProps {
   user: User;
-  isPrivate?: boolean;
 }
 
-export default function UserProfileCard({
-  user,
-  isPrivate = false,
-}: UserProfileCardProps) {
+export default function UserProfileCard({ user }: UserProfileCardProps) {
   const { t, i18n } = useTranslation("user");
   const dateLocale = i18n.language.startsWith("fr") ? "fr-FR" : "en-US";
   const formattedUser = useMemo(
@@ -46,45 +42,36 @@ export default function UserProfileCard({
 
           {/* Colonne droite */}
           <div className="md:col-span-2 space-y-4">
-            {isPrivate && (
-              <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4 text-muted-foreground" />
-                <span className="font-semibold">{t("profileCard.email")}</span>
-                <a
-                  href={`mailto:${user.email}`}
-                  className="text-primary hover:underline"
-                >
-                  {user.email}
-                </a>
+            <div className="flex items-center gap-2">
+              <Mail className="h-4 w-4 text-muted-foreground" />
+              <span className="font-semibold">{t("profileCard.email")}</span>
+              <a
+                href={`mailto:${user.email}`}
+                className="text-primary hover:underline"
+              >
+                {user.email}
+              </a>
+            </div>
+            <div className="space-y-2 pt-2 border-t">
+              <div>
+                <span className="font-semibold">
+                  {t("profileCard.registered")}
+                </span>{" "}
+                {formatDate(user.createdAt, dateLocale, true)}
               </div>
-            )}
-
-            {isPrivate && (
-              <>
-                <div className="space-y-2 pt-2 border-t">
-                  <div>
-                    <span className="font-semibold">
-                      {t("profileCard.registered")}
-                    </span>{" "}
-                    {formatDate(user.createdAt, dateLocale, true)}
-                  </div>
-                  <div>
-                    <span className="font-semibold">
-                      {t("profileCard.lastVisit")}
-                    </span>{" "}
-                    {formatDate(user.lastVisit, dateLocale, true)}
-                  </div>
-                </div>
-                <div className="space-y-2 pt-2 border-t">
-                  <div>
-                    <span className="font-semibold">
-                      {t("profileCard.logins")}
-                    </span>{" "}
-                    {user.nbLogin}
-                  </div>
-                </div>
-              </>
-            )}
+              <div>
+                <span className="font-semibold">
+                  {t("profileCard.lastVisit")}
+                </span>{" "}
+                {formatDate(user.lastVisit, dateLocale, true)}
+              </div>
+            </div>
+            <div className="space-y-2 pt-2 border-t">
+              <div>
+                <span className="font-semibold">{t("profileCard.logins")}</span>{" "}
+                {user.nbLogin}
+              </div>
+            </div>
           </div>
         </div>
       </CardContent>

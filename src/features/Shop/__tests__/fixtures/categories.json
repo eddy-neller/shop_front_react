@@ -1,0 +1,62 @@
+[
+  {
+    "id": "9542748f-33b9-4fd5-81b2-67497e90645b",
+    "title": "Cremin PLC",
+    "description": "",
+    "nbProduct": 4,
+    "slug": "cremin-plc",
+    "children": [
+      {
+        "id": "a385d47e-f6a2-48cd-9024-ec0364d655ed",
+        "title": "Ritchie-Zboncak",
+        "description": "",
+        "nbProduct": 4,
+        "slug": "ritchie-zboncak",
+        "parent": "/shop/categories/9542748f-33b9-4fd5-81b2-67497e90645b",
+        "children": [],
+        "createdAt": "2025-01-14T04:06:10+01:00"
+      },
+      {
+        "id": "4616f36d-9da9-46db-a58b-d3287e2fe141",
+        "title": "Schowalter-McClure",
+        "description": "",
+        "nbProduct": 6,
+        "slug": "schowalter-mcclure",
+        "parent": "/shop/categories/9542748f-33b9-4fd5-81b2-67497e90645b",
+        "children": [],
+        "createdAt": "2025-01-14T04:06:10+01:00"
+      }
+    ],
+    "createdAt": "2025-01-14T04:06:10+01:00"
+  },
+  {
+    "id": "dc3e072e-b97f-4940-a3d6-22a89a1554f6",
+    "title": "Hodkiewicz, DuBuque and Cole",
+    "description": "",
+    "nbProduct": 7,
+    "slug": "hodkiewicz-dubuque-and-cole",
+    "children": [
+      {
+        "id": "7e78c557-2fa8-4c8f-8c09-7c39c2697a21",
+        "title": "McKenzie, McGlynn and Senger",
+        "description": "",
+        "nbProduct": 4,
+        "slug": "mckenzie-mcglynn-and-senger",
+        "parent": "/shop/categories/dc3e072e-b97f-4940-a3d6-22a89a1554f6",
+        "children": [],
+        "createdAt": "2025-01-14T04:06:10+01:00"
+      },
+      {
+        "id": "e287d49b-5daa-4809-8828-102584a28e98",
+        "title": "Cremin, Runte and Kunde",
+        "description": "",
+        "nbProduct": 4,
+        "slug": "cremin-runte-and-kunde",
+        "parent": "/shop/categories/dc3e072e-b97f-4940-a3d6-22a89a1554f6",
+        "children": [],
+        "createdAt": "2025-01-14T04:06:10+01:00"
+      }
+    ],
+    "createdAt": "2025-01-14T04:06:10+01:00"
+  }
+]

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CheckCircle, Mail, Clock, LogIn } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,20 +12,14 @@ export default function RegisterSuccessPage() {
   const { setBreadcrumbItems } = useBreadcrumb();
   const { t } = useTranslation("auth-register");
   const navigate = useNavigate();
-  const [email, setEmail] = useState<string | null>(null);
+  const location = useLocation();
+  const email = (location.state as { email?: string } | null)?.email ?? null;
 
   useEffect(() => {
-    // Récupérer l'email depuis sessionStorage
-    if (typeof window !== "undefined") {
-      const storedEmail = sessionStorage.getItem("registerEmail");
-      if (storedEmail) {
-        setEmail(storedEmail);
-        sessionStorage.removeItem("registerEmail");
-      } else {
-        navigate("/register", { replace: true });
-      }
+    if (!email) {
+      navigate("/register", { replace: true });
     }
-  }, [navigate]);
+  }, [navigate, email]);
 
   useEffect(() => {
     setBreadcrumbItems([
@@ -45,10 +39,10 @@ export default function RegisterSuccessPage() {
   return (
     <>
       <Helmet>
-        <title>{t("forms.registerSuccess.helmet.title")}</title>
+        <title>{t("registerSuccess.helmet.title")}</title>
         <meta
           name="description"
-          content={t("forms.registerSuccess.helmet.description")}
+          content={t("registerSuccess.helmet.description")}
         />
       </Helmet>
 

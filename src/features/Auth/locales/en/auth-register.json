@@ -4,7 +4,7 @@
     "success": "Success"
   },
   "hero": {
-    "title": "Create account",
+    "title": "Create your account",
     "description": {
       "prefix": "Join",
       "brand": "E.N Shop",
@@ -22,35 +22,35 @@
     "signIn": "Sign in"
   },
   "trust": {
-    "secure": "Secure",
-    "nospam": "No spam"
+    "secure": "Secure by default",
+    "nospam": "No spam • Cancel anytime"
   },
   "whyJoin": {
     "title": "Why join?",
     "items": {
       "onboarding": {
-        "title": "Fast onboarding",
+        "title": "Faster onboarding",
         "text": "Get started in minutes with our streamlined onboarding process."
       },
       "practices": {
-        "title": "Best practices",
+        "title": "Built-in best practices",
         "text": "Benefit from years of experience and proven best practices."
       },
       "security": {
-        "title": "Security",
+        "title": "Security first",
         "text": "Your data is protected with the latest security technologies."
       }
     }
   },
   "stats": {
-    "uptime": "Availability",
-    "percentage": "99.9%",
-    "caption": "Uptime guarantee"
+    "uptime": "Uptime last 30d",
+    "percentage": "99.98%",
+    "caption": "SOC2-ready • GDPR-friendly"
   },
   "forms": {
     "register": {
       "helmet": {
-        "title": "E.N Shop - Register",
+        "title": "E.N Shop - Create account",
         "description": "Create an account"
       },
       "email": {
@@ -99,29 +99,29 @@
   },
   "registerSuccess": {
     "helmet": {
-      "title": "E.N Shop - Registration successful",
+      "title": "E.N Shop - Account created",
       "description": "Your activation link has been sent"
     },
     "subtitle": "We've sent you an activation link.",
     "hero": {
-      "title": "Registration successful!",
-      "subtitlePrefix": "A confirmation email has been sent to"
+      "title": "Account created",
+      "subtitlePrefix": "We've sent you an activation link to"
     },
     "steps": {
       "mail": {
-        "title": "Open your inbox",
-        "text": "and click the confirmation link to activate your account."
+        "title": "Open the email",
+        "text": "and click the link to validate your address."
       },
       "expiry": {
-        "prefix": "The confirmation link is valid for",
-        "highlight": "24 hours",
+        "prefix": "The activation link is valid for",
+        "highlight": "48 hours",
         "suffix": ". After that, you will need to request a new link."
       }
     },
     "alert": {
       "title": "Important:",
-      "message": "You must activate your account before you can sign in."
+      "message": "Please activate your account before signing in."
     },
-    "cta": "Go to the sign-in page"
+    "cta": "Go to sign in"
   }
 }

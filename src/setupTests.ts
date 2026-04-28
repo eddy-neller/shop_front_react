@@ -3,6 +3,7 @@ import { beforeEach, afterEach, vi } from "vitest";
 import { cleanup } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import { configure as domConfigure } from "@testing-library/dom";
+import i18n from "@/i18n";
 
 globalThis.React = React;
 
@@ -10,15 +11,35 @@ beforeEach(() => {
   vi.clearAllMocks();
 });
 
+beforeEach(async () => {
+  localStorage.setItem("i18nextLng", "en");
+  await i18n.changeLanguage("en");
+});
+
 afterEach(() => {
   cleanup();
 });
 
 // Mock global scrollTo for jsdom environment
-global.scrollTo = vi.fn();
+globalThis.scrollTo = vi.fn();
 
 // Mock global URL.createObjectURL for previewing in tests
-global.URL.createObjectURL = vi.fn(() => "mocked-image-url");
+globalThis.URL.createObjectURL = vi.fn(() => "mocked-image-url");
+
+// Mock window.matchMedia for components that read media preferences in jsdom
+Object.defineProperty(window, "matchMedia", {
+  writable: true,
+  value: vi.fn().mockImplementation((query: string) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  })),
+});
 
 // Supprimer totalement le dump du DOM
 domConfigure({

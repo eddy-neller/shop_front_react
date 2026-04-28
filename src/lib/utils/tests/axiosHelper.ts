@@ -1,5 +1,5 @@
 // tests/utils/axiosHelper.ts
-import { Violation } from "@/utils/axiosErrorHandler";
+import { Violation } from "@/lib/utils/axiosErrorHandler";
 import { AxiosError, AxiosHeaders, AxiosResponse } from "axios";
 
 // --- helpers internes sûrs pour axios v1 ---

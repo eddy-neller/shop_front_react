@@ -2,7 +2,7 @@ import "@/lib/utils/tests/mocks/mockAuthHelper";
 import "@/i18n";
 import { render } from "@testing-library/react";
 import { AbilityContext } from "@/contexts/AbilityContext";
-import { defineAbilityFor } from "@/utils/ability";
+import { defineAbilityFor } from "@/lib/utils/ability";
 import { UserType, userMap } from "@/lib/utils/tests/userTypes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { User } from "@/features/User/types/user";

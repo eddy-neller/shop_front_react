@@ -30,7 +30,7 @@ export default function RegisterValidationPage() {
       if (typeof window !== "undefined") {
         sessionStorage.setItem("registerValidationSuccess", "true");
       }
-      navigate("/register/validation/success");
+      navigate("/register/validation/success", { state: {} });
     },
     onError: () => {
       setIsTokenInvalid(true);
@@ -59,7 +59,6 @@ export default function RegisterValidationPage() {
     } else {
       mutation.mutate({ token } as ValidateActivationPayload);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [noToken, token]);
 
   // Afficher le loading
@@ -87,6 +86,7 @@ export default function RegisterValidationPage() {
                 <CardContent className="p-8">
                   {mutation.isPending && (
                     <div
+                      role="status"
                       className="text-center"
                       aria-live="polite"
                       aria-busy="true"

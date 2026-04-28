@@ -20,7 +20,7 @@ import { cn } from "@/lib/utils";
 import type { AuthUser } from "@/features/User/types/user";
 import { useTranslation } from "react-i18next";
 
-export default function UserNav() {
+const UserNav = () => {
   const location = useLocation();
   const authUser = useAuthUser<AuthUser | null>();
   const { logout } = useLogout();
@@ -29,7 +29,7 @@ export default function UserNav() {
 
   if (!authUser) return null;
 
-  const username = authUser.username || authUser.email;
+  const username = authUser.username;
 
   const USER_PATHS = [
     "/user",
@@ -121,4 +121,6 @@ export default function UserNav() {
       </Popover>
     </div>
   );
-}
+};
+
+export default UserNav;

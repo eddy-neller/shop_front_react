@@ -18,10 +18,6 @@ export enum SubjectType {
   ADMIN_CONTENT = "AdminContent",
   MODERATOR_CONTENT = "ModeratorContent",
   MEMBER_CONTENT = "MemberContent",
-  NEWS_COMMENT = "NewsComment",
-  FORUM_SUJET = "ForumSujet",
-  FORUM_MESSAGE = "ForumMessage",
-  PARTNER = "Partner",
 }
 
 // Définition d'interfaces pour chaque type de subject
@@ -37,35 +33,11 @@ export interface MemberContent {
   type: SubjectType.MEMBER_CONTENT;
 }
 
-export interface NewsComment {
-  type: SubjectType.NEWS_COMMENT;
-  user: { id: string };
-}
-
-export interface ForumSujet {
-  type: SubjectType.FORUM_SUJET;
-  user: { id: string };
-}
-
-export interface ForumMessage {
-  type: SubjectType.FORUM_MESSAGE;
-  user: { id: string };
-}
-
-export interface Partner {
-  type: SubjectType.PARTNER;
-  user: { id: string };
-}
-
 // Type union pour tous les subjects
 export type AppSubject =
   | AdminContent
   | ModeratorContent
   | MemberContent
-  | NewsComment
-  | ForumSujet
-  | ForumMessage
-  | Partner
   | SubjectType; // On garde aussi les strings pour la compatibilité
 
 // Type pour l'ability
@@ -94,27 +66,17 @@ type PermissionDefinition = (
 ) => void;
 
 const ROLE_PERMISSIONS: Record<Role, PermissionDefinition> = {
-  [Role.USER]: (can, user) => {
+  [Role.USER]: (can) => {
     can(Action.READ, SubjectType.MEMBER_CONTENT);
-    can(Action.CREATE, SubjectType.NEWS_COMMENT);
-    can(Action.UPDATE, SubjectType.NEWS_COMMENT, { "user.id": user.id });
-    can(Action.CREATE, SubjectType.FORUM_SUJET);
-    can(Action.CREATE, SubjectType.FORUM_MESSAGE);
-    can(Action.UPDATE, SubjectType.FORUM_MESSAGE, { "user.id": user.id });
-    can(Action.UPDATE, SubjectType.FORUM_SUJET, { "user.id": user.id });
-    can(Action.CREATE, SubjectType.PARTNER);
+    can(Action.CREATE, SubjectType.MEMBER_CONTENT);
   },
   [Role.MODERATEUR]: (can) => {
     can(Action.READ, SubjectType.MODERATOR_CONTENT);
-    can([Action.UPDATE, Action.DELETE], SubjectType.NEWS_COMMENT);
-    can([Action.UPDATE, Action.DELETE], SubjectType.FORUM_MESSAGE);
-    can(
-      [Action.UPDATE, Action.DELETE, Action.MODERATE],
-      SubjectType.FORUM_SUJET
-    );
+    can(Action.CREATE, SubjectType.MODERATOR_CONTENT);
   },
   [Role.ADMIN]: (can) => {
     can(Action.READ, SubjectType.ADMIN_CONTENT);
+    can(Action.CREATE, SubjectType.ADMIN_CONTENT);
   },
 };
 

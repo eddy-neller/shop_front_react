@@ -8,20 +8,19 @@ interface UserRoleProps {
 export default function UserRole({ roles }: UserRoleProps) {
   const { t } = useTranslation("user");
 
-  if (!roles || roles.length === 0) {
-    return null;
-  }
-
   const getRoleInfo = () => {
-    if (roles.includes("ROLE_ADMIN")) {
-      return { label: t("roles.admin"), color: "red" };
+    if (roles && roles.length > 0) {
+      if (roles.includes("ROLE_ADMIN")) {
+        return { label: t("roles.admin"), color: "red" };
+      }
+      if (roles.includes("ROLE_MODERATEUR")) {
+        return { label: t("roles.moderator"), color: "blue" };
+      }
+      if (roles.includes("ROLE_USER")) {
+        return { label: t("roles.member"), color: "green" };
+      }
     }
-    if (roles.includes("ROLE_MODERATEUR")) {
-      return { label: t("roles.moderator"), color: "blue" };
-    }
-    if (roles.includes("ROLE_USER")) {
-      return { label: t("roles.member"), color: "green" };
-    }
+
     return { label: t("roles.unknown"), color: "gray" };
   };
 

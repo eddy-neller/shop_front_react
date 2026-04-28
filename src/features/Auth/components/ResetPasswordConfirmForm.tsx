@@ -107,6 +107,9 @@ export default function ResetPasswordConfirmForm({
           <AlertDescription className="text-sm">
             {t("forms.resetConfirm.success.message")}
           </AlertDescription>
+          <AlertDescription className="mt-2 text-xs text-muted-foreground">
+            {t("forms.resetConfirm.success.redirecting")}
+          </AlertDescription>
         </div>
       </Alert>
     );

@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CheckCircle, ArrowRight, IdCard, Shield, Gauge } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,34 +12,15 @@ export default function RegisterValidationSuccessPage() {
   const { setBreadcrumbItems } = useBreadcrumb();
   const { t } = useTranslation("auth-registerValidation");
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const [isValid, setIsValid] = useState<boolean | null>(null);
-  const hasChecked = useRef(false);
+  const isValid = location.state !== null && location.state !== undefined;
 
   useEffect(() => {
-    if (hasChecked.current) return;
-    hasChecked.current = true;
-
-    // Récupérer le flag depuis sessionStorage
-    const checkValidation = () => {
-      if (typeof window !== "undefined") {
-        const validationSuccess = sessionStorage.getItem(
-          "registerValidationSuccess"
-        );
-        if (validationSuccess) {
-          setIsValid(true);
-          sessionStorage.removeItem("registerValidationSuccess");
-        } else {
-          navigate("/register", { replace: true });
-        }
-      }
-    };
-
-    // Utiliser requestAnimationFrame pour s'assurer que le DOM est prêt
-    requestAnimationFrame(() => {
-      requestAnimationFrame(checkValidation);
-    });
-  }, [navigate]);
+    if (!isValid) {
+      navigate("/register", { replace: true });
+    }
+  }, [navigate, isValid]);
 
   useEffect(() => {
     setBreadcrumbItems([
@@ -56,8 +37,7 @@ export default function RegisterValidationSuccessPage() {
     ]);
   }, [setBreadcrumbItems, t]);
 
-  // Ne rien afficher tant qu'on n'a pas vérifié le flag
-  if (isValid === null) {
+  if (!isValid) {
     return null;
   }
 

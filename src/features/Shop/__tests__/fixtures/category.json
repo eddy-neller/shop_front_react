@@ -1,0 +1,20 @@
+{
+  "id": "37d113d7-d8d6-4bcb-bc9d-4e74ffd8ec56",
+  "title": "Feest and Sons",
+  "description": "Fugiat nam voluptate repudiandae officia maxime ut et. Dicta voluptatem laborum veniam ipsa.",
+  "nbImage": 2,
+  "slug": "feest-and-sons",
+  "parent": {
+    "id": "a9b9b2fe-7e16-47f1-a68d-113dd97f9de5",
+    "title": "Fay, Zemlak and Toy",
+    "description": "Nihil nulla voluptatibus sit eius. Expedita deserunt porro exercitationem facilis voluptatem. Minus hic excepturi est reprehenderit possimus.",
+    "nbImage": 7,
+    "slug": "fay-zemlak-and-toy",
+    "children": [],
+    "createdAt": "2025-01-14T04:06:10+01:00",
+    "updatedAt": "2025-01-14T04:07:05+01:00"
+  },
+  "children": [],
+  "createdAt": "2025-01-14T04:06:10+01:00",
+  "updatedAt": "2025-01-14T04:07:05+01:00"
+}

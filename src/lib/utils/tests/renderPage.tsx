@@ -14,7 +14,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AppRoutes from "@/routes";
 import { UserType, userMap } from "@/lib/utils/tests/userTypes";
 import { AbilityContext } from "@/contexts/AbilityContext";
-import { defineAbilityFor } from "@/utils/ability";
+import { defineAbilityFor } from "@/lib/utils/ability";
 import { User } from "@/features/User/types/user";
 
 const queryClient = new QueryClient({
