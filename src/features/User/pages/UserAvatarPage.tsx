@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Spinner from "@/components/Spinner";
 
-export default function UserAvatarPage() {
+const UserAvatarPage = () => {
   const { setBreadcrumbItems } = useBreadcrumb();
   const { t } = useTranslation("user");
 
@@ -71,4 +71,6 @@ export default function UserAvatarPage() {
       </div>
     </>
   );
-}
+};
+
+export default UserAvatarPage;

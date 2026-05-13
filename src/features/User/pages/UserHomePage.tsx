@@ -7,7 +7,7 @@ import Spinner from "@/components/Spinner";
 import UserErrorCard from "@/features/User/components/UserErrorCard";
 import { useMe } from "@/features/User/hooks/useUser";
 
-export default function UserHomePage() {
+const UserHomePage = () => {
   const { setBreadcrumbItems } = useBreadcrumb();
   const { t } = useTranslation("user");
 
@@ -36,4 +36,6 @@ export default function UserHomePage() {
       </div>
     </>
   );
-}
+};
+
+export default UserHomePage;

@@ -18,7 +18,7 @@ describe("UserProfilePage", () => {
   beforeEach(() => {
     mockUseMe.mockReturnValue({
       data: user,
-      isLoading: false,
+      isPending: false,
       isError: false,
     });
   });

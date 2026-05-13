@@ -13,7 +13,6 @@ vi.mock("@/features/Auth/hooks/useLogin", () => ({
   useLogin: vi.fn(() => ({
     login: loginSpy,
     isPending: false,
-    isLoading: false,
     isError: false,
     error: null,
   })),
@@ -199,7 +198,6 @@ describe("LoginForm", () => {
       mockUseLogin.mockImplementation(() => ({
         login: loginSpy,
         isPending: false,
-        isLoading: false,
         isError: false,
         error: null,
       }));
@@ -209,7 +207,6 @@ describe("LoginForm", () => {
       mockUseLogin.mockReturnValue({
         login: loginSpy,
         isPending: true,
-        isLoading: true,
         isError: false,
         error: null,
       });
@@ -223,7 +220,6 @@ describe("LoginForm", () => {
       mockUseLogin.mockReturnValue({
         login: loginSpy,
         isPending: true,
-        isLoading: true,
         isError: false,
         error: null,
       });

@@ -1,3 +1,5 @@
+import { ShopCategory } from "@/features/Shop/types/shop";
+
 export type CategoryContextType = {
   setSelectedCategoryId: (id: string | null) => void;
   selectedCategoryId: string | null;
@@ -6,17 +8,15 @@ export type CategoryContextType = {
 export interface BaseCategory {
   id: string;
   title: string;
-  children: BaseCategory[];
-  count?: number;
-  nbImage?: number;
-  nbSong?: number;
+  hasChildren: boolean;
+  children?: BaseCategory[];
 }
 
-export type CategoryTree = BaseCategory;
+export type CategoryTree = ShopCategory;
 
 export const extractData = (category: CategoryTree) => ({
   id: category.id,
   title: category.title,
-  children: category.children,
-  count: category.count ?? category.nbImage ?? category.nbSong ?? 0,
+  hasChildren: category.hasChildren,
+  count: category.nbProduct ?? 0,
 });

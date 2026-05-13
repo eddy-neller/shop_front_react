@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 
-export default function UserEditPasswordPage() {
+const UserEditPasswordPage = () => {
   const { setBreadcrumbItems } = useBreadcrumb();
   const { t } = useTranslation("user");
 
@@ -40,4 +40,6 @@ export default function UserEditPasswordPage() {
       </div>
     </>
   );
-}
+};
+
+export default UserEditPasswordPage;

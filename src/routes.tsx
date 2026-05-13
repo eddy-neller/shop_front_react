@@ -18,12 +18,19 @@ import UserHomePage from "@/features/User/pages/UserHomePage";
 import UserProfilePage from "@/features/User/pages/UserProfilePage";
 import UserEditPasswordPage from "@/features/User/pages/UserEditPasswordPage";
 import UserAvatarPage from "@/features/User/pages/UserAvatarPage";
+import ShopLayout from "@/features/Shop/layouts/ShopLayout";
+import CatalogHomePage from "@/features/Shop/pages/CatalogHomePage";
+import ProductDetailPage from "@/features/Shop/pages/ProductDetailPage";
 
 const AppRoutes = (
   <Route path="/" element={<MainLayout />}>
     <Route index element={<HomePage />} />
     <Route path="about" element={<AboutPage />} />
     <Route path="contact" element={<ContactPage />} />
+    <Route path="products" element={<ShopLayout />}>
+      <Route index element={<CatalogHomePage />} />
+      <Route path=":id" element={<ProductDetailPage />} />
+    </Route>
 
     <Route element={<GuestOnlyOutlet fallbackPath="/user" />}>
       <Route path="register">

@@ -1,0 +1,41 @@
+{
+  "title": "Products",
+  "helmet": {
+    "products": {
+      "title": "Products | E.N Shop",
+      "description": "Browse products by category."
+    },
+    "detail": {
+      "title": "{{title}} | E.N Shop"
+    }
+  },
+  "page": {
+    "selectCategory": "Select a category to browse the product catalog."
+  },
+  "category": {
+    "productCount_one": "{{count}} product",
+    "productCount_other": "{{count}} products",
+    "level": "Category level {{level}}"
+  },
+  "products": {
+    "empty": "No products found in this category.",
+    "regionLabel": "Products",
+    "total_one": "{{count}} product",
+    "total_other": "{{count}} products",
+    "view": "View {{title}}",
+    "addToCart": "Add to cart"
+  },
+  "detail": {
+    "breadcrumb": "Product",
+    "backToProducts": "Back to products"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "errors": {
+    "loadCategories": "Unable to load product categories.",
+    "loadData": "Unable to load this category products.",
+    "loadProduct": "Unable to load this product."
+  }
+}

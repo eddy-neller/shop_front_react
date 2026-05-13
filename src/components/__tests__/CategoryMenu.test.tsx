@@ -7,7 +7,7 @@ import type { CategoryTree } from "@/lib/utils/category-tree";
 import { renderComponentQuery } from "@/lib/utils/tests/renderComponent";
 
 const mockRawCategories = vi.fn();
-const mockGetCategory = vi.fn();
+const mockGetCategoryChildren = vi.fn();
 const mockContext = vi.fn();
 const mockSetSelectedCategoryId = vi.fn();
 
@@ -29,7 +29,7 @@ describe("CategoryMenu", () => {
     renderComponentQuery(
       <CategoryMenu
         rawCategories={mockRawCategories()}
-        getCategory={mockGetCategory}
+        getCategoryChildren={mockGetCategoryChildren}
         context={mockContext}
       />
     );
@@ -82,29 +82,26 @@ describe("CategoryMenu", () => {
     expect(parentElement).toHaveClass("active");
   });
 
-  it("loads, sorts and renders child categories when a category is expanded once", async () => {
+  it("loads and renders child categories when a category is expanded once", async () => {
     const parentCategory = shopCategories[0];
-    const categoryWithChildren: CategoryTree = {
-      id: parentCategory.id,
-      title: parentCategory.title,
-      count: 12,
-      children: [
-        {
-          id: "child-zulu",
-          title: "Zulu Cases",
-          count: 9,
-          children: [],
-        },
-        {
-          id: "child-alpha",
-          title: "Alpha Accessories",
-          count: 3,
-          children: [],
-        },
-      ],
-    };
+    const childCategories: CategoryTree[] = [
+      {
+        id: "child-zulu",
+        title: "Zulu Cases",
+        slug: "zulu-cases",
+        nbProduct: 9,
+        hasChildren: true,
+      },
+      {
+        id: "child-alpha",
+        title: "Alpha Accessories",
+        slug: "alpha-accessories",
+        nbProduct: 3,
+        hasChildren: false,
+      },
+    ];
 
-    mockGetCategory.mockResolvedValue(categoryWithChildren);
+    mockGetCategoryChildren.mockResolvedValue(childCategories);
     setup();
 
     const expandButton = screen.getByRole("button", {
@@ -114,7 +111,7 @@ describe("CategoryMenu", () => {
     await userEvent.click(expandButton);
 
     await waitFor(() => {
-      expect(mockGetCategory).toHaveBeenCalledWith(parentCategory.id);
+      expect(mockGetCategoryChildren).toHaveBeenCalledWith(parentCategory.id);
       expect(
         screen.getByRole("button", { name: /select category child-alpha/i })
       ).toBeInTheDocument();
@@ -134,22 +131,22 @@ describe("CategoryMenu", () => {
     expect(zuluCategory).toHaveTextContent("Zulu Cases");
     expect(screen.getByText("3")).toBeInTheDocument();
     expect(screen.getByText("9")).toBeInTheDocument();
+    await userEvent.click(
+      screen.getByRole("button", {
+        name: new RegExp(`expand category ${parentCategory.id}`, "i"),
+      })
+    );
+    await userEvent.click(
+      screen.getByRole("button", {
+        name: new RegExp(`expand category ${parentCategory.id}`, "i"),
+      })
+    );
+
+    expect(mockGetCategoryChildren).toHaveBeenCalledTimes(1);
     expect(
-      alphaCategory.compareDocumentPosition(zuluCategory) &
-        Node.DOCUMENT_POSITION_FOLLOWING
-    ).toBeTruthy();
-
-    await userEvent.click(
       screen.getByRole("button", {
-        name: new RegExp(`expand category ${parentCategory.id}`, "i"),
+        name: /expand category child-zulu/i,
       })
-    );
-    await userEvent.click(
-      screen.getByRole("button", {
-        name: new RegExp(`expand category ${parentCategory.id}`, "i"),
-      })
-    );
-
-    expect(mockGetCategory).toHaveBeenCalledTimes(1);
+    ).toBeInTheDocument();
   });
 });

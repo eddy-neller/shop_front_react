@@ -50,6 +50,10 @@ under `src`.
 - `npm run test-ui`: open the Vitest UI.
 - `npm run prepare`: initialize Husky hooks after install.
 
+Do not run `npm run build` while implementing a new frontend feature. During
+feature work, use `npm run lint` and focused Vitest commands instead; reserve
+the production build for explicit verification requests.
+
 Useful focused test examples:
 
 ```bash

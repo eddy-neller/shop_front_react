@@ -19,13 +19,13 @@ type CategoryNode = NodeModel<{ count: number }>;
 
 interface CategoryMenuProps {
   rawCategories: CategoryTree[];
-  getCategory: (id: string) => Promise<CategoryTree>;
+  getCategoryChildren: (id: string) => Promise<CategoryTree[]>;
   context: () => CategoryContextType;
 }
 
 const CategoryMenu: React.FC<CategoryMenuProps> = ({
   rawCategories,
-  getCategory,
+  getCategoryChildren,
   context,
 }) => {
   const { t } = useTranslation("common");
@@ -36,12 +36,12 @@ const CategoryMenu: React.FC<CategoryMenuProps> = ({
   useEffect(() => {
     const transformedCategories = rawCategories.map(
       (category: CategoryTree) => {
-        const { id, title, children, count } = extractData(category);
+        const { id, title, hasChildren, count } = extractData(category);
         return {
           id,
           text: truncate(coupeMot(title, 15), 25),
           parent: 0,
-          droppable: children.length > 0,
+          droppable: hasChildren,
           data: { count },
         };
       }
@@ -50,16 +50,16 @@ const CategoryMenu: React.FC<CategoryMenuProps> = ({
   }, [rawCategories]);
 
   const loadChildrenMutation = useMutation({
-    mutationFn: (parentId: string) => getCategory(parentId),
-    onSuccess: (category: CategoryTree, variables: string) => {
-      const newChildren = extractData(category)
-        .children.map((child: CategoryTree) => {
-          const { id, title, children, count } = extractData(child);
+    mutationFn: (parentId: string) => getCategoryChildren(parentId),
+    onSuccess: (children: CategoryTree[], variables: string) => {
+      const newChildren = children
+        .map((child: CategoryTree) => {
+          const { id, title, hasChildren, count } = extractData(child);
           return {
             id,
             text: truncate(coupeMot(title, 15), 25),
             parent: variables,
-            droppable: children.length > 0,
+            droppable: hasChildren,
             data: { count },
           };
         })
@@ -67,7 +67,15 @@ const CategoryMenu: React.FC<CategoryMenuProps> = ({
           a.text.localeCompare(b.text)
         );
 
-      setCategories((prevCategories) => [...prevCategories, ...newChildren]);
+      setCategories((prevCategories) => [
+        ...prevCategories,
+        ...newChildren.filter(
+          (child) =>
+            !prevCategories.some(
+              (category) => String(category.id) === String(child.id)
+            )
+        ),
+      ]);
       setExpandedNodes((prev) => new Set(prev).add(String(variables)));
     },
   });
@@ -84,16 +92,16 @@ const CategoryMenu: React.FC<CategoryMenuProps> = ({
 
   return (
     <Card>
-      <CardHeader className="flex-row items-center gap-2 p-4">
-        <FaList />
-        <b>{t("categoryMenu.title")}</b>
+      <CardHeader className="flex-row items-center gap-2 space-y-0 p-4">
+        <FaList className="shrink-0" aria-hidden="true" />
+        <b className="leading-none">{t("categoryMenu.title")}</b>
       </CardHeader>
       <CardContent className="py-2 pl-2 pr-4">
         <DndProvider backend={MultiBackend} options={getBackendOptions()}>
           <Tree
             tree={categories}
             rootId={0}
-            sort={false}
+            sort
             onDrop={() => {}}
             classes={{
               container: "tree-list",
@@ -134,7 +142,7 @@ const CategoryMenu: React.FC<CategoryMenuProps> = ({
                       {node.text}
                     </button>
                   </div>
-                  <Badge variant="secondary" className="rounded-full">
+                  <Badge variant="default" className="rounded-full">
                     {node.data?.count}
                   </Badge>
                 </div>

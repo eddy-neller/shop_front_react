@@ -80,6 +80,17 @@ const formatDate = (
   return new Date(date).toLocaleDateString(locale, options || defaultOptions);
 };
 
+const formatPrice = (
+  price: number,
+  locale: string,
+  currency: string = "EUR"
+): string => {
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency,
+  }).format(price);
+};
+
 export {
   truncate,
   diffForHumans,
@@ -87,4 +98,5 @@ export {
   coupeMot,
   formatFileSize,
   formatDate,
+  formatPrice,
 };
