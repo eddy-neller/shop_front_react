@@ -18,16 +18,17 @@ import UserHomePage from "@/features/User/pages/UserHomePage";
 import UserProfilePage from "@/features/User/pages/UserProfilePage";
 import UserEditPasswordPage from "@/features/User/pages/UserEditPasswordPage";
 import UserAvatarPage from "@/features/User/pages/UserAvatarPage";
-import ShopLayout from "@/features/Shop/layouts/ShopLayout";
-import CatalogHomePage from "@/features/Shop/pages/CatalogHomePage";
-import ProductDetailPage from "@/features/Shop/pages/ProductDetailPage";
+import CatalogLayout from "@/features/Shop/layouts/CatalogLayout";
+import CatalogHomePage from "@/features/Shop/pages/Catalog/CatalogHomePage";
+import ProductDetailPage from "@/features/Shop/pages/Catalog/ProductDetailPage";
+import UserAddressesPage from "@/features/Shop/pages/Address/UserAddressesPage";
 
 const AppRoutes = (
   <Route path="/" element={<MainLayout />}>
     <Route index element={<HomePage />} />
     <Route path="about" element={<AboutPage />} />
     <Route path="contact" element={<ContactPage />} />
-    <Route path="products" element={<ShopLayout />}>
+    <Route path="products" element={<CatalogLayout />}>
       <Route index element={<CatalogHomePage />} />
       <Route path=":id" element={<ProductDetailPage />} />
     </Route>
@@ -56,6 +57,7 @@ const AppRoutes = (
         <Route path="profile" element={<UserProfilePage />} />
         <Route path="password" element={<UserEditPasswordPage />} />
         <Route path="avatar" element={<UserAvatarPage />} />
+        <Route path="addresses" element={<UserAddressesPage />} />
       </Route>
     </Route>
 

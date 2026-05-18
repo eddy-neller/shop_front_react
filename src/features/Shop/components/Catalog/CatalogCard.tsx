@@ -1,21 +1,21 @@
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 import Spinner from "@/components/Spinner";
-import CategoryCard from "@/features/Shop/components/CategoryCard";
-import Products from "@/features/Shop/components/Products";
-import { useShopData } from "@/features/Shop/hooks/useShop";
+import CategoryCard from "@/features/Shop/components/Catalog/CategoryCard";
+import Products from "@/features/Shop/components/Catalog/Products";
+import { useCatalogData } from "@/features/Shop/hooks/useCatalog";
 import ErrorLoadingCard from "@/components/ErrorLoadingCard";
 
-interface ShopCardProps {
+interface CatalogCardProps {
   selectedCategoryId: string;
 }
 
-export default function ShopCard({ selectedCategoryId }: ShopCardProps) {
-  const { t } = useTranslation("shop");
+export default function CatalogCard({ selectedCategoryId }: CatalogCardProps) {
+  const { t } = useTranslation("catalog");
   const [searchParams, setSearchParams] = useSearchParams();
   const parsedPage = Number(searchParams.get("page"));
   const page = Number.isInteger(parsedPage) && parsedPage > 0 ? parsedPage : 1;
-  const { category, products, isPending, isError } = useShopData(
+  const { category, products, isPending, isError } = useCatalogData(
     selectedCategoryId,
     page
   );

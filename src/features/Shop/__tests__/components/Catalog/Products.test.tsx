@@ -2,9 +2,9 @@ import type { ComponentProps } from "react";
 import { MemoryRouter } from "react-router-dom";
 import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Products from "@/features/Shop/components/Products";
+import Products from "@/features/Shop/components/Catalog/Products";
 import rawProducts from "@/features/Shop/__tests__/fixtures/products.json";
-import type { ShopProductSummary } from "@/features/Shop/types/shop";
+import type { ShopProductSummary } from "@/features/Shop/types/catalog";
 import { renderComponentQuery } from "@/lib/utils/tests/renderComponent";
 
 describe("Products", () => {

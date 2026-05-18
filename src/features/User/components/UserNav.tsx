@@ -8,6 +8,7 @@ import {
   UserCircle,
   LogOut,
   ChevronDown,
+  MapPin,
 } from "lucide-react";
 import {
   Popover,
@@ -36,6 +37,7 @@ const UserNav = () => {
     "/user/profile",
     "/user/avatar",
     "/user/password",
+    "/user/addresses",
   ];
   const isAuthActive = USER_PATHS.some((p) => location.pathname.startsWith(p));
 
@@ -87,6 +89,14 @@ const UserNav = () => {
             >
               <CreditCard className="h-4 w-4" />
               {t("userNav.profile")}
+            </Link>
+            <Link
+              to="/user/addresses"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2 px-2 py-1.5 text-sm rounded-sm hover:bg-accent transition-colors"
+            >
+              <MapPin className="h-4 w-4" />
+              {t("userNav.addresses")}
             </Link>
             <Separator className="my-1" />
             <Link

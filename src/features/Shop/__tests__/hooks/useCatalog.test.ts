@@ -6,8 +6,8 @@ import {
   useCategories,
   useProduct,
   useProducts,
-  useShopData,
-} from "@/features/Shop/hooks/useShop";
+  useCatalogData,
+} from "@/features/Shop/hooks/useCatalog";
 import {
   getCategories,
   getCategory,
@@ -23,7 +23,7 @@ import type {
   ShopCategory,
   ShopProductDetail,
   ShopProductSummary,
-} from "@/features/Shop/types/shop";
+} from "@/features/Shop/types/catalog";
 
 vi.mock("@/features/Shop/lib/api/catalog", () => ({
   getCategories: vi.fn(),
@@ -37,7 +37,7 @@ const mockGetCategory = getCategory as Mock;
 const mockGetProduct = getProduct as Mock;
 const mockGetProducts = getProducts as Mock;
 
-describe("useShop hooks", () => {
+describe("useCatalog hooks", () => {
   const category = rawCategory as ShopCategory;
   const categories = rawCategories as ShopCategory[];
   const product = rawProduct as ShopProductDetail;
@@ -148,13 +148,13 @@ describe("useShop hooks", () => {
     });
   });
 
-  describe("useShopData", () => {
+  describe("useCatalogData", () => {
     it("loads category and products", async () => {
       mockGetCategory.mockResolvedValueOnce(category);
       mockGetProducts.mockResolvedValueOnce(products);
 
       const { result } = renderHookTest({
-        hook: () => useShopData(category.id, 2),
+        hook: () => useCatalogData(category.id, 2),
       });
 
       await waitFor(() => expect(result.current.isPending).toBe(false));

@@ -199,6 +199,219 @@ Import them at the **top of the test file** to apply their `vi.mock(...)` side e
 
 `src/lib/utils/tests/userTypes.ts` exposes `userMap: { UserAdmin, UserModer, UserMember }` backed by the JSON fixtures in `src/features/User/__tests__/fixtures/`. Pass `"UserAdmin" | "UserModer" | "UserMember"` to the render helpers to get the corresponding ability + auth state. There's also `user-member-empty.json` for the "minimal-data" case.
 
+### Test Generation Conventions (mandatory — base every generated test on this)
+
+All generated tests **must** follow these conventions, derived from the existing test suite. Do not invent patterns not listed here.
+
+#### File structure and import order
+
+Imports must appear in this exact order — mock side-effect imports first, then everything else:
+
+```typescript
+// 1. Mock side-effect imports (must precede component imports so vi.mock hoisting works)
+import "@/lib/utils/tests/mocks/mockAuthHelper";
+import "@/lib/utils/tests/mocks/mockRouterHelper";
+import "@/lib/utils/tests/mocks/mockToastHelper";
+import "@/lib/utils/tests/mocks/mockFunctionHelper"; // only when testing date/string formatters
+
+// 2. Named exports from mock helpers (after the side-effect import of the same file)
+import { signIn, signOut } from "@/lib/utils/tests/mocks/mockAuthHelper";
+import { navigate, toast } from "@/lib/utils/tests/mocks/mockToastHelper";
+
+// 3. Testing library + vitest
+import { screen, waitFor, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { vi, type Mock } from "vitest";
+
+// 4. Render helpers
+import { renderPage } from "@/lib/utils/tests/renderPage";
+import { renderComponentQuery, renderComponentAbility } from "@/lib/utils/tests/renderComponent";
+import { renderHookTest } from "@/lib/utils/tests/renderHook";
+
+// 5. Axios builders
+import { makeAxiosResponse, makeAxiosError, makeValidationError422 } from "@/lib/utils/tests/axiosHelper";
+
+// 6. Fixtures and types
+import rawUser from "@/features/User/__tests__/fixtures/user-admin.json";
+import type { User } from "@/features/User/types/user";
+
+// 7. vi.mock declarations (module mocks hoisted by Vitest)
+vi.mock("@/features/Shop/lib/api/addresses", () => ({
+  getAddresses: vi.fn(),
+}));
+
+// 8. Subject under test
+import { ComponentOrHook } from "@/features/...";
+```
+
+#### Choosing the right render helper
+
+| Scenario | Helper |
+|---|---|
+| Full page with routing, breadcrumb, Helmet | `renderPage(path, userType?)` |
+| Component using `useQuery` / `useMutation` | `renderComponentQuery(<Component />)` |
+| Component using `<Can>` or `useAbility()` | `renderComponentAbility(<Component />, userType?)` |
+| Custom hook (React Query or standalone) | `renderHookTest({ hook: () => useMyHook() })` |
+
+Never build providers manually — always use the helpers above.
+
+#### Setup function pattern
+
+Every `describe` block exposes a local `setup()` function. Render once per test, never share render state across tests:
+
+```typescript
+describe("ComponentName", () => {
+  const setup = (overrides?: Partial<Props>) => {
+    return renderComponentQuery(<Component {...overrides} />);
+  };
+
+  it("should render correctly", () => {
+    setup();
+    expect(screen.getByRole("heading", { name: /title/i })).toBeInTheDocument();
+  });
+});
+```
+
+#### Mock patterns
+
+**API functions**: cast the import to `Mock` at the top of the describe block, then use `mockResolvedValueOnce` / `mockRejectedValueOnce` per test:
+
+```typescript
+import { getAddresses } from "@/features/Shop/lib/api/addresses";
+const mockGetAddresses = getAddresses as Mock;
+
+it("loads addresses", async () => {
+  mockGetAddresses.mockResolvedValueOnce(makeAxiosResponse(addresses));
+  // ...
+});
+```
+
+**Hook returns**: mock hooks with `mockReturnValue` in `beforeEach`, then override per test:
+
+```typescript
+import { useMe } from "@/features/User/hooks/useMe";
+vi.mock("@/features/User/hooks/useMe");
+
+beforeEach(() => {
+  vi.mocked(useMe).mockReturnValue({ data: user, isPending: false, isError: false });
+});
+```
+
+**spyOn**: use `vi.spyOn` only for methods on already-constructed objects (e.g. `queryClient`, `i18n`). Never spyOn a module function that could be mocked with `vi.mock`.
+
+#### Assertions and selectors
+
+Prefer selectors in this priority order: ARIA role → label → placeholder → visible text → `data-testid` (last resort).
+
+```typescript
+// ✅ preferred
+screen.getByRole("button", { name: /sign in/i });
+screen.getByLabelText(/email address/i);
+screen.getByPlaceholderText(/name@example\.com/i);
+
+// ✅ async variants
+await screen.findByRole("alert");
+await waitFor(() => expect(result.current.isSuccess).toBe(true));
+
+// ⚠️ last resort
+screen.getByTestId("my-element");
+```
+
+Use `within(container)` when multiple identical elements exist in the DOM:
+
+```typescript
+const nav = screen.getByRole("navigation", { name: /breadcrumb/i });
+expect(within(nav).getByRole("link", { name: "Home" })).toBeInTheDocument();
+```
+
+#### Async interactions
+
+Always set up `userEvent` before rendering:
+
+```typescript
+it("submits the form", async () => {
+  const user = userEvent.setup();
+  setup();
+
+  await user.type(screen.getByLabelText(/email/i), "test@example.com");
+  await user.click(screen.getByRole("button", { name: /submit/i }));
+
+  await waitFor(() => {
+    expect(mockSubmit).toHaveBeenCalledWith({ email: "test@example.com" });
+  });
+});
+```
+
+#### Testing React Query hooks
+
+```typescript
+describe("useAddresses", () => {
+  const setup = () => renderHookTest({ hook: () => useAddresses() });
+
+  it("returns addresses on success", async () => {
+    mockGetAddresses.mockResolvedValueOnce(makeAxiosResponse(addresses));
+    const { result } = setup();
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    expect(result.current.data).toEqual(addresses);
+  });
+
+  it("invalidates cache on mutation", async () => {
+    mockCreateAddress.mockResolvedValueOnce(makeAxiosResponse(newAddress));
+    const { result, queryClient } = renderHookTest({ hook: () => useCreateAddress() });
+    const invalidateSpy = vi.spyOn(queryClient, "invalidateQueries");
+
+    result.current.mutate(payload);
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+
+    expect(invalidateSpy).toHaveBeenCalledWith(
+      expect.objectContaining({ queryKey: expect.arrayContaining(["shop", "addresses"]) })
+    );
+  });
+});
+```
+
+#### Fixtures
+
+Store test data as JSON in `src/features/<Feature>/__tests__/fixtures/`. Type-cast on import — never inline large objects in test files:
+
+```typescript
+import rawAddresses from "@/features/Shop/__tests__/fixtures/addresses.json";
+import type { Address } from "@/features/Shop/types/address";
+const addresses = rawAddresses as Address[];
+```
+
+#### Describe / it naming
+
+- `describe`: component or hook name, exactly as exported (`"AddressForm"`, `"useAddresses"`). Nest with a topic string for grouping (`"validation"`, `"on success"`, `"loading state"`).
+- `it`: starts with `"should"` + present-tense verb. Always in **English**.
+
+```typescript
+describe("AddressForm", () => {
+  describe("validation", () => {
+    it("should show required field errors on empty submission", async () => { ... });
+    it("should accept a valid address", async () => { ... });
+  });
+  describe("on submit error", () => {
+    it("should map 422 violations onto form fields", async () => { ... });
+    it("should display a toast on 500 error", async () => { ... });
+  });
+});
+```
+
+#### What to cover per file type
+
+| File type | Minimum coverage |
+|---|---|
+| Page component | renders without crashing; Helmet title; breadcrumb items; loading state (spinner); error state; happy-path data display |
+| Form component | renders fields; client-side validation errors; successful submission (API called with correct payload, toast shown, navigation triggered); 422 violations mapped to fields; loading button disabled while submitting |
+| Hook (query) | success path; error path; correct query key used |
+| Hook (mutation) | success path (correct API called, cache invalidated / refetched); error path (toast or `setError`); loading state |
+| Non-form component | renders given props; conditional rendering branches |
+
+#### Reusable test utilities
+
+`src/lib/utils/tests/base-tests.ts` exposes helpers like `expectSpinnerWhileLoading()`. Use them instead of duplicating the same assertions across files.
+
 ## Code Conventions
 
 - **TypeScript strict** + `noUnusedLocals` + `noUnusedParameters` + `noUncheckedSideEffectImports`. The build will fail on dead code or unused parameters — prefix unused args with `_` only when truly intentional.
@@ -207,6 +420,7 @@ Import them at the **top of the test file** to apply their `vi.mock(...)` side e
 - **File / symbol naming**: `PascalCase` for components and pages (`LoginForm.tsx`, `UserHomePage.tsx`), `camelCase` for hooks/utils (`useLogin.ts`, `format.ts`). Schema factories are `createXxxSchema`, types are `XxxFormData = z.infer<...>`.
 - **Imports**: always `@/` absolute. Group order in practice: external libs, then `@/...`.
 - **Locale of comments and toasts**: French (this is the project's working language; commit messages and runtime UI strings are bilingual via i18n, but inline comments are predominantly French).
+- **Test titles** (`describe` / `it` strings): always in **English**. This matches the existing test suite and keeps output readable in CI regardless of locale.
 
 ## Common Patterns
 

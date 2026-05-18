@@ -1,0 +1,98 @@
+{
+  "helmet": {
+    "title": "E.N Shop - Mes adresses",
+    "description": "Gérer mes adresses"
+  },
+  "breadcrumb": {
+    "dashboard": "Tableau de bord",
+    "addresses": "Mes adresses"
+  },
+  "page": {
+    "title": "Mes adresses",
+    "description": "Gérez les adresses liées à votre compte.",
+    "add": "Ajouter une adresse",
+    "cancel": "Annuler",
+    "emptyTitle": "Aucune adresse",
+    "emptyDescription": "Ajoutez une adresse pour accélérer vos prochaines commandes.",
+    "errorTitle": "Impossible de charger vos adresses",
+    "errorDescription": "Veuillez réessayer plus tard."
+  },
+  "card": {
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "confirmDelete": "Supprimer cette adresse ?",
+    "company": "Entreprise",
+    "phone": "Téléphone"
+  },
+  "form": {
+    "createTitle": "Nouvelle adresse",
+    "editTitle": "Modifier l'adresse",
+    "submitCreate": "Créer l'adresse",
+    "submitEdit": "Enregistrer",
+    "busyCreate": "Création...",
+    "busyEdit": "Enregistrement...",
+    "fields": {
+      "name": {
+        "label": "Libellé",
+        "placeholder": "Maison",
+        "required": "Le libellé est obligatoire",
+        "min": "Le libellé doit contenir au moins 2 caractères"
+      },
+      "firstname": {
+        "label": "Prénom",
+        "placeholder": "Jean",
+        "required": "Le prénom est obligatoire",
+        "min": "Le prénom doit contenir au moins 2 caractères"
+      },
+      "lastname": {
+        "label": "Nom",
+        "placeholder": "Dupont",
+        "required": "Le nom est obligatoire",
+        "min": "Le nom doit contenir au moins 2 caractères"
+      },
+      "company": {
+        "label": "Entreprise",
+        "placeholder": "Nom de l'entreprise",
+        "max": "L'entreprise doit contenir au maximum 50 caractères"
+      },
+      "address": {
+        "label": "Adresse",
+        "placeholder": "12 rue de la Paix",
+        "required": "L'adresse est obligatoire",
+        "min": "L'adresse doit contenir au moins 2 caractères"
+      },
+      "zip": {
+        "label": "Code postal",
+        "placeholder": "75001",
+        "required": "Le code postal est obligatoire",
+        "min": "Le code postal doit contenir au moins 2 caractères"
+      },
+      "city": {
+        "label": "Ville",
+        "placeholder": "Paris",
+        "required": "La ville est obligatoire",
+        "min": "La ville doit contenir au moins 2 caractères"
+      },
+      "country": {
+        "label": "Pays",
+        "placeholder": "France",
+        "required": "Le pays est obligatoire",
+        "min": "Le pays doit contenir au moins 2 caractères"
+      },
+      "phone": {
+        "label": "Téléphone",
+        "placeholder": "+33 1 23 45 67 89",
+        "required": "Le téléphone est obligatoire",
+        "min": "Le téléphone doit contenir au moins 2 caractères"
+      }
+    },
+    "toast": {
+      "created": "Adresse créée avec succès.",
+      "updated": "Adresse modifiée avec succès.",
+      "deleted": "Adresse supprimée avec succès.",
+      "createError": "Impossible de créer cette adresse.",
+      "updateError": "Impossible de modifier cette adresse.",
+      "deleteError": "Impossible de supprimer cette adresse."
+    }
+  }
+}

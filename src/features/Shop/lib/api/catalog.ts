@@ -6,7 +6,7 @@ import type {
   ShopCategory,
   ShopProductDetail,
   ShopProductSummary,
-} from "@/features/Shop/types/shop";
+} from "@/features/Shop/types/catalog";
 
 const DEFAULT_TOTAL_PAGES = 1;
 

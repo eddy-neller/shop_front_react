@@ -1,10 +1,13 @@
 import { MemoryRouter, useLocation } from "react-router-dom";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ShopProvider, useShop } from "@/features/Shop/contexts/ShopContext";
+import {
+  CatalogProvider,
+  useCatalog,
+} from "@/features/Shop/contexts/CatalogContext";
 
-function ShopContextProbe() {
-  const { selectedCategoryId, setSelectedCategoryId } = useShop();
+function CatalogContextProbe() {
+  const { selectedCategoryId, setSelectedCategoryId } = useCatalog();
   const location = useLocation();
 
   return (
@@ -21,19 +24,19 @@ function ShopContextProbe() {
   );
 }
 
-function renderShopProvider(path = "/products") {
+function renderCatalogProvider(path = "/products") {
   return render(
     <MemoryRouter initialEntries={[path]}>
-      <ShopProvider>
-        <ShopContextProbe />
-      </ShopProvider>
+      <CatalogProvider>
+        <CatalogContextProbe />
+      </CatalogProvider>
     </MemoryRouter>
   );
 }
 
-describe("ShopContext", () => {
+describe("CatalogContext", () => {
   it("uses the category from the URL search params", () => {
-    renderShopProvider("/products?cat=category-1&page=2");
+    renderCatalogProvider("/products?cat=category-1&page=2");
 
     expect(
       screen.getByText("Selected category: category-1")
@@ -41,7 +44,7 @@ describe("ShopContext", () => {
   });
 
   it("updates the category URL param and resets pagination", async () => {
-    renderShopProvider("/products?cat=category-1&page=2");
+    renderCatalogProvider("/products?cat=category-1&page=2");
 
     await userEvent.click(
       screen.getByRole("button", { name: "Select category" })
@@ -52,7 +55,7 @@ describe("ShopContext", () => {
   });
 
   it("clears category and pagination URL params", async () => {
-    renderShopProvider("/products?cat=category-1&page=2");
+    renderCatalogProvider("/products?cat=category-1&page=2");
 
     await userEvent.click(
       screen.getByRole("button", { name: "Clear category" })

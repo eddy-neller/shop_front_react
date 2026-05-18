@@ -16,7 +16,7 @@ import type {
   ShopCategory,
   ShopProductDetail,
   ShopProductSummary,
-} from "@/features/Shop/types/shop";
+} from "@/features/Shop/types/catalog";
 
 vi.mock("@/lib/api/httpClient", () => ({
   default: {

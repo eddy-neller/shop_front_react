@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useTranslation } from "react-i18next";
-import type { Product } from "@/features/Shop/types/shop";
+import type { Product } from "@/features/Shop/types/catalog";
 
 export default function HomePage() {
   const { t } = useTranslation("home");

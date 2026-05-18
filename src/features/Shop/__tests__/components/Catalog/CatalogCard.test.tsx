@@ -1,19 +1,19 @@
 import { MemoryRouter, useLocation } from "react-router-dom";
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import ShopCard from "@/features/Shop/components/ShopCard";
-import { useShopData } from "@/features/Shop/hooks/useShop";
+import CatalogCard from "@/features/Shop/components/Catalog/CatalogCard";
+import { useCatalogData } from "@/features/Shop/hooks/useCatalog";
 import categoryFixture from "@/features/Shop/__tests__/fixtures/category.json";
 import productsFixture from "@/features/Shop/__tests__/fixtures/products.json";
 import type {
   PaginatedResult,
   ShopCategory,
   ShopProductSummary,
-} from "@/features/Shop/types/shop";
+} from "@/features/Shop/types/catalog";
 import { renderComponentQuery } from "@/lib/utils/tests/renderComponent";
 
-vi.mock("@/features/Shop/hooks/useShop", () => ({
-  useShopData: vi.fn(),
+vi.mock("@/features/Shop/hooks/useCatalog", () => ({
+  useCatalogData: vi.fn(),
 }));
 
 vi.mock("@/components/Spinner", () => ({
@@ -27,13 +27,13 @@ vi.mock("@/components/ErrorLoadingCard", () => ({
   ),
 }));
 
-vi.mock("@/features/Shop/components/CategoryCard", () => ({
+vi.mock("@/features/Shop/components/Catalog/CategoryCard", () => ({
   default: ({ category }: { category: ShopCategory }) => (
     <div>{category.title}</div>
   ),
 }));
 
-vi.mock("@/features/Shop/components/Products", () => ({
+vi.mock("@/features/Shop/components/Catalog/Products", () => ({
   default: ({
     page,
     onPageChange,
@@ -53,7 +53,7 @@ vi.mock("@/features/Shop/components/Products", () => ({
   ),
 }));
 
-const mockUseShopData = vi.mocked(useShopData);
+const mockUseCatalogData = vi.mocked(useCatalogData);
 
 function LocationProbe() {
   const location = useLocation();
@@ -61,19 +61,19 @@ function LocationProbe() {
   return <div data-testid="location">{location.search}</div>;
 }
 
-function renderShopCard(path = "/products") {
+function renderCatalogCard(path = "/products") {
   return renderComponentQuery(
     <MemoryRouter initialEntries={[path]}>
-      <ShopCard selectedCategoryId="category-1" />
+      <CatalogCard selectedCategoryId="category-1" />
       <LocationProbe />
     </MemoryRouter>
   );
 }
 
-describe("ShopCard", () => {
+describe("CatalogCard", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    mockUseShopData.mockReturnValue({
+    mockUseCatalogData.mockReturnValue({
       category: { data: categoryFixture as unknown as ShopCategory },
       products: {
         data: {
@@ -85,33 +85,33 @@ describe("ShopCard", () => {
       isPending: false,
       isError: false,
       error: null,
-    } as unknown as ReturnType<typeof useShopData>);
+    } as unknown as ReturnType<typeof useCatalogData>);
   });
 
   it("shows a spinner while loading", () => {
-    mockUseShopData.mockReturnValue({
+    mockUseCatalogData.mockReturnValue({
       category: { data: undefined },
       products: { data: undefined },
       isPending: true,
       isError: false,
       error: null,
-    } as unknown as ReturnType<typeof useShopData>);
+    } as unknown as ReturnType<typeof useCatalogData>);
 
-    renderShopCard();
+    renderCatalogCard();
 
     expect(screen.getByRole("status")).toBeInTheDocument();
   });
 
   it("shows an error card when isError is true", () => {
-    mockUseShopData.mockReturnValue({
+    mockUseCatalogData.mockReturnValue({
       category: { data: undefined },
       products: { data: undefined },
       isPending: false,
       isError: true,
       error: null,
-    } as unknown as ReturnType<typeof useShopData>);
+    } as unknown as ReturnType<typeof useCatalogData>);
 
-    renderShopCard();
+    renderCatalogCard();
 
     expect(screen.getByRole("alert")).toHaveTextContent(
       "Unable to load this category products."
@@ -119,7 +119,7 @@ describe("ShopCard", () => {
   });
 
   it("shows an error card when category data is missing", () => {
-    mockUseShopData.mockReturnValue({
+    mockUseCatalogData.mockReturnValue({
       category: { data: undefined },
       products: {
         data: {
@@ -131,9 +131,9 @@ describe("ShopCard", () => {
       isPending: false,
       isError: false,
       error: null,
-    } as unknown as ReturnType<typeof useShopData>);
+    } as unknown as ReturnType<typeof useCatalogData>);
 
-    renderShopCard();
+    renderCatalogCard();
 
     expect(screen.getByRole("alert")).toHaveTextContent(
       "Unable to load this category products."
@@ -141,15 +141,15 @@ describe("ShopCard", () => {
   });
 
   it("shows an error card when products data is missing", () => {
-    mockUseShopData.mockReturnValue({
+    mockUseCatalogData.mockReturnValue({
       category: { data: categoryFixture as unknown as ShopCategory },
       products: { data: undefined },
       isPending: false,
       isError: false,
       error: null,
-    } as unknown as ReturnType<typeof useShopData>);
+    } as unknown as ReturnType<typeof useCatalogData>);
 
-    renderShopCard();
+    renderCatalogCard();
 
     expect(screen.getByRole("alert")).toHaveTextContent(
       "Unable to load this category products."
@@ -157,14 +157,14 @@ describe("ShopCard", () => {
   });
 
   it("uses the page from the URL search params", () => {
-    renderShopCard("/products?page=3");
+    renderCatalogCard("/products?page=3");
 
-    expect(mockUseShopData).toHaveBeenLastCalledWith("category-1", 3);
+    expect(mockUseCatalogData).toHaveBeenLastCalledWith("category-1", 3);
     expect(screen.getByText("Page 3")).toBeInTheDocument();
   });
 
   it("updates the URL search params when the page changes", async () => {
-    renderShopCard("/products");
+    renderCatalogCard("/products");
 
     await userEvent.click(screen.getByRole("button", { name: "Go page 2" }));
 
@@ -173,7 +173,7 @@ describe("ShopCard", () => {
   });
 
   it("removes the page param for the first page", async () => {
-    renderShopCard("/products?page=3");
+    renderCatalogCard("/products?page=3");
 
     await userEvent.click(screen.getByRole("button", { name: "Go page 1" }));
 

@@ -6,14 +6,14 @@ import { PackageSearch } from "lucide-react";
 import Spinner from "@/components/Spinner";
 import { Button } from "@/components/ui/button";
 import { useBreadcrumb } from "@/contexts/BreadcrumbContext";
-import { useProduct } from "@/features/Shop/hooks/useShop";
+import { useProduct } from "@/features/Shop/hooks/useCatalog";
 import { formatPrice } from "@/lib/utils/helper";
 import { resolveStaticUrl } from "@/lib/utils/url";
 import ErrorLoadingCard from "@/components/ErrorLoadingCard";
 
 const ProductDetailPage = () => {
   const { id } = useParams<{ id: string }>();
-  const { t, i18n } = useTranslation("shop");
+  const { t, i18n } = useTranslation("catalog");
   const navigate = useNavigate();
   const { setBreadcrumbItems } = useBreadcrumb();
   const { data: product, isPending, isError } = useProduct(id);

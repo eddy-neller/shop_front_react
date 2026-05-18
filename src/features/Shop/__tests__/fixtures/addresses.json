@@ -1,0 +1,30 @@
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440301",
+    "name": "Home",
+    "firstname": "Jean",
+    "lastname": "Dupont",
+    "company": null,
+    "address": "12 rue de la Paix",
+    "zip": "75001",
+    "city": "Paris",
+    "country": "France",
+    "phone": "+33 1 23 45 67 89",
+    "createdAt": "2026-01-01T10:00:00+00:00",
+    "updatedAt": "2026-01-01T10:00:00+00:00"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440302",
+    "name": "Office",
+    "firstname": "Marie",
+    "lastname": "Martin",
+    "company": "ACME",
+    "address": "25 avenue Victor Hugo",
+    "zip": "69001",
+    "city": "Lyon",
+    "country": "France",
+    "phone": "+33 4 12 34 56 78",
+    "createdAt": "2026-01-02T10:00:00+00:00",
+    "updatedAt": "2026-01-02T10:00:00+00:00"
+  }
+]

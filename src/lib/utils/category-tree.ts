@@ -1,4 +1,4 @@
-import { ShopCategory } from "@/features/Shop/types/shop";
+import { ShopCategory } from "@/features/Shop/types/catalog";
 
 export type CategoryContextType = {
   setSelectedCategoryId: (id: string | null) => void;

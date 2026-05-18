@@ -2,7 +2,7 @@ import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import CategoryMenu from "@/components/CategoryMenu";
 import mockShopCategories from "@/features/Shop/__tests__/fixtures/categories.json";
-import type { ShopCategory } from "@/features/Shop/types/shop";
+import type { ShopCategory } from "@/features/Shop/types/catalog";
 import type { CategoryTree } from "@/lib/utils/category-tree";
 import { renderComponentQuery } from "@/lib/utils/tests/renderComponent";
 

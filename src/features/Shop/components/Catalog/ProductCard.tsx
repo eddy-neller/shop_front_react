@@ -11,14 +11,14 @@ import {
 } from "@/components/ui/card";
 import { formatPrice } from "@/lib/utils/helper";
 import { resolveStaticUrl } from "@/lib/utils/url";
-import type { ShopProductSummary } from "@/features/Shop/types/shop";
+import type { ShopProductSummary } from "@/features/Shop/types/catalog";
 
 interface ProductCardProps {
   product: ShopProductSummary;
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const { t, i18n } = useTranslation("shop");
+  const { t, i18n } = useTranslation("catalog");
   const imageUrl = resolveStaticUrl(product.imageUrl ?? undefined);
   const formattedPrice = formatPrice(product.price, i18n.language);
 

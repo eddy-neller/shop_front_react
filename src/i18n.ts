@@ -14,7 +14,7 @@ i18n
       if (ns === "user") {
         return import(`@/features/User/locales/${lng}/${ns}.json`);
       }
-      if (ns === "shop") {
+      if (ns === "catalog" || ns === "addresses") {
         return import(`@/features/Shop/locales/${lng}/${ns}.json`);
       }
       return import(`@/locales/${lng}/${ns}.json`);
@@ -46,7 +46,8 @@ i18n
       "auth-registerValidation",
       "contact",
       "user",
-      "shop",
+      "catalog",
+      "addresses",
     ],
     defaultNS: "common",
     react: {

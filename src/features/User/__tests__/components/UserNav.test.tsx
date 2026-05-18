@@ -55,13 +55,20 @@ describe("UserNav", () => {
       await waitFor(() => {
         expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
         expect(screen.getByText(/profile/i)).toBeInTheDocument();
+        expect(screen.getByText(/addresses/i)).toBeInTheDocument();
         expect(screen.getByText(/avatar/i)).toBeInTheDocument();
         expect(screen.getByText(/password/i)).toBeInTheDocument();
         expect(screen.getByText(/logout/i)).toBeInTheDocument();
       });
     });
 
-    it.each([[/dashboard/i], [/profile/i], [/avatar/i], [/password/i]])(
+    it.each([
+      [/dashboard/i],
+      [/profile/i],
+      [/addresses/i],
+      [/avatar/i],
+      [/password/i],
+    ])(
       "closes user dropdown menu when clicking %s link",
       async (linkName) => {
         setup();

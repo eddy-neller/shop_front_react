@@ -1,6 +1,6 @@
 import { screen, waitFor } from "@testing-library/react";
-import CategoryCard from "@/features/Shop/components/CategoryCard";
-import type { ShopCategory } from "@/features/Shop/types/shop";
+import CategoryCard from "@/features/Shop/components/Catalog/CategoryCard";
+import type { ShopCategory } from "@/features/Shop/types/catalog";
 import rawCategory from "@/features/Shop/__tests__/fixtures/category.json";
 import { renderComponentQuery } from "@/lib/utils/tests/renderComponent";
 
@@ -47,9 +47,7 @@ describe("CategoryCard", () => {
     setup({ ...category, description: null });
 
     await waitFor(() => {
-      expect(
-        screen.queryByText(category.description!)
-      ).not.toBeInTheDocument();
+      expect(screen.queryByText(category.description!)).not.toBeInTheDocument();
     });
   });
 });

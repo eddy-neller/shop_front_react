@@ -20,4 +20,7 @@ export const shopKeys = {
     [...shopKeys.all, "categories", params] as const,
   category: (id: string | undefined) =>
     [...shopKeys.all, "category", id] as const,
+  addresses: () => [...shopKeys.all, "addresses"] as const,
+  address: (id: string | undefined) =>
+    [...shopKeys.all, "address", id] as const,
 } as const;

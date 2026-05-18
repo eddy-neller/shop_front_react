@@ -10,7 +10,7 @@ import type {
   ShopCategory,
   ShopProductDetail,
   ShopProductSummary,
-} from "@/features/Shop/types/shop";
+} from "@/features/Shop/types/catalog";
 import { shopKeys } from "@/lib/utils/queryKeys";
 
 const DEFAULT_PRODUCTS_PER_PAGE = 12;
@@ -81,7 +81,7 @@ export const useProduct = (id: string | undefined) => {
   });
 };
 
-export const useShopData = (
+export const useCatalogData = (
   categoryId: string | undefined,
   page: number = 1
 ) => {

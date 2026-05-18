@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import Paginate from "@/components/Paginate";
-import ProductCard from "@/features/Shop/components/ProductCard";
-import type { ShopProductSummary } from "@/features/Shop/types/shop";
+import ProductCard from "@/features/Shop/components/Catalog/ProductCard";
+import type { ShopProductSummary } from "@/features/Shop/types/catalog";
 
 interface ProductsProps {
   products: ShopProductSummary[];
@@ -17,7 +17,7 @@ const Products = ({
   totalPages,
   onPageChange,
 }: ProductsProps) => {
-  const { t } = useTranslation("shop");
+  const { t } = useTranslation("catalog");
 
   if (products.length === 0) {
     return (

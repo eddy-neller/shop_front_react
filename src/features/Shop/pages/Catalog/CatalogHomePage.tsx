@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useBreadcrumb } from "@/contexts/BreadcrumbContext";
-import { useShop } from "@/features/Shop/contexts/ShopContext";
-import ShopCard from "@/features/Shop/components/ShopCard";
+import { useCatalog } from "@/features/Shop/contexts/CatalogContext";
+import CatalogCard from "@/features/Shop/components/Catalog/CatalogCard";
 
 const CatalogHomePage = () => {
-  const { selectedCategoryId } = useShop();
+  const { selectedCategoryId } = useCatalog();
   const { setBreadcrumbItems } = useBreadcrumb();
-  const { t } = useTranslation("shop");
+  const { t } = useTranslation("catalog");
 
   useEffect(() => {
     setBreadcrumbItems([{ key: "products", title: t("title"), active: true }]);
@@ -24,7 +24,7 @@ const CatalogHomePage = () => {
     );
   }
 
-  return <ShopCard selectedCategoryId={selectedCategoryId} />;
+  return <CatalogCard selectedCategoryId={selectedCategoryId} />;
 };
 
 export default CatalogHomePage;

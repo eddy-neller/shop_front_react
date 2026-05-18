@@ -2,10 +2,10 @@ import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Mock, vi } from "vitest";
 import { renderPage } from "@/lib/utils/tests/renderPage";
-import { useProduct } from "@/features/Shop/hooks/useShop";
+import { useProduct } from "@/features/Shop/hooks/useCatalog";
 import { expectSpinnerWhileLoading } from "@/lib/utils/tests/base-tests";
 import rawProduct from "@/features/Shop/__tests__/fixtures/product.json";
-import type { ShopProductDetail } from "@/features/Shop/types/shop";
+import type { ShopProductDetail } from "@/features/Shop/types/catalog";
 
 const mockNavigate = vi.hoisted(() => vi.fn());
 
@@ -21,21 +21,21 @@ vi.mock("react-router-dom", async () => {
   };
 });
 
-vi.mock("@/features/Shop/hooks/useShop", () => ({
+vi.mock("@/features/Shop/hooks/useCatalog", () => ({
   useProduct: vi.fn(),
   useCategories: vi.fn(),
 }));
 
-vi.mock("@/features/Shop/components/ShopMenu", () => ({
-  default: () => <div>Shop menu</div>,
+vi.mock("@/features/Shop/components/Catalog/CatalogMenu", () => ({
+  default: () => <div>Catalog menu</div>,
 }));
 
-vi.mock("@/features/Shop/contexts/ShopContext", () => ({
-  useShop: vi.fn().mockReturnValue({
+vi.mock("@/features/Shop/contexts/CatalogContext", () => ({
+  useCatalog: vi.fn().mockReturnValue({
     selectedCategoryId: null,
     setSelectedCategoryId: vi.fn(),
   }),
-  ShopProvider: ({ children }: { children: React.ReactNode }) => children,
+  CatalogProvider: ({ children }: { children: React.ReactNode }) => children,
 }));
 
 const mockUseProduct = useProduct as Mock;

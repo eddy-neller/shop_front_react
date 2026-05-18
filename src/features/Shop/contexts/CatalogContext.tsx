@@ -2,24 +2,24 @@ import { createContext, ReactNode, useCallback, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CategoryContextType } from "@/lib/utils/category-tree";
 
-const ShopContext = createContext<CategoryContextType | undefined>(undefined);
-ShopContext.displayName = "ShopContext";
+const CatalogContext = createContext<CategoryContextType | undefined>(undefined);
+CatalogContext.displayName = "CatalogContext";
 
-export const useShop = (): CategoryContextType => {
-  const context = useContext(ShopContext);
+export const useCatalog = (): CategoryContextType => {
+  const context = useContext(CatalogContext);
 
   if (!context) {
-    throw new Error("useShop must be used within a ShopProvider");
+    throw new Error("useCatalog must be used within a CatalogProvider");
   }
 
   return context;
 };
 
-type ShopProviderProps = {
+type CatalogProviderProps = {
   children: ReactNode;
 };
 
-export const ShopProvider = ({ children }: ShopProviderProps) => {
+export const CatalogProvider = ({ children }: CatalogProviderProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedCategoryId = searchParams.get("cat");
   const setSelectedCategoryId = useCallback(
@@ -41,8 +41,10 @@ export const ShopProvider = ({ children }: ShopProviderProps) => {
   );
 
   return (
-    <ShopContext.Provider value={{ selectedCategoryId, setSelectedCategoryId }}>
+    <CatalogContext.Provider
+      value={{ selectedCategoryId, setSelectedCategoryId }}
+    >
       {children}
-    </ShopContext.Provider>
+    </CatalogContext.Provider>
   );
 };

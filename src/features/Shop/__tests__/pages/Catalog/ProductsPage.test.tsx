@@ -1,24 +1,24 @@
 import { screen, waitFor } from "@testing-library/react";
 import { Mock, vi } from "vitest";
 import { renderPage } from "@/lib/utils/tests/renderPage";
-import { useShop } from "@/features/Shop/contexts/ShopContext";
+import { useCatalog } from "@/features/Shop/contexts/CatalogContext";
 
-vi.mock("@/features/Shop/contexts/ShopContext", () => ({
-  useShop: vi.fn(),
-  ShopProvider: ({ children }: { children: React.ReactNode }) => children,
+vi.mock("@/features/Shop/contexts/CatalogContext", () => ({
+  useCatalog: vi.fn(),
+  CatalogProvider: ({ children }: { children: React.ReactNode }) => children,
 }));
 
-vi.mock("@/features/Shop/components/ShopCard", () => ({
+vi.mock("@/features/Shop/components/Catalog/CatalogCard", () => ({
   default: ({ selectedCategoryId }: { selectedCategoryId: string }) => (
-    <div>Shop card for {selectedCategoryId}</div>
+    <div>Catalog card for {selectedCategoryId}</div>
   ),
 }));
 
-vi.mock("@/features/Shop/components/ShopMenu", () => ({
-  default: () => <div>Shop menu</div>,
+vi.mock("@/features/Shop/components/Catalog/CatalogMenu", () => ({
+  default: () => <div>Catalog menu</div>,
 }));
 
-const mockUseShop = useShop as Mock;
+const mockUseCatalog = useCatalog as Mock;
 
 describe("ProductsPage", () => {
   beforeEach(() => {
@@ -26,7 +26,7 @@ describe("ProductsPage", () => {
   });
 
   it("asks the user to select a category when none is selected", async () => {
-    mockUseShop.mockReturnValue({
+    mockUseCatalog.mockReturnValue({
       selectedCategoryId: null,
       setSelectedCategoryId: vi.fn(),
     });
@@ -41,7 +41,7 @@ describe("ProductsPage", () => {
   });
 
   it("renders shop products for the selected category", async () => {
-    mockUseShop.mockReturnValue({
+    mockUseCatalog.mockReturnValue({
       selectedCategoryId: "category-1",
       setSelectedCategoryId: vi.fn(),
     });
@@ -49,7 +49,9 @@ describe("ProductsPage", () => {
     renderPage("/products");
 
     await waitFor(() => {
-      expect(screen.getByText("Shop card for category-1")).toBeInTheDocument();
+      expect(
+        screen.getByText("Catalog card for category-1")
+      ).toBeInTheDocument();
     });
   });
 });

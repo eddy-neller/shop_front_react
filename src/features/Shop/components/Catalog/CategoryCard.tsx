@@ -7,14 +7,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import type { ShopCategory } from "@/features/Shop/types/shop";
+import type { ShopCategory } from "@/features/Shop/types/catalog";
 
 interface CategoryCardProps {
   category: ShopCategory;
 }
 
 const CategoryCard = ({ category }: CategoryCardProps) => {
-  const { t } = useTranslation("shop");
+  const { t } = useTranslation("catalog");
 
   return (
     <Card>

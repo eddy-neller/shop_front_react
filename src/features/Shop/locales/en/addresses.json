@@ -1,0 +1,98 @@
+{
+  "helmet": {
+    "title": "E.N Shop - My Addresses",
+    "description": "Manage your addresses"
+  },
+  "breadcrumb": {
+    "dashboard": "Dashboard",
+    "addresses": "My Addresses"
+  },
+  "page": {
+    "title": "My addresses",
+    "description": "Manage the addresses linked to your account.",
+    "add": "Add an address",
+    "cancel": "Cancel",
+    "emptyTitle": "No address yet",
+    "emptyDescription": "Add an address to speed up your future orders.",
+    "errorTitle": "Unable to load your addresses",
+    "errorDescription": "Please try again later."
+  },
+  "card": {
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirmDelete": "Delete this address?",
+    "company": "Company",
+    "phone": "Phone"
+  },
+  "form": {
+    "createTitle": "New address",
+    "editTitle": "Edit address",
+    "submitCreate": "Create address",
+    "submitEdit": "Save changes",
+    "busyCreate": "Creating...",
+    "busyEdit": "Saving...",
+    "fields": {
+      "name": {
+        "label": "Label",
+        "placeholder": "Home",
+        "required": "Address label is required",
+        "min": "Address label must be at least 2 characters"
+      },
+      "firstname": {
+        "label": "First name",
+        "placeholder": "John",
+        "required": "First name is required",
+        "min": "First name must be at least 2 characters"
+      },
+      "lastname": {
+        "label": "Last name",
+        "placeholder": "Doe",
+        "required": "Last name is required",
+        "min": "Last name must be at least 2 characters"
+      },
+      "company": {
+        "label": "Company",
+        "placeholder": "Company name",
+        "max": "Company must be at most 50 characters"
+      },
+      "address": {
+        "label": "Street address",
+        "placeholder": "12 Main Street",
+        "required": "Street address is required",
+        "min": "Street address must be at least 2 characters"
+      },
+      "zip": {
+        "label": "Zip code",
+        "placeholder": "75001",
+        "required": "Zip code is required",
+        "min": "Zip code must be at least 2 characters"
+      },
+      "city": {
+        "label": "City",
+        "placeholder": "Paris",
+        "required": "City is required",
+        "min": "City must be at least 2 characters"
+      },
+      "country": {
+        "label": "Country",
+        "placeholder": "France",
+        "required": "Country is required",
+        "min": "Country must be at least 2 characters"
+      },
+      "phone": {
+        "label": "Phone",
+        "placeholder": "+33 1 23 45 67 89",
+        "required": "Phone is required",
+        "min": "Phone must be at least 2 characters"
+      }
+    },
+    "toast": {
+      "created": "Address created successfully.",
+      "updated": "Address updated successfully.",
+      "deleted": "Address deleted successfully.",
+      "createError": "Unable to create this address.",
+      "updateError": "Unable to update this address.",
+      "deleteError": "Unable to delete this address."
+    }
+  }
+}

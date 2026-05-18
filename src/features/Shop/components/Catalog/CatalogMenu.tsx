@@ -1,13 +1,13 @@
 import CategoryMenu from "@/components/CategoryMenu";
 import ErrorLoadingCard from "@/components/ErrorLoadingCard";
 import Spinner from "@/components/Spinner";
-import { useShop } from "@/features/Shop/contexts/ShopContext";
-import { useCategories } from "@/features/Shop/hooks/useShop";
+import { useCatalog } from "@/features/Shop/contexts/CatalogContext";
+import { useCategories } from "@/features/Shop/hooks/useCatalog";
 import { getCategoryChildren } from "@/features/Shop/lib/api/catalog";
 import { useTranslation } from "react-i18next";
 
-const ShopMenu = () => {
-  const { t } = useTranslation("shop");
+const CatalogMenu = () => {
+  const { t } = useTranslation("catalog");
   const { data: categories, isPending, isError } = useCategories(0);
 
   if (isPending) return <Spinner loading={isPending} fullscreen />;
@@ -19,9 +19,9 @@ const ShopMenu = () => {
     <CategoryMenu
       rawCategories={categories}
       getCategoryChildren={getCategoryChildren}
-      context={useShop}
+      context={useCatalog}
     />
   );
 };
 
-export default ShopMenu;
+export default CatalogMenu;
