@@ -18,6 +18,9 @@
     "errorDescription": "Please try again later."
   },
   "card": {
+    "default": "Default address",
+    "setDefault": "Set as default",
+    "settingDefault": "Updating...",
     "edit": "Edit",
     "delete": "Delete",
     "confirmDelete": "Delete this address?",
@@ -90,9 +93,11 @@
       "created": "Address created successfully.",
       "updated": "Address updated successfully.",
       "deleted": "Address deleted successfully.",
+      "defaultUpdated": "Default address updated.",
       "createError": "Unable to create this address.",
       "updateError": "Unable to update this address.",
-      "deleteError": "Unable to delete this address."
+      "deleteError": "Unable to delete this address.",
+      "defaultUpdateError": "Unable to set this address as default."
     }
   }
 }

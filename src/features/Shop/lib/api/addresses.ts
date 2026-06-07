@@ -46,6 +46,14 @@ export const updateAddress = async (
   return response.data;
 };
 
+export const setDefaultAddress = async (id: string): Promise<ShopAddress> => {
+  const response = await httpClient.post<ShopAddress>(
+    `${ADDRESS_BASE_URL}/${id}/default`
+  );
+
+  return response.data;
+};
+
 export const deleteAddress = async (id: string): Promise<void> => {
   await httpClient.delete(`${ADDRESS_BASE_URL}/${id}`);
 };

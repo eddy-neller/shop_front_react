@@ -6,6 +6,7 @@ import { renderPage } from "@/lib/utils/tests/renderPage";
 import {
   useAddresses,
   useDeleteAddress,
+  useSetDefaultAddress,
 } from "@/features/Shop/hooks/useAddresses";
 import rawAddresses from "@/features/Shop/__tests__/fixtures/addresses.json";
 import type { ShopAddress } from "@/features/Shop/types/address";
@@ -14,6 +15,7 @@ import { Mock, vi } from "vitest";
 vi.mock("@/features/Shop/hooks/useAddresses", () => ({
   useAddresses: vi.fn(),
   useDeleteAddress: vi.fn(),
+  useSetDefaultAddress: vi.fn(),
   useCreateAddress: () => ({
     mutate: vi.fn(),
     isPending: false,
@@ -26,7 +28,9 @@ vi.mock("@/features/Shop/hooks/useAddresses", () => ({
 
 const mockUseAddresses = useAddresses as Mock;
 const mockUseDeleteAddress = useDeleteAddress as Mock;
+const mockUseSetDefaultAddress = useSetDefaultAddress as Mock;
 const deleteMutate = vi.fn();
+const setDefaultMutate = vi.fn();
 
 describe("UserAddressesPage", () => {
   const addresses = rawAddresses as ShopAddress[];
@@ -35,6 +39,11 @@ describe("UserAddressesPage", () => {
     mockUseDeleteAddress.mockReturnValue({
       mutate: deleteMutate,
       isPending: false,
+    });
+    mockUseSetDefaultAddress.mockReturnValue({
+      mutate: setDefaultMutate,
+      isPending: false,
+      variables: undefined,
     });
     mockUseAddresses.mockReturnValue({
       data: addresses,
@@ -122,6 +131,52 @@ describe("UserAddressesPage", () => {
 
     expect(await screen.findByText("Edit address")).toBeInTheDocument();
     expect(screen.getByDisplayValue("Home")).toBeInTheDocument();
+  });
+
+  it("sets a secondary address as default", async () => {
+    setup();
+
+    await userEvent.click(
+      await screen.findByRole("button", { name: /set as default/i })
+    );
+
+    expect(setDefaultMutate).toHaveBeenCalledWith(
+      addresses[1].id,
+      expect.objectContaining({
+        onSuccess: expect.any(Function),
+        onError: expect.any(Function),
+      })
+    );
+  });
+
+  it("shows a success toast after updating the default address", async () => {
+    setup();
+
+    await userEvent.click(
+      await screen.findByRole("button", { name: /set as default/i })
+    );
+
+    act(() => {
+      setDefaultMutate.mock.calls[0][1].onSuccess();
+    });
+
+    expect(toast.success).toHaveBeenCalledWith("Default address updated.");
+  });
+
+  it("shows an error toast when updating the default address fails", async () => {
+    setup();
+
+    await userEvent.click(
+      await screen.findByRole("button", { name: /set as default/i })
+    );
+
+    act(() => {
+      setDefaultMutate.mock.calls[0][1].onError();
+    });
+
+    expect(toast.error).toHaveBeenCalledWith(
+      "Unable to set this address as default."
+    );
   });
 
   it("does not delete when confirm is cancelled", async () => {

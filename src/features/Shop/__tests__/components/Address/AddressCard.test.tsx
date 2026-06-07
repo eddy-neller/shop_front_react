@@ -12,14 +12,21 @@ const addressWithoutCompany = addresses[0];
 describe("AddressCard", () => {
   const onEdit = vi.fn();
   const onDelete = vi.fn();
+  const onSetDefault = vi.fn();
 
-  const setup = (address: ShopAddress, isDeleting = false) => {
+  const setup = (
+    address: ShopAddress,
+    isDeleting = false,
+    isSettingDefault = false
+  ) => {
     renderComponentQuery(
       <AddressCard
         address={address}
         onEdit={onEdit}
         onDelete={onDelete}
+        onSetDefault={onSetDefault}
         isDeleting={isDeleting}
+        isSettingDefault={isSettingDefault}
       />
     );
   };
@@ -72,6 +79,31 @@ describe("AddressCard", () => {
     setup(addressWithoutCompany);
 
     expect(screen.queryByText(/Company:/)).not.toBeInTheDocument();
+  });
+
+  it("highlights the default address", () => {
+    setup(addressWithoutCompany);
+
+    expect(screen.getByText("Default address")).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /set as default/i })
+    ).not.toBeInTheDocument();
+  });
+
+  it("calls onSetDefault for a secondary address", async () => {
+    setup(addressWithCompany);
+
+    await userEvent.click(
+      screen.getByRole("button", { name: /set as default/i })
+    );
+
+    expect(onSetDefault).toHaveBeenCalledWith(addressWithCompany);
+  });
+
+  it("shows the pending state while setting the default address", () => {
+    setup(addressWithCompany, false, true);
+
+    expect(screen.getByRole("button", { name: /updating/i })).toBeDisabled();
   });
 
   it("calls onEdit with the address when clicking Edit", async () => {

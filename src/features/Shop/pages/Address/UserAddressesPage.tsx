@@ -18,6 +18,7 @@ import AddressForm from "@/features/Shop/components/Address/AddressForm";
 import {
   useAddresses,
   useDeleteAddress,
+  useSetDefaultAddress,
 } from "@/features/Shop/hooks/useAddresses";
 import type { ShopAddress } from "@/features/Shop/types/address";
 
@@ -28,6 +29,7 @@ export default function UserAddressesPage() {
   const { data: addresses, isPending, isError } = useAddresses();
 
   const deleteMutation = useDeleteAddress();
+  const setDefaultMutation = useSetDefaultAddress();
 
   const [formOpen, setFormOpen] = useState(false);
   const [editedAddress, setEditedAddress] = useState<ShopAddress | null>(null);
@@ -80,7 +82,22 @@ export default function UserAddressesPage() {
     });
   };
 
+  const handleSetDefault = (address: ShopAddress) => {
+    setDefaultMutation.mutate(address.id, {
+      onSuccess: () => {
+        toast.success(t("form.toast.defaultUpdated"));
+      },
+      onError: () => {
+        toast.error(t("form.toast.defaultUpdateError"));
+      },
+    });
+  };
+
   const isEmpty = !addresses || addresses.length === 0;
+  const sortedAddresses = [...(addresses ?? [])].sort(
+    (addressA, addressB) =>
+      Number(addressB.isDefault) - Number(addressA.isDefault)
+  );
 
   return (
     <>
@@ -160,13 +177,18 @@ export default function UserAddressesPage() {
 
           {!isPending && !isError && !isEmpty && (
             <div className="space-y-4">
-              {addresses.map((address) => (
+              {sortedAddresses.map((address) => (
                 <AddressCard
                   key={address.id}
                   address={address}
                   onEdit={openEditForm}
                   onDelete={handleDelete}
+                  onSetDefault={handleSetDefault}
                   isDeleting={deleteMutation.isPending}
+                  isSettingDefault={
+                    setDefaultMutation.isPending &&
+                    setDefaultMutation.variables === address.id
+                  }
                 />
               ))}
             </div>

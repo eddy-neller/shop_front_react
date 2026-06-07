@@ -5,6 +5,7 @@ import {
   deleteAddress,
   getAddress,
   getAddresses,
+  setDefaultAddress,
   updateAddress,
 } from "@/features/Shop/lib/api/addresses";
 import rawAddresses from "@/features/Shop/__tests__/fixtures/addresses.json";
@@ -89,8 +90,21 @@ describe("shop addresses api", () => {
     expect(result).toEqual(addresses[0]);
   });
 
+  it("sets an address as default", async () => {
+    mockPost.mockResolvedValueOnce(makeAxiosResponse(addresses[0]));
+
+    const result = await setDefaultAddress(addresses[0].id);
+
+    expect(httpClient.post).toHaveBeenCalledWith(
+      `/shop/me/addresses/${addresses[0].id}/default`
+    );
+    expect(result).toEqual(addresses[0]);
+  });
+
   it("deletes an address", async () => {
-    mockDelete.mockResolvedValueOnce(makeAxiosResponse(null, 204, "No Content"));
+    mockDelete.mockResolvedValueOnce(
+      makeAxiosResponse(null, 204, "No Content")
+    );
 
     await deleteAddress(addresses[0].id);
 

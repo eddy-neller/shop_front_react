@@ -5,15 +5,17 @@ import {
   useAddresses,
   useAddress,
   useCreateAddress,
-  useUpdateAddress,
   useDeleteAddress,
+  useSetDefaultAddress,
+  useUpdateAddress,
 } from "@/features/Shop/hooks/useAddresses";
 import {
   getAddresses,
   getAddress,
   createAddress,
-  updateAddress,
   deleteAddress,
+  setDefaultAddress,
+  updateAddress,
 } from "@/features/Shop/lib/api/addresses";
 import rawAddresses from "@/features/Shop/__tests__/fixtures/addresses.json";
 import type {
@@ -29,6 +31,7 @@ vi.mock("@/features/Shop/lib/api/addresses", () => ({
   createAddress: vi.fn(),
   updateAddress: vi.fn(),
   deleteAddress: vi.fn(),
+  setDefaultAddress: vi.fn(),
 }));
 
 const mockGetAddresses = getAddresses as Mock;
@@ -36,6 +39,7 @@ const mockGetAddress = getAddress as Mock;
 const mockCreateAddress = createAddress as Mock;
 const mockUpdateAddress = updateAddress as Mock;
 const mockDeleteAddress = deleteAddress as Mock;
+const mockSetDefaultAddress = setDefaultAddress as Mock;
 
 describe("useAddresses hooks", () => {
   const addresses = rawAddresses as ShopAddress[];
@@ -298,6 +302,59 @@ describe("useAddresses hooks", () => {
       mockDeleteAddress.mockRejectedValueOnce(new Error("API error"));
 
       const { result } = renderHookTest({ hook: () => useDeleteAddress() });
+
+      result.current.mutate(address.id);
+
+      await waitFor(() => expect(result.current.isError).toBe(true));
+
+      expect(result.current.error).toEqual(new Error("API error"));
+    });
+  });
+
+  describe("useSetDefaultAddress", () => {
+    it("sets an address as default", async () => {
+      mockSetDefaultAddress.mockResolvedValueOnce(address);
+
+      const { result } = renderHookTest({
+        hook: () => useSetDefaultAddress(),
+      });
+
+      result.current.mutate(address.id);
+
+      await waitFor(() => expect(result.current.isSuccess).toBe(true));
+
+      expect(result.current.data).toEqual(address);
+      expect(setDefaultAddress).toHaveBeenCalledWith(address.id);
+    });
+
+    it("updates caches after setting the default address", async () => {
+      mockSetDefaultAddress.mockResolvedValueOnce(address);
+
+      const { result, queryClient } = renderHookTest({
+        hook: () => useSetDefaultAddress(),
+      });
+      const setQueryDataSpy = vi.spyOn(queryClient, "setQueryData");
+      const invalidateSpy = vi.spyOn(queryClient, "invalidateQueries");
+
+      result.current.mutate(address.id);
+
+      await waitFor(() => expect(result.current.isSuccess).toBe(true));
+
+      expect(setQueryDataSpy).toHaveBeenCalledWith(
+        ["shop", "address", address.id],
+        address
+      );
+      expect(invalidateSpy).toHaveBeenCalledWith(
+        expect.objectContaining({ queryKey: ["shop", "addresses"] })
+      );
+    });
+
+    it("handles an API error", async () => {
+      mockSetDefaultAddress.mockRejectedValueOnce(new Error("API error"));
+
+      const { result } = renderHookTest({
+        hook: () => useSetDefaultAddress(),
+      });
 
       result.current.mutate(address.id);
 

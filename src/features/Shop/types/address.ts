@@ -9,6 +9,7 @@ export interface ShopAddress {
   city: string;
   country: string;
   phone: string;
+  isDefault: boolean;
   createdAt: string;
   updatedAt: string;
 }

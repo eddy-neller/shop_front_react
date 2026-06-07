@@ -5,6 +5,7 @@ import {
   deleteAddress,
   getAddress,
   getAddresses,
+  setDefaultAddress,
   updateAddress,
 } from "@/features/Shop/lib/api/addresses";
 import type {
@@ -75,6 +76,18 @@ export const useDeleteAddress = () => {
   return useMutation({
     mutationFn: (id: string) => deleteAddress(id),
     onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: shopKeys.addresses() });
+    },
+  });
+};
+
+export const useSetDefaultAddress = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: string) => setDefaultAddress(id),
+    onSuccess: (address) => {
+      queryClient.setQueryData(shopKeys.address(address.id), address);
       void queryClient.invalidateQueries({ queryKey: shopKeys.addresses() });
     },
   });

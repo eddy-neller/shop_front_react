@@ -18,6 +18,9 @@
     "errorDescription": "Veuillez réessayer plus tard."
   },
   "card": {
+    "default": "Adresse par défaut",
+    "setDefault": "Définir par défaut",
+    "settingDefault": "Mise à jour...",
     "edit": "Modifier",
     "delete": "Supprimer",
     "confirmDelete": "Supprimer cette adresse ?",
@@ -90,9 +93,11 @@
       "created": "Adresse créée avec succès.",
       "updated": "Adresse modifiée avec succès.",
       "deleted": "Adresse supprimée avec succès.",
+      "defaultUpdated": "Adresse par défaut mise à jour.",
       "createError": "Impossible de créer cette adresse.",
       "updateError": "Impossible de modifier cette adresse.",
-      "deleteError": "Impossible de supprimer cette adresse."
+      "deleteError": "Impossible de supprimer cette adresse.",
+      "defaultUpdateError": "Impossible de définir cette adresse par défaut."
     }
   }
 }
