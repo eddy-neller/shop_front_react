@@ -95,6 +95,8 @@
       "deleted": "Adresse supprimée avec succès.",
       "defaultUpdated": "Adresse par défaut mise à jour.",
       "createError": "Impossible de créer cette adresse.",
+      "addressLimitTitle": "Limite d'adresses atteinte",
+      "addressLimitDescription": "Vous pouvez enregistrer jusqu'à 5 adresses. Supprimez une adresse existante avant d'en ajouter une nouvelle.",
       "updateError": "Impossible de modifier cette adresse.",
       "deleteError": "Impossible de supprimer cette adresse.",
       "defaultUpdateError": "Impossible de définir cette adresse par défaut."

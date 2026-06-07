@@ -95,6 +95,8 @@
       "deleted": "Address deleted successfully.",
       "defaultUpdated": "Default address updated.",
       "createError": "Unable to create this address.",
+      "addressLimitTitle": "Address limit reached",
+      "addressLimitDescription": "You can have up to 5 addresses. Delete an existing address before adding a new one.",
       "updateError": "Unable to update this address.",
       "deleteError": "Unable to delete this address.",
       "defaultUpdateError": "Unable to set this address as default."

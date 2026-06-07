@@ -6,6 +6,7 @@ import userEvent from "@testing-library/user-event";
 import { vi, type Mock } from "vitest";
 import { renderComponentQuery } from "@/lib/utils/tests/renderComponent";
 import {
+  makeAxiosError,
   makeAxiosResponse,
   makeValidationError422,
 } from "@/lib/utils/tests/axiosHelper";
@@ -324,6 +325,27 @@ describe("AddressForm", () => {
         expect(toast.error).toHaveBeenCalledWith(
           "Unable to create this address."
         );
+      });
+    });
+
+    it("should show a clear toast when the address limit is reached", async () => {
+      mockCreateAddress.mockRejectedValueOnce(
+        makeAxiosError(409, "Conflict", {
+          message: "A customer cannot have more than 5 addresses.",
+        })
+      );
+      setup();
+
+      const user = await fillForm();
+      await user.click(
+        screen.getByRole("button", { name: /create address/i })
+      );
+
+      await waitFor(() => {
+        expect(toast.error).toHaveBeenCalledWith("Address limit reached", {
+          description:
+            "You can have up to 5 addresses. Delete an existing address before adding a new one.",
+        });
       });
     });
   });

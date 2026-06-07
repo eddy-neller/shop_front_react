@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { isAxiosError } from "axios";
 import { Save } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -129,6 +130,13 @@ export default function AddressForm({
         onSaved();
       },
       onError: (error) => {
+        if (isAxiosError(error) && error.response?.status === 409) {
+          toast.error(t("form.toast.addressLimitTitle"), {
+            description: t("form.toast.addressLimitDescription"),
+          });
+          return;
+        }
+
         handleAxiosError(error, setError, true, t("form.toast.createError"));
       },
     });

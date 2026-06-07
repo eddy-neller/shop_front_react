@@ -10,9 +10,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <h3 className="text-xl font-bold mb-4">{t("footer.brand")}</h3>
-            <p className="text-gray-400">
-              {t("footer.description")}
-            </p>
+            <p className="text-gray-400">{t("footer.description")}</p>
           </div>
           <div>
             <h4 className="text-lg font-semibold mb-4">
@@ -25,6 +23,14 @@ export default function Footer() {
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   {t("footer.navigation.home")}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/products"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  {t("footer.navigation.products")}
                 </Link>
               </li>
               <li>
