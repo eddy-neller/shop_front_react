@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import {
   createAddress,
   deleteAddress,
@@ -13,23 +13,26 @@ import type {
   ShopAddressCreatePayload,
   ShopAddressUpdatePayload,
 } from "@/features/Shop/types/address";
+import type { AuthUser } from "@/features/User/types/user";
 import { shopKeys } from "@/lib/utils/queryKeys";
 
+const useUserId = () => useAuthUser<AuthUser | null>()?.id;
+
 export const useAddresses = () => {
-  const isAuthenticated = useIsAuthenticated();
+  const userId = useUserId();
 
   return useQuery<ShopAddress[]>({
-    queryKey: shopKeys.addresses(),
+    queryKey: shopKeys.addresses(userId),
     queryFn: getAddresses,
-    enabled: isAuthenticated,
+    enabled: !!userId,
   });
 };
 
 export const useAddress = (id: string | undefined) => {
-  const isAuthenticated = useIsAuthenticated();
+  const userId = useUserId();
 
   return useQuery<ShopAddress>({
-    queryKey: shopKeys.address(id),
+    queryKey: shopKeys.address(userId, id),
     queryFn: () => {
       if (!id) {
         throw new Error("ID not found.");
@@ -37,23 +40,27 @@ export const useAddress = (id: string | undefined) => {
 
       return getAddress(id);
     },
-    enabled: isAuthenticated && !!id,
+    enabled: !!userId && !!id,
   });
 };
 
 export const useCreateAddress = () => {
   const queryClient = useQueryClient();
+  const userId = useUserId();
 
   return useMutation({
     mutationFn: (data: ShopAddressCreatePayload) => createAddress(data),
     onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: shopKeys.addresses() });
+      void queryClient.invalidateQueries({
+        queryKey: shopKeys.addresses(userId),
+      });
     },
   });
 };
 
 export const useUpdateAddress = () => {
   const queryClient = useQueryClient();
+  const userId = useUserId();
 
   return useMutation({
     mutationFn: ({
@@ -64,31 +71,39 @@ export const useUpdateAddress = () => {
       data: ShopAddressUpdatePayload;
     }) => updateAddress(id, data),
     onSuccess: (address) => {
-      queryClient.setQueryData(shopKeys.address(address.id), address);
-      void queryClient.invalidateQueries({ queryKey: shopKeys.addresses() });
+      queryClient.setQueryData(shopKeys.address(userId, address.id), address);
+      void queryClient.invalidateQueries({
+        queryKey: shopKeys.addresses(userId),
+      });
     },
   });
 };
 
 export const useDeleteAddress = () => {
   const queryClient = useQueryClient();
+  const userId = useUserId();
 
   return useMutation({
     mutationFn: (id: string) => deleteAddress(id),
     onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: shopKeys.addresses() });
+      void queryClient.invalidateQueries({
+        queryKey: shopKeys.addresses(userId),
+      });
     },
   });
 };
 
 export const useSetDefaultAddress = () => {
   const queryClient = useQueryClient();
+  const userId = useUserId();
 
   return useMutation({
     mutationFn: (id: string) => setDefaultAddress(id),
     onSuccess: (address) => {
-      queryClient.setQueryData(shopKeys.address(address.id), address);
-      void queryClient.invalidateQueries({ queryKey: shopKeys.addresses() });
+      queryClient.setQueryData(shopKeys.address(userId, address.id), address);
+      void queryClient.invalidateQueries({
+        queryKey: shopKeys.addresses(userId),
+      });
     },
   });
 };

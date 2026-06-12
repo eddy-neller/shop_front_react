@@ -79,6 +79,11 @@ vi.mock("@/contexts/AbilityContext", () => ({
     displayName: "AbilityContext",
   },
 }));
+vi.mock("@/features/Shop/contexts/CartContext", () => ({
+  CartProvider: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="cart-provider">{children}</div>
+  ),
+}));
 vi.mock("@/routes", () => ({
   default: (
     <Route>
@@ -101,6 +106,7 @@ describe("App", () => {
 
     expect(screen.getByTestId("auth-provider")).toBeInTheDocument();
     expect(screen.getByTestId("ability-provider")).toBeInTheDocument();
+    expect(screen.getByTestId("cart-provider")).toBeInTheDocument();
   });
 
   it("should render routes content", () => {

@@ -154,6 +154,15 @@ components. Current user factories are `userKeys.all`, `userKeys.me()`,
 `userKeys.detail(id)`, and `userKeys.others(id)`. Authenticated queries should
 be gated when appropriate, as `useMe` does with `useIsAuthenticated()`.
 
+**Per-user data must avoid cross-account leaks** with two defenses: (1) index
+the query key on the account id (`useAuthUser<AuthUser>()?.id`, e.g.
+`cartKeys.mine(userId)` / `shopKeys.addresses(userId)`) and gate with
+`enabled: !!userId` — critical for providers mounted above the router (e.g.
+`CartProvider`) that never unmount and would otherwise reuse one account's cache
+for the next; (2) `useLogout` purges `userKeys.all`, `cartKeys.all`, and
+`shopKeys.all`, so add any new per-user key family there. References: `useCart`,
+`useAddresses`.
+
 Use `handleAxiosError(error, setError, true, defaultMessage)` in mutation error
 handlers. It maps 422 `violations` onto `react-hook-form`, handles 403, 404,
 429, 5xx, and network failures, and keeps toast behavior consistent.
@@ -268,6 +277,11 @@ Available mocks include `mockAuthHelper` for `react-auth-kit` hooks,
 formatter output. Test user fixtures are exposed through `userTypes.ts` as
 `UserAdmin`, `UserModer`, and `UserMember`.
 
+For any per-user query, add a **cross-account leak test**: on a shared
+`QueryClient`, render the hook with one `useAuthUser` id, then with another, and
+assert the second account gets a fresh fetch and never the first account's
+cached data. Models: `useCart.test.ts` and `useAddresses.test.ts`.
+
 Coverage excludes framework glue such as contexts, layouts, `lib/api`,
 `lib/utils`, types, UI primitives, `main.tsx`, `i18n.ts`, and the auth listener.
 Still test these files when behavior is risky, but do not expect them to improve
@@ -281,6 +295,9 @@ coverage metrics.
   hook or component.
 - User-data mutation: invalidate or remove the relevant `userKeys.*` entries in
   `onSuccess`.
+- User-scoped data: index the query key on the account id and gate with
+  `enabled: !!userId`; ensure `useLogout` purges its key family. Prevents
+  cross-account cache leaks. References: `useCart`, `useAddresses`.
 - Guarded route: nest authenticated screens under `AuthOutlet` with fallback
   `/login`; nest guest-only flows under `GuestOnlyOutlet` with fallback `/user`.
 - Translated screen: create both `en` and `fr` JSON namespace files, register

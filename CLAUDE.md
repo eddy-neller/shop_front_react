@@ -111,7 +111,7 @@ Public-page components without a feature live in `src/components/<topic>/` (e.g.
   - network/no-response → `reason: "others"`
   - `/login` and `/token/invalidate` are exempt (don't trigger auto-logout).
 - **`lib/api/contact.ts`** — top-level (non-feature) API call.
-- **`lib/utils/queryKeys.ts`** — TanStack Query key factories. Add new keys here, never inline. Current: `userKeys.all | me() | detail(id) | others(id)`.
+- **`lib/utils/queryKeys.ts`** — TanStack Query key factories. Add new keys here, never inline. Current: `userKeys.all | me() | detail(id) | others(id)`. **Per-user data must index its key on the account id** (e.g. `cartKeys.mine(userId)`, `shopKeys.addresses(userId)`) — see "User-scoped queries" under Common Patterns.
 - **`lib/utils/ability.ts`** — CASL setup. Roles `ROLE_USER < ROLE_MODERATEUR < ROLE_ADMIN` with hierarchical inheritance. Subjects: `ADMIN_CONTENT`, `MODERATOR_CONTENT`, `MEMBER_CONTENT`. Use the `<Can I={Action.READ} a={SubjectType.X}>` component from `contexts/AbilityContext.tsx` (and `Can not` for negation). On login, `useLogin` calls `ability.update(defineAbilityFor(decoded).rules)`; on logout, `useLogout` resets it.
 - **`lib/utils/axiosErrorHandler.ts`** — centralized form-error handler. Maps **422 violations** onto `react-hook-form` via `setError(violation.propertyPath, ...)`, plus toast-friendly messages for 403/404/429/5xx/network errors. Canonical call shape in mutation `onError`: `handleAxiosError(error, setError, true, defaultMessage)`.
 - **`lib/utils/errorCodes.ts`** — `ERROR_CODES.JWT.*` (sync'd with backend `InfoCodes.php`). Extend here when the backend adds new code families.
@@ -405,6 +405,7 @@ describe("AddressForm", () => {
 | Page component | renders without crashing; Helmet title; breadcrumb items; loading state (spinner); error state; happy-path data display |
 | Form component | renders fields; client-side validation errors; successful submission (API called with correct payload, toast shown, navigation triggered); 422 violations mapped to fields; loading button disabled while submitting |
 | Hook (query) | success path; error path; correct query key used |
+| Hook (user-scoped query) | success / error / correct key **+ cross-account leak test**: on a shared `QueryClient`, a second render with `useAuthUser` returning a different id yields a different key (so a fresh fetch, never the previous account's cache). Model: `features/Shop/__tests__/hooks/useCart.test.ts` and `useAddresses.test.ts` (the `useAuthUser` mock already ships in `mockAuthHelper.ts`). |
 | Hook (mutation) | success path (correct API called, cache invalidated / refetched); error path (toast or `setError`); loading state |
 | Non-form component | renders given props; conditional rendering branches |
 
@@ -427,6 +428,9 @@ describe("AddressForm", () => {
 - **Adding an API call**: put it in the feature's `lib/api/<entity>.ts` (or `src/lib/api/` if cross-cutting). Always go through the shared `httpClient` so auth/locale/FormData handling stays consistent.
 - **Adding a new query**: add the key factory to `lib/utils/queryKeys.ts`, then write the hook (e.g. `useThing(id)`) using `useQuery` + that key. Gate authenticated queries with `enabled: useIsAuthenticated()` (see `useMe`).
 - **Adding a new mutation that touches user data**: invalidate or remove `userKeys.*` in `onSuccess`. On logout the queryClient's `userKeys.all` is removed by `useLogout` — don't duplicate that elsewhere.
+- **User-scoped queries (cross-account leak prevention)**: any data tied to the logged-in account must be protected by **two defenses** so a re-login (possibly as a different user) never serves the previous account's cache:
+  1. **Per-user key** — include the account id in the query key (`useAuthUser<AuthUser>()?.id`) and gate with `enabled: !!userId`, *not* just `enabled: isAuthenticated`. This matters most for providers mounted **above the router** (e.g. `CartProvider` in `App.tsx`) which never unmount: an identity-less key reuses one account's cache for the next. Canonical examples: `useCart` (`features/Shop/hooks/useCart.ts`, `cartKeys.mine(userId)`) and `useAddresses` (`shopKeys.addresses(userId)`).
+  2. **Purge on logout** — `useLogout` (`features/Auth/hooks/useLogout.ts`) removes `userKeys.all`, `cartKeys.all`, and `shopKeys.all`. Any **new** per-user key family outside the shop subtree must be added to its `removeQueries(...)` list.
 - **Adding a permission-gated UI**: wrap with `<Can I={Action.READ} a={SubjectType.X}>`. Add the corresponding `can(...)` rule in `ROLE_PERMISSIONS` inside `lib/utils/ability.ts` if it's a new (action, subject) pair. Subjects are role-keyed (`ADMIN_CONTENT` etc.) and inherited via `ROLE_HIERARCHY`.
 - **Adding a guarded route**: nest under `<Route element={<AuthOutlet fallbackPath="/login" />}>` in `routes.tsx`. For guest-only flows, use the local `<GuestOnlyOutlet fallbackPath="/user" />`.
 - **Adding a translated screen**: create `<ns>.json` files under the appropriate `locales/<lng>/`, register the namespace in `src/i18n.ts` (and the `resourcesToBackend` routing if outside `src/locales/`), then `useTranslation("<ns>")` in the component.

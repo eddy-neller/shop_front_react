@@ -1,0 +1,18 @@
+{
+  "title": "My cart",
+  "helmet": { "title": "Cart | E.N Shop" },
+  "badge": "Cart, {{count}} item(s)",
+  "empty": "Your cart is empty.",
+  "continueShopping": "Continue shopping",
+  "clear": "Clear cart",
+  "total": "Subtotal",
+  "lines": {
+    "remove": "Remove"
+  },
+  "toast": {
+    "added": "Product added to cart",
+    "removed": "Product removed from cart",
+    "cleared": "Cart cleared",
+    "error": "Unable to update the cart"
+  }
+}

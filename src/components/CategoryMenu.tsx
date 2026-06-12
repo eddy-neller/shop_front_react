@@ -9,7 +9,7 @@ import { DndProvider } from "react-dnd";
 import { coupeMot, truncate } from "@/lib/utils/helper";
 import { FaCaretDown, FaCaretRight, FaList } from "react-icons/fa";
 import { useMutation } from "@tanstack/react-query";
-import { CategoryContextType, CategoryTree } from "@/lib/utils/category-tree";
+import { CategoryContextValue, CategoryTree } from "@/lib/utils/category-tree";
 import { extractData } from "@/lib/utils/category-tree";
 import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -20,7 +20,7 @@ type CategoryNode = NodeModel<{ count: number }>;
 interface CategoryMenuProps {
   rawCategories: CategoryTree[];
   getCategoryChildren: (id: string) => Promise<CategoryTree[]>;
-  context: () => CategoryContextType;
+  context: () => CategoryContextValue;
 }
 
 const CategoryMenu: React.FC<CategoryMenuProps> = ({

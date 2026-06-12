@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useBreadcrumb } from "@/contexts/BreadcrumbContext";
-import { useCatalog } from "@/features/Shop/contexts/CatalogContext";
+import { useCatalogContext } from "@/features/Shop/contexts/CatalogContext";
 import CatalogCard from "@/features/Shop/components/Catalog/CatalogCard";
 
 const CatalogHomePage = () => {
-  const { selectedCategoryId } = useCatalog();
+  const { selectedCategoryId } = useCatalogContext();
   const { setBreadcrumbItems } = useBreadcrumb();
   const { t } = useTranslation("catalog");
 

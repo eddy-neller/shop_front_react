@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { jwtDecode } from "jwt-decode";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
@@ -12,6 +12,7 @@ import { useLogout } from "@/features/Auth/hooks/useLogout";
 
 export const useLogin = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const signIn = useSignIn();
   const ability = useAbility();
   const { clearAndRedirect } = useLogout();
@@ -42,7 +43,13 @@ export const useLogin = () => {
 
         ability.update(defineAbilityFor(decoded).rules);
         setupAuthLogoutListener(clearAndRedirect);
-        navigate("/user", { replace: true });
+
+        const requestedPath = (location.state as { from?: string } | null)
+          ?.from;
+
+        navigate(requestedPath?.startsWith("/") ? requestedPath : "/user", {
+          replace: true,
+        });
       } catch {
         toast.error("Connexion impossible", {
           description:

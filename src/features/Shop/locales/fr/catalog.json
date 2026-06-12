@@ -23,7 +23,8 @@
     "total_one": "{{count}} produit",
     "total_other": "{{count}} produits",
     "view": "Voir {{title}}",
-    "addToCart": "Ajouter au panier"
+    "addToCart": "Ajouter au panier",
+    "loginRequired": "Connectez-vous pour ajouter un produit au panier."
   },
   "detail": {
     "breadcrumb": "Produit",

@@ -7,6 +7,7 @@ import UserNav from "@/features/User/components/UserNav";
 import { cn } from "@/lib/utils";
 import usFlag from "@/assets/flags/us.svg";
 import frFlag from "@/assets/flags/fr.svg";
+import CartBadge from "@/features/Shop/components/Cart/CartBadge";
 
 export default function Header() {
   const location = useLocation();
@@ -78,6 +79,7 @@ export default function Header() {
             </div>
           </div>
           <div className="flex items-center justify-end gap-3">
+            {isAuthenticated && <CartBadge />}
             {!isAuthenticated ? <AuthNav /> : <UserNav />}
             <div
               className="flex items-center gap-2"

@@ -23,7 +23,8 @@
     "total_one": "{{count}} product",
     "total_other": "{{count}} products",
     "view": "View {{title}}",
-    "addToCart": "Add to cart"
+    "addToCart": "Add to cart",
+    "loginRequired": "Sign in to add a product to your cart."
   },
   "detail": {
     "breadcrumb": "Product",

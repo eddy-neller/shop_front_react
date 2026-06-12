@@ -12,6 +12,7 @@ import {
 import { formatPrice } from "@/lib/utils/helper";
 import { resolveStaticUrl } from "@/lib/utils/url";
 import type { ShopProductSummary } from "@/features/Shop/types/catalog";
+import { useAddToCartAction } from "@/features/Shop/hooks/useAddToCartAction";
 
 interface ProductCardProps {
   product: ShopProductSummary;
@@ -19,8 +20,11 @@ interface ProductCardProps {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const { t, i18n } = useTranslation("catalog");
+
   const imageUrl = resolveStaticUrl(product.imageUrl ?? undefined);
   const formattedPrice = formatPrice(product.price, i18n.language);
+
+  const { handleAddToCart, isMutating } = useAddToCartAction();
 
   return (
     <Card className="flex h-full flex-col overflow-hidden">
@@ -49,7 +53,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <p className="text-xl font-bold text-primary">{formattedPrice}</p>
       </CardContent>
       <CardFooter className="mt-auto">
-        <Button type="button" className="w-full">
+        <Button
+          type="button"
+          className="w-full"
+          disabled={isMutating}
+          onClick={() => handleAddToCart(product.id)}
+        >
           {t("products.addToCart")}
         </Button>
       </CardFooter>

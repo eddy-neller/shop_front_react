@@ -15,6 +15,7 @@ import AppRoutes from "@/routes";
 import { UserType, userMap } from "@/lib/utils/tests/userTypes";
 import { AbilityContext } from "@/contexts/AbilityContext";
 import { defineAbilityFor } from "@/lib/utils/ability";
+import { CartProvider } from "@/features/Shop/contexts/CartContext";
 import { User } from "@/features/User/types/user";
 
 const queryClient = new QueryClient({
@@ -57,7 +58,9 @@ export const renderPage = (
           <BreadcrumbProvider>
             <AbilityContext.Provider value={ability}>
               <Suspense fallback={null}>
-                <RouterProvider router={router} />
+                <CartProvider>
+                  <RouterProvider router={router} />
+                </CartProvider>
               </Suspense>
             </AbilityContext.Provider>
           </BreadcrumbProvider>

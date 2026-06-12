@@ -10,6 +10,7 @@ import { AbilityProvider } from "@/contexts/AbilityContext";
 import "@/App.scss";
 import { HelmetProvider } from "react-helmet-async";
 import { BreadcrumbProvider } from "@/contexts/BreadcrumbContext";
+import { CartProvider } from "@/features/Shop/contexts/CartContext";
 
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(AppRoutes));
@@ -24,7 +25,9 @@ function App() {
       <BreadcrumbProvider>
         <AuthProvider store={store}>
           <AbilityProvider>
-            <RouterProvider router={router} />
+            <CartProvider>
+              <RouterProvider router={router} />
+            </CartProvider>
           </AbilityProvider>
         </AuthProvider>
       </BreadcrumbProvider>

@@ -3,7 +3,7 @@ import useSignOut from "react-auth-kit/hooks/useSignOut";
 import { useAbility } from "@/contexts/AbilityContext";
 import { defineAbilityFor } from "@/lib/utils/ability";
 import { useQueryClient } from "@tanstack/react-query";
-import { userKeys } from "@/lib/utils/queryKeys";
+import { cartKeys, shopKeys, userKeys } from "@/lib/utils/queryKeys";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { removeAuthLogoutListener } from "@/features/Auth/utils/authEventListener";
@@ -19,6 +19,8 @@ export const useLogout = () => {
       removeAuthLogoutListener();
 
       queryClient.removeQueries({ queryKey: userKeys.all });
+      queryClient.removeQueries({ queryKey: cartKeys.all });
+      queryClient.removeQueries({ queryKey: shopKeys.all });
       signOut();
       ability.update(defineAbilityFor(null).rules);
 

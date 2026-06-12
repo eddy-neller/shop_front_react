@@ -1,7 +1,7 @@
 import CategoryMenu from "@/components/CategoryMenu";
 import ErrorLoadingCard from "@/components/ErrorLoadingCard";
 import Spinner from "@/components/Spinner";
-import { useCatalog } from "@/features/Shop/contexts/CatalogContext";
+import { useCatalogContext } from "@/features/Shop/contexts/CatalogContext";
 import { useCategories } from "@/features/Shop/hooks/useCatalog";
 import { getCategoryChildren } from "@/features/Shop/lib/api/catalog";
 import { useTranslation } from "react-i18next";
@@ -19,7 +19,7 @@ const CatalogMenu = () => {
     <CategoryMenu
       rawCategories={categories}
       getCategoryChildren={getCategoryChildren}
-      context={useCatalog}
+      context={useCatalogContext}
     />
   );
 };

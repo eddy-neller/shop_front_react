@@ -1,0 +1,7 @@
+{
+  "quantity": {
+    "label": "Quantity",
+    "decrease": "Decrease quantity",
+    "increase": "Increase quantity"
+  }
+}

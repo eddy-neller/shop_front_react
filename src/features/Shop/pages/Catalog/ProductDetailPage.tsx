@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
@@ -10,13 +10,20 @@ import { useProduct } from "@/features/Shop/hooks/useCatalog";
 import { formatPrice } from "@/lib/utils/helper";
 import { resolveStaticUrl } from "@/lib/utils/url";
 import ErrorLoadingCard from "@/components/ErrorLoadingCard";
+import { useAddToCartAction } from "@/features/Shop/hooks/useAddToCartAction";
+import QuantityStepper from "@/features/Shop/components/QuantityStepper";
 
 const ProductDetailPage = () => {
   const { id } = useParams<{ id: string }>();
-  const { t, i18n } = useTranslation("catalog");
-  const navigate = useNavigate();
   const { setBreadcrumbItems } = useBreadcrumb();
+  const { t, i18n } = useTranslation("catalog");
+
+  const navigate = useNavigate();
+
   const { data: product, isPending, isError } = useProduct(id);
+
+  const [quantity, setQuantity] = useState(1);
+  const { handleAddToCart, isMutating } = useAddToCartAction();
 
   useEffect(() => {
     setBreadcrumbItems([
@@ -87,6 +94,21 @@ const ProductDetailPage = () => {
             <p className="text-3xl font-bold text-primary">{formattedPrice}</p>
             <div className="prose max-w-none text-gray-700">
               <p>{product.description}</p>
+            </div>
+            <div className="flex max-w-sm flex-wrap items-stretch gap-3">
+              <QuantityStepper
+                value={quantity}
+                onChange={setQuantity}
+                disabled={isMutating}
+              />
+              <Button
+                type="button"
+                className="h-10 flex-1"
+                disabled={isMutating}
+                onClick={() => handleAddToCart(product.id, quantity)}
+              >
+                {t("products.addToCart")}
+              </Button>
             </div>
           </article>
         </div>

@@ -22,6 +22,7 @@ import CatalogLayout from "@/features/Shop/layouts/CatalogLayout";
 import CatalogHomePage from "@/features/Shop/pages/Catalog/CatalogHomePage";
 import ProductDetailPage from "@/features/Shop/pages/Catalog/ProductDetailPage";
 import UserAddressesPage from "@/features/Shop/pages/Address/UserAddressesPage";
+import CartPage from "@/features/Shop/pages/Cart/CartPage";
 
 const AppRoutes = (
   <Route path="/" element={<MainLayout />}>
@@ -52,6 +53,7 @@ const AppRoutes = (
     </Route>
 
     <Route element={<AuthOutlet fallbackPath="/login" />}>
+      <Route path="cart" element={<CartPage />} />
       <Route path="user">
         <Route index element={<UserHomePage />} />
         <Route path="profile" element={<UserProfilePage />} />

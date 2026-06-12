@@ -20,7 +20,14 @@ export const shopKeys = {
     [...shopKeys.all, "categories", params] as const,
   category: (id: string | undefined) =>
     [...shopKeys.all, "category", id] as const,
-  addresses: () => [...shopKeys.all, "addresses"] as const,
-  address: (id: string | undefined) =>
-    [...shopKeys.all, "address", id] as const,
+  addresses: (userId: string | undefined) =>
+    [...shopKeys.all, "addresses", userId] as const,
+  address: (userId: string | undefined, id: string | undefined) =>
+    [...shopKeys.all, "address", userId, id] as const,
+} as const;
+
+export const cartKeys = {
+  all: ["shop", "cart"] as const,
+  mine: (userId: string | undefined) =>
+    [...cartKeys.all, "mine", userId] as const,
 } as const;

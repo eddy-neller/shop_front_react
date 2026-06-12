@@ -14,7 +14,12 @@ i18n
       if (ns === "user") {
         return import(`@/features/User/locales/${lng}/${ns}.json`);
       }
-      if (ns === "catalog" || ns === "addresses") {
+      if (
+        ns === "catalog" ||
+        ns === "addresses" ||
+        ns === "cart" ||
+        ns === "shop-common"
+      ) {
         return import(`@/features/Shop/locales/${lng}/${ns}.json`);
       }
       return import(`@/locales/${lng}/${ns}.json`);
@@ -48,6 +53,8 @@ i18n
       "user",
       "catalog",
       "addresses",
+      "cart",
+      "shop-common",
     ],
     defaultNS: "common",
     react: {

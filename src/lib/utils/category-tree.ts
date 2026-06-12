@@ -1,6 +1,6 @@
 import { ShopCategory } from "@/features/Shop/types/catalog";
 
-export type CategoryContextType = {
+export type CategoryContextValue = {
   setSelectedCategoryId: (id: string | null) => void;
   selectedCategoryId: string | null;
 };

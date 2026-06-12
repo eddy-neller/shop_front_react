@@ -1,0 +1,7 @@
+{
+  "quantity": {
+    "label": "Quantité",
+    "decrease": "Diminuer la quantité",
+    "increase": "Augmenter la quantité"
+  }
+}
