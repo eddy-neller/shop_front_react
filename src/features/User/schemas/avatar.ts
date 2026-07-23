@@ -8,12 +8,14 @@ export const createAvatarFormSchema = (t: TFunction<"user">) =>
       .refine((files) => files.length > 0, {
         message: t("forms.avatar.required"),
       })
-      .refine((files) => files[0]?.size <= 200 * 1024, {
+      .refine((files) => files[0]?.size <= 2 * 1024 * 1024, {
         message: t("forms.avatar.size"),
       })
       .refine(
         (files) =>
-          files[0]?.type === "image/jpeg" || files[0]?.type === "image/png",
+          files[0]?.type === "image/jpeg" ||
+          files[0]?.type === "image/png" ||
+          files[0]?.type === "image/webp",
         {
           message: t("forms.avatar.type"),
         }

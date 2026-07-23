@@ -110,7 +110,7 @@
       "required": "Veuillez sélectionner un fichier image",
       "size": "La taille du fichier doit être inférieure à 200KB",
       "type": "Seuls les fichiers jpg et png sont autorisés",
-      "hint": "(jpg/png, 96x96px max, 200KB max)",
+      "hint": "(jpg/png, 512x512px max, 2MB max)",
       "submit": {
         "label": "Mettre à jour l'avatar",
         "busy": "Upload en cours..."

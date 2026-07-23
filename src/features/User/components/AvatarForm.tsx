@@ -74,7 +74,7 @@ export default function AvatarForm() {
                 <Input
                   id="avatarFile"
                   type="file"
-                  accept="image/jpeg, image/png"
+                  accept="image/jpeg, image/png, image/webp"
                   className={errors.avatarFile ? "border-destructive" : ""}
                   {...register("avatarFile")}
                 />

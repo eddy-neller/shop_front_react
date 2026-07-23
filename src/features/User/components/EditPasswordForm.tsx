@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
@@ -35,12 +35,12 @@ export default function EditPasswordForm() {
   const {
     register,
     handleSubmit,
-    watch,
     setError,
-    clearErrors,
     formState: { errors, isSubmitting },
   } = useForm<EditPasswordFormData>({
     resolver: zodResolver(createEditPasswordFormSchema(t)),
+    // Validation en temps réel pilotée par le schéma Zod (source unique de vérité)
+    mode: "onChange",
   });
 
   const mutation = useMutation({
@@ -62,38 +62,6 @@ export default function EditPasswordForm() {
   const onSubmit = (data: EditPasswordFormData) => {
     mutation.mutate(data);
   };
-
-  const currentPassword = watch("currentPassword");
-  const newPassword = watch("newPassword");
-  const confirmNewPassword = watch("confirmNewPassword");
-
-  // Validation en temps réel : nouveau mot de passe différent de l'actuel
-  useEffect(() => {
-    if (newPassword && currentPassword) {
-      if (newPassword === currentPassword) {
-        setError("newPassword", {
-          type: "manual",
-          message: t("forms.editPassword.new.different"),
-        });
-      } else {
-        clearErrors("newPassword");
-      }
-    }
-  }, [newPassword, currentPassword, setError, clearErrors, t]);
-
-  // Validation en temps réel : confirmation du mot de passe
-  useEffect(() => {
-    if (confirmNewPassword) {
-      if (newPassword !== confirmNewPassword) {
-        setError("confirmNewPassword", {
-          type: "manual",
-          message: t("forms.editPassword.confirm.mismatch"),
-        });
-      } else {
-        clearErrors("confirmNewPassword");
-      }
-    }
-  }, [newPassword, confirmNewPassword, setError, clearErrors, t]);
 
   const isBusy = isSubmitting || mutation.isPending;
 

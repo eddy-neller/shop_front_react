@@ -6,7 +6,7 @@ export interface LoginCredentials {
 }
 
 export interface RefreshTokenResponse {
-  token: string;
+  accessToken: string;
   refresh_token: string;
   refresh_token_expiration?: number;
 }

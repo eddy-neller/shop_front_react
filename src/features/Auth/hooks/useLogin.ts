@@ -21,12 +21,12 @@ export const useLogin = () => {
     mutationFn: (data: LoginCredentials) => login(data),
     onSuccess: (response) => {
       try {
-        const { token } = response;
-        const decoded: JwtPayload = jwtDecode(token);
+        const { accessToken } = response;
+        const decoded: JwtPayload = jwtDecode(accessToken);
 
         const isLogged = signIn({
           auth: {
-            token: token,
+            token: accessToken,
             type: "Bearer",
           },
           userState: {

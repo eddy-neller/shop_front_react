@@ -1,8 +1,6 @@
+import { PASSWORD_REGEX } from "@/lib/utils/form";
 import type { TFunction } from "i18next";
 import { z } from "zod";
-
-const PASSWORD_REGEX =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 export const createRegisterSchema = (t: TFunction<"auth-register">) =>
   z

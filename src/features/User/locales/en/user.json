@@ -110,7 +110,7 @@
       "required": "Please select an image file",
       "size": "File size must be less than 200KB",
       "type": "Only jpg and png files are allowed",
-      "hint": "(jpg/png, 96x96px max, 200KB max)",
+      "hint": "(jpg/png, 512x512px max, 2MB max)",
       "submit": {
         "label": "Update avatar",
         "busy": "Uploading..."

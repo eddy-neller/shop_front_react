@@ -11,7 +11,7 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ["i18next-resources-to-backend"],
+    include: ["i18next-resources-to-backend", "lucide-react"],
   },
   server: {
     port: 4100,

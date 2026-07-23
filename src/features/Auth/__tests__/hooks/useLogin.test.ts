@@ -56,7 +56,7 @@ describe("useLogin", () => {
     roles: ["ROLE_USER"],
     exp: 1234567890,
   };
-  const mockLoginResponse = { token: mockToken };
+  const mockLoginResponse = { accessToken: mockToken };
 
   const setup = () => renderHookTest({ hook: () => useLogin() });
 

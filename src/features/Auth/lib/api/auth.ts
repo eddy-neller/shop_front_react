@@ -13,7 +13,7 @@ import type {
 export const login = async (
   credentials: LoginCredentials
 ): Promise<RefreshTokenResponse> => {
-  const response = await httpClient.post<RefreshTokenResponse>("/login", {
+  const response = await httpClient.post<RefreshTokenResponse>("/auth/login", {
     email: credentials.email.trim(),
     password: credentials.password,
   });
@@ -25,7 +25,7 @@ export const refreshToken = async (
   refresh_token: string
 ): Promise<RefreshTokenResponse> => {
   const response = await httpClient.post<RefreshTokenResponse>(
-    "/token/refresh",
+    "/auth/token/refresh",
     { refresh_token }
   );
 

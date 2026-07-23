@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { User as UserIcon, Mail } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { coupeMot, formatDate, supRepLettre } from "@/lib/utils/format";
@@ -14,12 +13,10 @@ interface UserProfileCardProps {
 export default function UserProfileCard({ user }: UserProfileCardProps) {
   const { t, i18n } = useTranslation("user");
   const dateLocale = i18n.language.startsWith("fr") ? "fr-FR" : "en-US";
-  const formattedUser = useMemo(
-    () => ({
-      username: coupeMot(supRepLettre(user.username), 15),
-    }),
-    [user]
-  );
+
+  const formattedUser = {
+    username: coupeMot(supRepLettre(user.username), 15),
+  };
 
   return (
     <Card className="w-full max-w-4xl mx-auto">
