@@ -11,6 +11,7 @@
     "test": "vitest",
     "test:cov": "vitest run --coverage",
     "test:ci": "vitest run",
+    "test:staged": "vitest related --run $(git diff --cached --name-only --diff-filter=d)",
     "test-ui": "vitest --ui",
     "prepare": "husky"
   },
