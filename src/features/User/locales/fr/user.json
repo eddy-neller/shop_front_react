@@ -108,7 +108,7 @@
     "avatar": {
       "label": "Fichier image",
       "required": "Veuillez sélectionner un fichier image",
-      "size": "La taille du fichier doit être inférieure à 200KB",
+      "size": "La taille du fichier doit être inférieure à 2MB",
       "type": "Seuls les fichiers jpg et png sont autorisés",
       "hint": "(jpg/png, 512x512px max, 2MB max)",
       "submit": {

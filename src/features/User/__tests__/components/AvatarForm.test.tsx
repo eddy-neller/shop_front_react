@@ -53,7 +53,7 @@ describe("AvatarForm", () => {
     const file = new File(["large-image"], "large.jpg", {
       type: "image/jpeg",
     });
-    Object.defineProperty(file, "size", { value: 300 * 1024 });
+    Object.defineProperty(file, "size", { value: 3 * 1024 * 1024 });
 
     const input = screen.getByLabelText(/image file/i);
     await userEvent.upload(input, file);
@@ -66,7 +66,7 @@ describe("AvatarForm", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(/file size must be less than 200kb/i)
+        screen.getByText(/file size must be less than 2mb/i)
       ).toBeInTheDocument();
     });
   });
