@@ -12,9 +12,7 @@ export interface RefreshTokenResponse {
 }
 
 export interface JwtPayload {
-  id: string;
-  username: string;
-  email: string;
+  sub: string;
   roles: string[];
   exp: number;
 }

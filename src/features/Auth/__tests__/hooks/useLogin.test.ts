@@ -50,9 +50,7 @@ const mockSetupAuthLogoutListener = setupAuthLogoutListener as Mock;
 describe("useLogin", () => {
   const mockToken = "mock.jwt.token";
   const mockDecodedToken = {
-    id: "user-123",
-    username: "testuser",
-    email: "test@example.com",
+    sub: "user-123",
     roles: ["ROLE_USER"],
     exp: 1234567890,
   };
@@ -112,9 +110,7 @@ describe("useLogin", () => {
         expect(signIn).toHaveBeenCalledWith({
           auth: { token: mockToken, type: "Bearer" },
           userState: {
-            id: mockDecodedToken.id,
-            username: mockDecodedToken.username,
-            email: mockDecodedToken.email,
+            id: mockDecodedToken.sub,
             roles: mockDecodedToken.roles,
           },
         });

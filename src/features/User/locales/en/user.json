@@ -108,7 +108,7 @@
     "avatar": {
       "label": "Image file",
       "required": "Please select an image file",
-      "size": "File size must be less than 200KB",
+      "size": "File size must be less than 2MB",
       "type": "Only jpg and png files are allowed",
       "hint": "(jpg/png, 512x512px max, 2MB max)",
       "submit": {
@@ -122,7 +122,7 @@
     }
   },
   "userNav": {
-    "menuAria": "User menu",
+    "menu": "User menu",
     "dashboard": "Dashboard",
     "profile": "Profile",
     "addresses": "Addresses",

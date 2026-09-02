@@ -31,8 +31,6 @@ describe("UserNav", () => {
   describe("when user is authenticated", () => {
     const authUser: AuthUser = {
       id: "1",
-      username: "anna",
-      email: "anna@example.com",
       roles: ["user"],
     };
 
@@ -40,16 +38,20 @@ describe("UserNav", () => {
       mockAuthUser.mockReturnValue(authUser);
     });
 
-    it("renders user dropdown with username", () => {
+    it("renders user dropdown trigger", () => {
       setup();
 
-      expect(screen.getByText(/anna/i)).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /user menu/i })
+      ).toBeInTheDocument();
     });
 
     it("shows user dropdown menu when clicked", async () => {
       setup();
 
-      const userDropdown = screen.getByText(/anna/i);
+      const userDropdown = screen.getByRole("button", {
+        name: /user menu/i,
+      });
       await userEvent.click(userDropdown);
 
       await waitFor(() => {
@@ -73,7 +75,9 @@ describe("UserNav", () => {
       async (linkName) => {
         setup();
 
-        const userDropdown = screen.getByRole("button", { name: /anna/i });
+        const userDropdown = screen.getByRole("button", {
+          name: /user menu/i,
+        });
         await userEvent.click(userDropdown);
 
         expect(userDropdown).toHaveAttribute("aria-expanded", "true");
@@ -89,7 +93,9 @@ describe("UserNav", () => {
     it("has proper ARIA attributes for user dropdowns", () => {
       setup();
 
-      const userDropdown = screen.getByRole("button", { name: /anna/i });
+      const userDropdown = screen.getByRole("button", {
+        name: /user menu/i,
+      });
       expect(userDropdown).toHaveAttribute("aria-haspopup", "menu");
       expect(userDropdown).toHaveAttribute("aria-expanded", "false");
     });
@@ -97,7 +103,9 @@ describe("UserNav", () => {
     it("calls logout from the menu", async () => {
       setup();
 
-      await userEvent.click(screen.getByRole("button", { name: /anna/i }));
+      await userEvent.click(
+        screen.getByRole("button", { name: /user menu/i })
+      );
       await userEvent.click(screen.getByRole("button", { name: /logout/i }));
 
       expect(logoutSpy).toHaveBeenCalled();

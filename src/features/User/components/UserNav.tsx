@@ -30,8 +30,6 @@ const UserNav = () => {
 
   if (!authUser) return null;
 
-  const username = authUser.username;
-
   const USER_PATHS = [
     "/user",
     "/user/profile",
@@ -59,10 +57,9 @@ const UserNav = () => {
             )}
             aria-haspopup="menu"
             aria-expanded={open}
-            aria-label={username}
+            aria-label={t("userNav.menu")}
           >
             <User className="h-5 w-5" />
-            <span className="hidden md:inline">{username}</span>
             <ChevronDown className="h-4 w-4 hidden md:inline" />
           </button>
         </PopoverTrigger>
@@ -71,7 +68,7 @@ const UserNav = () => {
           align="end"
           sideOffset={8}
           role="menu"
-          aria-label={t("userNav.menuAria")}
+          aria-label={t("userNav.menu")}
         >
           <div className="p-1">
             <Link

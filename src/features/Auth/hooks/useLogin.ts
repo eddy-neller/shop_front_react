@@ -30,9 +30,7 @@ export const useLogin = () => {
             type: "Bearer",
           },
           userState: {
-            id: decoded.id,
-            username: decoded.username,
-            email: decoded.email,
+            id: decoded.sub,
             roles: decoded.roles,
           },
         });
