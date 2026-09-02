@@ -17,7 +17,12 @@ export default defineConfig({
     port: 4100,
     proxy: {
       "/api": {
-        target: "http://localhost:20900",
+        target: "http://localhost:20800",
+        changeOrigin: true,
+      },
+      // Temporaire : disparait le jour ou les assets passent sur S3.
+      "/uploads": {
+        target: "http://localhost:20800",
         changeOrigin: true,
       },
     },
