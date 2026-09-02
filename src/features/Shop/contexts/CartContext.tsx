@@ -1,4 +1,4 @@
-import { createContext, useContext, type ReactNode } from "react";
+import { createContext, useContext, useMemo, type ReactNode } from "react";
 import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
 import {
   useAddToCart,
@@ -35,21 +35,36 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const removeMutation = useRemoveCartLine();
   const clearMutation = useClearCart();
 
-  const value: CartContextValue = {
-    isAuthenticated,
-    cart: isAuthenticated ? cartQuery.data : undefined,
-    isPending: isAuthenticated && cartQuery.isPending,
-    itemCount: isAuthenticated ? (cartQuery.data?.totalQuantity ?? 0) : 0,
-    isMutating:
-      addMutation.isPending ||
-      updateMutation.isPending ||
-      removeMutation.isPending ||
+  const value: CartContextValue = useMemo(
+    () => ({
+      isAuthenticated,
+      cart: isAuthenticated ? cartQuery.data : undefined,
+      isPending: isAuthenticated && cartQuery.isPending,
+      itemCount: isAuthenticated ? (cartQuery.data?.totalQuantity ?? 0) : 0,
+      isMutating:
+        addMutation.isPending ||
+        updateMutation.isPending ||
+        removeMutation.isPending ||
+        clearMutation.isPending,
+      addToCart: addMutation.mutateAsync,
+      updateLine: updateMutation.mutateAsync,
+      removeLine: removeMutation.mutateAsync,
+      clearCart: clearMutation.mutateAsync,
+    }),
+    [
+      isAuthenticated,
+      cartQuery.data,
+      cartQuery.isPending,
+      addMutation.isPending,
+      updateMutation.isPending,
+      removeMutation.isPending,
       clearMutation.isPending,
-    addToCart: addMutation.mutateAsync,
-    updateLine: updateMutation.mutateAsync,
-    removeLine: removeMutation.mutateAsync,
-    clearCart: clearMutation.mutateAsync,
-  };
+      addMutation.mutateAsync,
+      updateMutation.mutateAsync,
+      removeMutation.mutateAsync,
+      clearMutation.mutateAsync,
+    ]
+  );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
