@@ -1,4 +1,5 @@
 import { waitFor } from "@testing-library/react";
+import { QueryClient } from "@tanstack/react-query";
 import { Mock, vi } from "vitest";
 import { renderHookTest } from "@/lib/utils/tests/renderHook";
 import {
@@ -23,7 +24,8 @@ import type {
   ShopAddressCreatePayload,
   ShopAddressUpdatePayload,
 } from "@/features/Shop/types/address";
-import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
+import type { AuthUser } from "@/features/User/types/user";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 
 vi.mock("@/features/Shop/lib/api/addresses", () => ({
   getAddresses: vi.fn(),
@@ -41,12 +43,19 @@ const mockUpdateAddress = updateAddress as Mock;
 const mockDeleteAddress = deleteAddress as Mock;
 const mockSetDefaultAddress = setDefaultAddress as Mock;
 
+const authUser: AuthUser = {
+  id: "user-1",
+  roles: [],
+};
+const addressesKey = ["shop", "addresses", authUser.id];
+const addressKey = (id: string) => ["shop", "address", authUser.id, id];
+
 describe("useAddresses hooks", () => {
   const addresses = rawAddresses as ShopAddress[];
   const address = addresses[0];
 
   beforeEach(() => {
-    vi.mocked(useIsAuthenticated).mockReturnValue(true);
+    vi.mocked(useAuthUser).mockReturnValue(authUser);
   });
 
   afterEach(() => {
@@ -66,7 +75,7 @@ describe("useAddresses hooks", () => {
     });
 
     it("does not fetch when the user is not authenticated", () => {
-      vi.mocked(useIsAuthenticated).mockReturnValue(false);
+      vi.mocked(useAuthUser).mockReturnValue(null);
 
       const { result } = renderHookTest({ hook: () => useAddresses() });
 
@@ -82,6 +91,29 @@ describe("useAddresses hooks", () => {
       await waitFor(() => expect(result.current.isError).toBe(true));
 
       expect(result.current.error).toEqual(new Error("API error"));
+    });
+
+    // Anti-fuite entre comptes : sur un QueryClient partagé, se reconnecter avec
+    // un autre id produit une clé différente, donc un fetch neuf — jamais le
+    // cache du compte précédent.
+    it("does not serve another account's cached data after re-login", async () => {
+      const otherAddresses = [{ ...address, id: "other-1" }] as ShopAddress[];
+      const queryClient = new QueryClient({
+        defaultOptions: { queries: { retry: false } },
+      });
+
+      mockGetAddresses.mockResolvedValueOnce(addresses);
+      const first = renderHookTest({ hook: () => useAddresses(), queryClient });
+      await waitFor(() => expect(first.result.current.isSuccess).toBe(true));
+      expect(first.result.current.data).toEqual(addresses);
+
+      vi.mocked(useAuthUser).mockReturnValue({ ...authUser, id: "user-2" });
+      mockGetAddresses.mockResolvedValueOnce(otherAddresses);
+      const second = renderHookTest({ hook: () => useAddresses(), queryClient });
+      await waitFor(() => expect(second.result.current.isSuccess).toBe(true));
+
+      expect(second.result.current.data).toEqual(otherAddresses);
+      expect(getAddresses).toHaveBeenCalledTimes(2);
     });
   });
 
@@ -109,7 +141,7 @@ describe("useAddresses hooks", () => {
     });
 
     it("does not fetch when the user is not authenticated", () => {
-      vi.mocked(useIsAuthenticated).mockReturnValue(false);
+      vi.mocked(useAuthUser).mockReturnValue(null);
 
       const { result } = renderHookTest({
         hook: () => useAddress(address.id),
@@ -183,7 +215,7 @@ describe("useAddresses hooks", () => {
       await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
       expect(invalidateSpy).toHaveBeenCalledWith(
-        expect.objectContaining({ queryKey: ["shop", "addresses"] })
+        expect.objectContaining({ queryKey: addressesKey })
       );
     });
 
@@ -231,7 +263,7 @@ describe("useAddresses hooks", () => {
       await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
       expect(setQueryDataSpy).toHaveBeenCalledWith(
-        ["shop", "address", address.id],
+        addressKey(address.id),
         updatedAddress
       );
     });
@@ -250,7 +282,7 @@ describe("useAddresses hooks", () => {
       await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
       expect(invalidateSpy).toHaveBeenCalledWith(
-        expect.objectContaining({ queryKey: ["shop", "addresses"] })
+        expect.objectContaining({ queryKey: addressesKey })
       );
     });
 
@@ -294,7 +326,7 @@ describe("useAddresses hooks", () => {
       await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
       expect(invalidateSpy).toHaveBeenCalledWith(
-        expect.objectContaining({ queryKey: ["shop", "addresses"] })
+        expect.objectContaining({ queryKey: addressesKey })
       );
     });
 
@@ -341,11 +373,11 @@ describe("useAddresses hooks", () => {
       await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
       expect(setQueryDataSpy).toHaveBeenCalledWith(
-        ["shop", "address", address.id],
+        addressKey(address.id),
         address
       );
       expect(invalidateSpy).toHaveBeenCalledWith(
-        expect.objectContaining({ queryKey: ["shop", "addresses"] })
+        expect.objectContaining({ queryKey: addressesKey })
       );
     });
 

@@ -2,7 +2,7 @@ import { screen, waitFor } from "@testing-library/react";
 import { Mock, vi } from "vitest";
 import CatalogMenu from "@/features/Shop/components/Catalog/CatalogMenu";
 import { useCategories } from "@/features/Shop/hooks/useCatalog";
-import { useCatalog } from "@/features/Shop/contexts/CatalogContext";
+import { useCatalogContext } from "@/features/Shop/contexts/CatalogContext";
 import rawCategories from "@/features/Shop/__tests__/fixtures/categories.json";
 import type { ShopCategory } from "@/features/Shop/types/catalog";
 import { renderComponentQuery } from "@/lib/utils/tests/renderComponent";
@@ -13,25 +13,25 @@ vi.mock("@/features/Shop/hooks/useCatalog", () => ({
 }));
 
 vi.mock("@/features/Shop/contexts/CatalogContext", () => ({
-  useCatalog: vi.fn(),
+  useCatalogContext: vi.fn(),
 }));
 
 const mockUseCategories = useCategories as Mock;
-const mockUseCatalog = useCatalog as Mock;
+const mockUseCatalogContext = useCatalogContext as Mock;
 
 describe("CatalogMenu", () => {
   const categories = rawCategories as ShopCategory[];
 
   beforeEach(() => {
     vi.clearAllMocks();
-    mockUseCatalog.mockReturnValue({
+    mockUseCatalogContext.mockReturnValue({
       selectedCategoryId: null,
       setSelectedCategoryId: vi.fn(),
     });
   });
 
   it("displays a spinner while loading categories", () => {
-    mockUseCategories.mockReturnValueOnce({
+    mockUseCategories.mockReturnValue({
       data: undefined,
       isPending: true,
       isError: false,
@@ -43,7 +43,7 @@ describe("CatalogMenu", () => {
   });
 
   it("displays an error message when categories fail", async () => {
-    mockUseCategories.mockReturnValueOnce({
+    mockUseCategories.mockReturnValue({
       data: undefined,
       isPending: false,
       isError: true,
@@ -59,7 +59,7 @@ describe("CatalogMenu", () => {
   });
 
   it("renders the shared category menu with shop categories", async () => {
-    mockUseCategories.mockReturnValueOnce({
+    mockUseCategories.mockReturnValue({
       data: categories,
       isPending: false,
       isError: false,

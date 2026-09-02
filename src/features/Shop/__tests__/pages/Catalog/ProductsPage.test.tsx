@@ -1,10 +1,10 @@
 import { screen, waitFor } from "@testing-library/react";
 import { Mock, vi } from "vitest";
 import { renderPage } from "@/lib/utils/tests/renderPage";
-import { useCatalog } from "@/features/Shop/contexts/CatalogContext";
+import { useCatalogContext } from "@/features/Shop/contexts/CatalogContext";
 
 vi.mock("@/features/Shop/contexts/CatalogContext", () => ({
-  useCatalog: vi.fn(),
+  useCatalogContext: vi.fn(),
   CatalogProvider: ({ children }: { children: React.ReactNode }) => children,
 }));
 
@@ -18,7 +18,7 @@ vi.mock("@/features/Shop/components/Catalog/CatalogMenu", () => ({
   default: () => <div>Catalog menu</div>,
 }));
 
-const mockUseCatalog = useCatalog as Mock;
+const mockUseCatalogContext = useCatalogContext as Mock;
 
 describe("ProductsPage", () => {
   beforeEach(() => {
@@ -26,7 +26,7 @@ describe("ProductsPage", () => {
   });
 
   it("asks the user to select a category when none is selected", async () => {
-    mockUseCatalog.mockReturnValue({
+    mockUseCatalogContext.mockReturnValue({
       selectedCategoryId: null,
       setSelectedCategoryId: vi.fn(),
     });
@@ -41,7 +41,7 @@ describe("ProductsPage", () => {
   });
 
   it("renders shop products for the selected category", async () => {
-    mockUseCatalog.mockReturnValue({
+    mockUseCatalogContext.mockReturnValue({
       selectedCategoryId: "category-1",
       setSelectedCategoryId: vi.fn(),
     });

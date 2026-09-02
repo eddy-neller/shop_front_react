@@ -3,11 +3,11 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import {
   CatalogProvider,
-  useCatalog,
+  useCatalogContext,
 } from "@/features/Shop/contexts/CatalogContext";
 
 function CatalogContextProbe() {
-  const { selectedCategoryId, setSelectedCategoryId } = useCatalog();
+  const { selectedCategoryId, setSelectedCategoryId } = useCatalogContext();
   const location = useLocation();
 
   return (
