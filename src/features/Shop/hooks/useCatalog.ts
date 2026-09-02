@@ -30,9 +30,9 @@ export const useCategory = (id: string | undefined) => {
   });
 };
 
-export const useCategories = (level: number) => {
+export const useCategories = () => {
   const params = {
-    level,
+    root: true,
     itemsPerPage: DEFAULT_CATEGORIES_PER_PAGE,
     order: { title: "asc" as const },
   };

@@ -86,13 +86,13 @@ describe("useCatalog hooks", () => {
     it("loads root categories ordered by title", async () => {
       mockGetCategories.mockResolvedValueOnce(categories);
 
-      const { result } = renderHookTest({ hook: () => useCategories(0) });
+      const { result } = renderHookTest({ hook: () => useCategories() });
 
       await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
       expect(result.current.data).toEqual(categories);
       expect(getCategories).toHaveBeenCalledWith({
-        level: 0,
+        root: true,
         itemsPerPage: 100,
         order: { title: "asc" },
       });

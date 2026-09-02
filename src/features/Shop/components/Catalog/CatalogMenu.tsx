@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 
 const CatalogMenu = () => {
   const { t } = useTranslation("catalog");
-  const { data: categories, isPending, isError } = useCategories(0);
+  const { data: categories, isPending, isError } = useCategories();
 
   if (isPending) return <Spinner loading={isPending} fullscreen />;
   if (isError || !categories) {

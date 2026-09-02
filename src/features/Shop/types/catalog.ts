@@ -37,6 +37,7 @@ export interface Product {
 export interface CategoryListParams {
   level?: number;
   parent?: string;
+  root?: boolean;
   page?: number;
   itemsPerPage?: number;
   order?: {

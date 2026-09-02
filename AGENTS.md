@@ -693,13 +693,18 @@ tests fast and deterministic — no real network calls, no real timers without
 
 Local Git aliases used in this project:
 
-- **Commit**: `git cm "<message>"`.
+- **Commit**: `git cm "<message>"`. Use a concise English imperative subject in
+  sentence case, without a conventional-commit prefix or trailing period (e.g.
+  `Expand cart and catalog test coverage`, `Memoize cart context value`,
+  `Correct avatar upload size validation copy`,
+  `Use JWT subject as authenticated user ID`, `Replace local env file with
+  distributable defaults`).
 - **Push**: `git psa && git fa`.
 
 ## Commit & Pull Request Guidelines
 
-Commit subjects: short, imperative, scoped to one change (existing examples:
-`Set Up Initial Tests`, `Initial commit`). The pre-commit hook blocks
+Commit subjects: follow the Git & Hygiene convention above: concise, imperative,
+in English, and scoped to one change. The pre-commit hook blocks
 `main`/`master` and runs lint + tests; bypassing with `--no-verify` is for
 emergencies only.
 

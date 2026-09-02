@@ -36,13 +36,13 @@ describe("shop catalog api", () => {
     mockGet.mockResolvedValueOnce(makeAxiosResponse(categories));
 
     const result = await getCategories({
-      level: 0,
+      root: true,
       order: { title: "asc" },
     });
 
     expect(httpClient.get).toHaveBeenCalledWith("/shop/categories", {
       params: {
-        level: 0,
+        root: true,
         order: { title: "asc" },
       },
     });
